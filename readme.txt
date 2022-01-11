@@ -1,0 +1,2 @@
+G4GetRects 为后重建后导航的定位校准
+GetRect 为前仿的定位校准

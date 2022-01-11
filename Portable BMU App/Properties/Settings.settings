@@ -1,0 +1,70 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Portable_BMU_App.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="CalibrationMatrix" Type="System.Numerics.Matrix4x4" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;Matrix4x4 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;M11&gt;0&lt;/M11&gt;
+  &lt;M12&gt;0&lt;/M12&gt;
+  &lt;M13&gt;0&lt;/M13&gt;
+  &lt;M14&gt;0&lt;/M14&gt;
+  &lt;M21&gt;0&lt;/M21&gt;
+  &lt;M22&gt;0&lt;/M22&gt;
+  &lt;M23&gt;0&lt;/M23&gt;
+  &lt;M24&gt;0&lt;/M24&gt;
+  &lt;M31&gt;0&lt;/M31&gt;
+  &lt;M32&gt;0&lt;/M32&gt;
+  &lt;M33&gt;0&lt;/M33&gt;
+  &lt;M34&gt;0&lt;/M34&gt;
+  &lt;M41&gt;0&lt;/M41&gt;
+  &lt;M42&gt;0&lt;/M42&gt;
+  &lt;M43&gt;0&lt;/M43&gt;
+  &lt;M44&gt;0&lt;/M44&gt;
+  &lt;Translation&gt;
+    &lt;X&gt;0&lt;/X&gt;
+    &lt;Y&gt;0&lt;/Y&gt;
+    &lt;Z&gt;0&lt;/Z&gt;
+  &lt;/Translation&gt;
+&lt;/Matrix4x4&gt;</Value>
+    </Setting>
+    <Setting Name="boxHeight" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="boxOrg" Type="System.Numerics.Vector3" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;Vector3 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;X&gt;0&lt;/X&gt;
+  &lt;Y&gt;0&lt;/Y&gt;
+  &lt;Z&gt;0&lt;/Z&gt;
+&lt;/Vector3&gt;</Value>
+    </Setting>
+    <Setting Name="boxWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="boxDepth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="isCalibration" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="gpsConfigFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ScanPosition" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Standing Position</Value>
+    </Setting>
+    <Setting Name="SavedRootPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ScannerType" Type="UnitInterFaceV733.ChooseScannerType" Scope="User">
+      <Value Profile="(Default)">null</Value>
+    </Setting>
+    <Setting Name="Lateral" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="DataFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
+</SettingsFile>
