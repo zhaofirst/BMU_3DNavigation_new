@@ -957,3 +957,141 @@ C:\Users\BMU\Desktop\zlx10.31\Zlx\Portable-Real-time-Processing-App\Portable BMU
 C:\Users\BMU\Desktop\zlx10.31\Zlx\Portable-Real-time-Processing-App\Portable BMU App\obj\x64\Debug\Portable Real-time Processing App.csproj.CopyComplete
 C:\Users\BMU\Desktop\zlx10.31\Zlx\Portable-Real-time-Processing-App\Portable BMU App\obj\x64\Debug\Portable BMU App.exe
 C:\Users\BMU\Desktop\zlx10.31\Zlx\Portable-Real-time-Processing-App\Portable BMU App\obj\x64\Debug\Portable BMU App.pdb
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\dll\x86\OpenCvSharpExtern.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\dll\x86\opencv_ffmpeg400.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\dll\x64\OpenCvSharpExtern.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\dll\x64\opencv_ffmpeg400_64.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\Portable BMU App.exe.config
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\Portable BMU App.exe
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\Portable BMU App.pdb
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\Microsoft.Win32.Primitives.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\netstandard.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.AppContext.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Collections.Concurrent.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Collections.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Collections.NonGeneric.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Collections.Specialized.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.ComponentModel.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.ComponentModel.EventBasedAsync.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.ComponentModel.Primitives.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.ComponentModel.TypeConverter.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Console.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Data.Common.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Diagnostics.Contracts.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Diagnostics.Debug.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Diagnostics.FileVersionInfo.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Diagnostics.Process.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Diagnostics.StackTrace.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Diagnostics.TextWriterTraceListener.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Diagnostics.Tools.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Diagnostics.TraceSource.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Diagnostics.Tracing.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Drawing.Primitives.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Dynamic.Runtime.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Globalization.Calendars.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Globalization.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Globalization.Extensions.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.IO.Compression.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.IO.Compression.ZipFile.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.IO.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.IO.FileSystem.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.IO.FileSystem.DriveInfo.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.IO.FileSystem.Primitives.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.IO.FileSystem.Watcher.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.IO.IsolatedStorage.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.IO.MemoryMappedFiles.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.IO.Pipes.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.IO.UnmanagedMemoryStream.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Linq.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Linq.Expressions.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Linq.Parallel.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Linq.Queryable.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Net.Http.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Net.NameResolution.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Net.NetworkInformation.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Net.Ping.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Net.Primitives.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Net.Requests.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Net.Security.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Net.Sockets.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Net.WebHeaderCollection.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Net.WebSockets.Client.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Net.WebSockets.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.ObjectModel.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Reflection.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Reflection.Extensions.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Reflection.Primitives.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Resources.Reader.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Resources.ResourceManager.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Resources.Writer.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Runtime.CompilerServices.VisualC.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Runtime.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Runtime.Extensions.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Runtime.Handles.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Runtime.InteropServices.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Runtime.Numerics.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Runtime.Serialization.Formatters.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Runtime.Serialization.Json.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Runtime.Serialization.Primitives.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Runtime.Serialization.Xml.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Security.Claims.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Security.Cryptography.Algorithms.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Security.Cryptography.Csp.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Security.Cryptography.Encoding.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Security.Cryptography.Primitives.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Security.Cryptography.X509Certificates.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Security.Principal.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Security.SecureString.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Text.Encoding.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Text.Encoding.Extensions.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Text.RegularExpressions.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Threading.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Threading.Overlapped.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Threading.Tasks.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Threading.Tasks.Parallel.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Threading.Thread.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Threading.ThreadPool.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Threading.Timer.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.ValueTuple.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Xml.ReaderWriter.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Xml.XDocument.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Xml.XmlDocument.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Xml.XmlSerializer.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Xml.XPath.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\System.Xml.XPath.XDocument.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\csmatio.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\OpenCvSharp.Blob.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\OpenCvSharp.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\OpenCvSharp.Extensions.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\OpenCvSharp.UserInterface.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\SoapFormatter.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\zlib.net.dll
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\csmatio.xml
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\OpenCvSharp.pdb
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\OpenCvSharp.xml
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\OpenCvSharp.Blob.pdb
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\OpenCvSharp.Blob.xml
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\OpenCvSharp.Extensions.pdb
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\OpenCvSharp.Extensions.xml
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\OpenCvSharp.UserInterface.pdb
+D:\BMU_Navigation\Portable BMU App\bin\x64\Debug\OpenCvSharp.UserInterface.xml
+D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable Real-time Processing App.csprojAssemblyReference.cache
+D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable BMU App.exe.config
+D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable_BMU_App.Dlg_waitingRecons.resources
+D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable_BMU_App.Frm_RealTime_Calibration.resources
+D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable_BMU_App.Frm_RealTime_PreScan.resources
+D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable_BMU_App.Frm_RealTime_SaveUI.resources
+D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable_BMU_App.Frm_Recons_DataExport.resources
+D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable_BMU_App.Frm_Recons_DataSelect.resources
+D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable_BMU_App.Frm_Recons_Navigation.resources
+D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable_BMU_App.MainForm.resources
+D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable_BMU_App.Frm_RealTime_Navigation_ZLX.resources
+D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable_BMU_App.Properties.Resources.resources
+D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable_BMU_App.Show_Coronal.resources
+D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable_BMU_App.Show_Saggital.resources
+D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable Real-time Processing App.csproj.GenerateResource.cache
+D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable Real-time Processing App.csproj.CoreCompileInputs.cache
+D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable Real-time Processing App.csproj.CopyComplete
+D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable BMU App.exe
+D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable BMU App.pdb

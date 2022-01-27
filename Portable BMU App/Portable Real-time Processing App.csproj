@@ -121,12 +121,6 @@
     <Compile Include="Dlg_waitingRecons.Designer.cs">
       <DependentUpon>Dlg_waitingRecons.cs</DependentUpon>
     </Compile>
-    <Compile Include="Frm_RealTIme_Navigation_ZLX_short.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Frm_RealTIme_Navigation_ZLX_short.Designer.cs">
-      <DependentUpon>Frm_RealTIme_Navigation_ZLX_short.cs</DependentUpon>
-    </Compile>
     <Compile Include="Frm_RealTime_Calibration.cs">
       <SubType>Form</SubType>
     </Compile>
