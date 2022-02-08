@@ -18,6 +18,7 @@ namespace Portable_BMU_App
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Frm_RealTime_Navigation_ZLX());
             //Application.Run(new MainForm());
+            //Application.Run(new Frm_Recons_DataSelect(mainForm()));
 
         }
 

@@ -127,6 +127,12 @@
     <Compile Include="Frm_RealTime_Calibration.Designer.cs">
       <DependentUpon>Frm_RealTime_Calibration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frm_RealTime_Navigation_ZLX _short.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_RealTime_Navigation_ZLX _short.designer.cs">
+      <DependentUpon>Frm_RealTime_Navigation_ZLX _short.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frm_RealTime_PreScan.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -201,6 +207,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_RealTime_Calibration.resx">
       <DependentUpon>Frm_RealTime_Calibration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_RealTime_Navigation_ZLX _short.resx">
+      <DependentUpon>Frm_RealTime_Navigation_ZLX _short.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_RealTime_PreScan.resx">
       <DependentUpon>Frm_RealTime_PreScan.cs</DependentUpon>

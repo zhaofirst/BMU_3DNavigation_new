@@ -1095,3 +1095,4 @@ D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable Real-time Processing A
 D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable Real-time Processing App.csproj.CopyComplete
 D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable BMU App.exe
 D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable BMU App.pdb
+D:\BMU_Navigation\Portable BMU App\obj\x64\Debug\Portable_BMU_App.Frm_RealTime_Navigation_ZLX_short.resources

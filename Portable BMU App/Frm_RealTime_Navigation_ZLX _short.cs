@@ -28,7 +28,7 @@ using System.Threading;
 namespace Portable_BMU_App
 {
 
-    public partial class Frm_RealTime_Navigation_ZLX : Form
+    public partial class Frm_RealTime_Navigation_ZLX_short : Form
     {
         //----------------------- ----------------------------Start of parameter from Frm_RealTime_Navigation------------------ --------//
 
@@ -76,7 +76,7 @@ namespace Portable_BMU_App
         #region
 
 
-        public Frm_RealTime_Navigation_ZLX()
+        public Frm_RealTime_Navigation_ZLX_short()
         {
             InitializeComponent();
             //mainForm = this;
@@ -1250,7 +1250,10 @@ namespace Portable_BMU_App
                 this.OpenFilePath = filePath;
                 Console.WriteLine("Volume File: {0}", this.OpenFilePath);
 
-      
+
+
+
+ 
                 //return;
                 var mfr = new MatFileReader(filePath);
                 dataCount = mfr.Data.Count();
@@ -1261,12 +1264,18 @@ namespace Portable_BMU_App
                 int width = mlSquares.Dimensions[1];
                 int depth = mlSquares.Dimensions[2];
 
+
+
                 PicSag.Width = (int)(PicTra.Width * height / width);  // 使得Sag面的宽度保持和Tra面的高度一致
                 int poX = (int)((panel3.Width - PicSag.Width) / 2);
                 int poY = 63;
                 PicSag.Location = new System.Drawing.Point(poX, poY);
                 PicProSag.Width = (int)(PicTra.Width * height / width);  // 使得Sag面的宽度保持和Tra面的高度一致
                 PicProSag.Location = new System.Drawing.Point(poX, poY);
+
+
+
+                PicSag.Width = (int)(PicTra.Width * height / width);
                 Console.WriteLine(mlSquares);
 
                 Console.WriteLine("Volume size, height*width*depth : {0}, {1},{2}", height, width, depth);
@@ -1455,12 +1464,15 @@ namespace Portable_BMU_App
             int width = Original_Width;
             int height = Original_Height;
 
+
+
             PicSag.Width = (int)(PicTra.Width * height / width);  // 使得Sag面的宽度保持和Tra面的高度一致
             int poX = (int)((panel3.Width - PicSag.Width) / 2);
             int poY = 63;
-            PicSag.Location = new System.Drawing.Point(poX, poY);
+            PicSag.Location = new System.Drawing.Point(poX,poY);
             PicProSag.Width = (int)(PicTra.Width * height / width);  // 使得Sag面的宽度保持和Tra面的高度一致
             PicProSag.Location = new System.Drawing.Point(poX, poY);
+
             //这里完成3个面的切片
             volume_guan = new short[Original_Height][,];
             for (int i = 0; i < Original_Height; i++)
@@ -2349,14 +2361,8 @@ namespace Portable_BMU_App
 
         }
 
-        private void PicSag_SizeChanged(object sender, EventArgs e)
+        private void label5_Click(object sender, EventArgs e)
         {
-            
-
-
-
-
-
 
         }
 
