@@ -42,9 +42,10 @@
             this.PicProCor = new System.Windows.Forms.PictureBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.texdown_heng = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.PicTra = new System.Windows.Forms.PictureBox();
-            this.texdown_heng = new System.Windows.Forms.TextBox();
             this.hscroll_transverse = new System.Windows.Forms.HScrollBar();
             this.panel10 = new System.Windows.Forms.Panel();
             this.ContrastBar = new System.Windows.Forms.TrackBar();
@@ -60,19 +61,18 @@
             this.buttonNavigation = new System.Windows.Forms.Button();
             this.num_increaseX = new System.Windows.Forms.NumericUpDown();
             this.BrightnessBar = new System.Windows.Forms.TrackBar();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.texdown_guan = new System.Windows.Forms.TextBox();
+            this.hscroll_Coronal = new System.Windows.Forms.HScrollBar();
+            this.label3 = new System.Windows.Forms.Label();
+            this.PicCor = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.texdown_shi = new System.Windows.Forms.TextBox();
+            this.hscroll_Sagittal = new System.Windows.Forms.HScrollBar();
             this.label1 = new System.Windows.Forms.Label();
             this.PicSag = new System.Windows.Forms.PictureBox();
-            this.hscroll_Sagittal = new System.Windows.Forms.HScrollBar();
-            this.texdown_shi = new System.Windows.Forms.TextBox();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.hscroll_Coronal = new System.Windows.Forms.HScrollBar();
-            this.PicCor = new System.Windows.Forms.PictureBox();
-            this.texdown_guan = new System.Windows.Forms.TextBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.panel6 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -82,6 +82,7 @@
             this.panel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicProCor)).BeginInit();
             this.panel2.SuspendLayout();
+            this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicTra)).BeginInit();
             this.panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ContrastBar)).BeginInit();
@@ -89,13 +90,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.num_increaseZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_increaseX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BrightnessBar)).BeginInit();
-            this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PicSag)).BeginInit();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicCor)).BeginInit();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicSag)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).BeginInit();
-            this.panel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -261,6 +261,30 @@
             this.panel2.Size = new System.Drawing.Size(449, 1160);
             this.panel2.TabIndex = 4;
             // 
+            // panel6
+            // 
+            this.panel6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel6.Controls.Add(this.texdown_heng);
+            this.panel6.Controls.Add(this.label2);
+            this.panel6.Controls.Add(this.PicTra);
+            this.panel6.Controls.Add(this.hscroll_transverse);
+            this.panel6.Location = new System.Drawing.Point(9, 485);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(426, 666);
+            this.panel6.TabIndex = 29;
+            // 
+            // texdown_heng
+            // 
+            this.texdown_heng.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.texdown_heng.Location = new System.Drawing.Point(314, 609);
+            this.texdown_heng.Name = "texdown_heng";
+            this.texdown_heng.Size = new System.Drawing.Size(100, 35);
+            this.texdown_heng.TabIndex = 7;
+            this.texdown_heng.KeyDown += new System.Windows.Forms.KeyEventHandler(this.texdown_heng_KeyDown);
+            this.texdown_heng.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_KeyPress);
+            // 
             // label2
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -284,16 +308,6 @@
             this.PicTra.TabIndex = 3;
             this.PicTra.TabStop = false;
             this.PicTra.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.picTra_MouseWheel);
-            // 
-            // texdown_heng
-            // 
-            this.texdown_heng.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.texdown_heng.Location = new System.Drawing.Point(314, 609);
-            this.texdown_heng.Name = "texdown_heng";
-            this.texdown_heng.Size = new System.Drawing.Size(100, 35);
-            this.texdown_heng.TabIndex = 7;
-            this.texdown_heng.KeyDown += new System.Windows.Forms.KeyEventHandler(this.texdown_heng_KeyDown);
-            this.texdown_heng.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_KeyPress);
             // 
             // hscroll_transverse
             // 
@@ -341,7 +355,7 @@
             this.ContrastBar.Size = new System.Drawing.Size(175, 78);
             this.ContrastBar.TabIndex = 11;
             this.ContrastBar.Value = 100;
-            this.ContrastBar.Scroll += new System.EventHandler(this.ContrastBar_Scroll);
+            this.ContrastBar.Scroll += new System.EventHandler(this.BrightnessBarContrastBar_Scroll);
             // 
             // label6
             // 
@@ -501,7 +515,65 @@
             this.BrightnessBar.Size = new System.Drawing.Size(175, 78);
             this.BrightnessBar.TabIndex = 10;
             this.BrightnessBar.Value = 100;
-            this.BrightnessBar.Scroll += new System.EventHandler(this.BrightnessBar_Scroll);
+            this.BrightnessBar.Scroll += new System.EventHandler(this.BrightnessBarContrastBar_Scroll);
+            // 
+            // panel4
+            // 
+            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel4.Controls.Add(this.texdown_guan);
+            this.panel4.Controls.Add(this.hscroll_Coronal);
+            this.panel4.Controls.Add(this.label3);
+            this.panel4.Controls.Add(this.PicCor);
+            this.panel4.Location = new System.Drawing.Point(913, 3);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(449, 1160);
+            this.panel4.TabIndex = 6;
+            // 
+            // texdown_guan
+            // 
+            this.texdown_guan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.texdown_guan.Location = new System.Drawing.Point(334, 1094);
+            this.texdown_guan.Name = "texdown_guan";
+            this.texdown_guan.Size = new System.Drawing.Size(100, 35);
+            this.texdown_guan.TabIndex = 5;
+            this.texdown_guan.KeyDown += new System.Windows.Forms.KeyEventHandler(this.texdown_shi_KeyDown);
+            this.texdown_guan.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_KeyPress);
+            // 
+            // hscroll_Coronal
+            // 
+            this.hscroll_Coronal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.hscroll_Coronal.Location = new System.Drawing.Point(32, 1094);
+            this.hscroll_Coronal.Name = "hscroll_Coronal";
+            this.hscroll_Coronal.Size = new System.Drawing.Size(284, 35);
+            this.hscroll_Coronal.TabIndex = 6;
+            this.hscroll_Coronal.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hscroll_Coronal_Scroll);
+            // 
+            // label3
+            // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(123, 18);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(190, 24);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Coronal Section";
+            // 
+            // PicCor
+            // 
+            this.PicCor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.PicCor.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.PicCor.Location = new System.Drawing.Point(32, 63);
+            this.PicCor.Name = "PicCor";
+            this.PicCor.Size = new System.Drawing.Size(380, 982);
+            this.PicCor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PicCor.TabIndex = 3;
+            this.PicCor.TabStop = false;
+            this.PicCor.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.picCor_MouseWheel);
             // 
             // panel3
             // 
@@ -516,6 +588,26 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(449, 1160);
             this.panel3.TabIndex = 5;
+            // 
+            // texdown_shi
+            // 
+            this.texdown_shi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.texdown_shi.Location = new System.Drawing.Point(337, 1094);
+            this.texdown_shi.Name = "texdown_shi";
+            this.texdown_shi.Size = new System.Drawing.Size(100, 35);
+            this.texdown_shi.TabIndex = 6;
+            this.texdown_shi.KeyDown += new System.Windows.Forms.KeyEventHandler(this.texdown_shi_KeyDown);
+            this.texdown_shi.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_KeyPress);
+            // 
+            // hscroll_Sagittal
+            // 
+            this.hscroll_Sagittal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.hscroll_Sagittal.Location = new System.Drawing.Point(27, 1094);
+            this.hscroll_Sagittal.Name = "hscroll_Sagittal";
+            this.hscroll_Sagittal.Size = new System.Drawing.Size(294, 35);
+            this.hscroll_Sagittal.TabIndex = 6;
+            this.hscroll_Sagittal.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hscroll_Sagittal_Scroll);
             // 
             // label1
             // 
@@ -533,92 +625,14 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PicSag.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.PicSag.Location = new System.Drawing.Point(56, 63);
+            this.PicSag.Location = new System.Drawing.Point(65, 63);
             this.PicSag.Name = "PicSag";
             this.PicSag.Size = new System.Drawing.Size(341, 982);
             this.PicSag.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PicSag.TabIndex = 3;
             this.PicSag.TabStop = false;
-            this.PicSag.SizeChanged += new System.EventHandler(this.PicSag_SizeChanged);
+            this.PicSag.SizeChanged += new System.EventHandler(this.PictureSizeChanged);
             this.PicSag.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.picSag_MouseWheel);
-            // 
-            // hscroll_Sagittal
-            // 
-            this.hscroll_Sagittal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.hscroll_Sagittal.Location = new System.Drawing.Point(27, 1094);
-            this.hscroll_Sagittal.Name = "hscroll_Sagittal";
-            this.hscroll_Sagittal.Size = new System.Drawing.Size(294, 35);
-            this.hscroll_Sagittal.TabIndex = 6;
-            this.hscroll_Sagittal.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hscroll_Sagittal_Scroll);
-            // 
-            // texdown_shi
-            // 
-            this.texdown_shi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.texdown_shi.Location = new System.Drawing.Point(337, 1094);
-            this.texdown_shi.Name = "texdown_shi";
-            this.texdown_shi.Size = new System.Drawing.Size(100, 35);
-            this.texdown_shi.TabIndex = 6;
-            this.texdown_shi.KeyDown += new System.Windows.Forms.KeyEventHandler(this.texdown_shi_KeyDown);
-            this.texdown_shi.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_KeyPress);
-            // 
-            // panel4
-            // 
-            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel4.Controls.Add(this.texdown_guan);
-            this.panel4.Controls.Add(this.hscroll_Coronal);
-            this.panel4.Controls.Add(this.label3);
-            this.panel4.Controls.Add(this.PicCor);
-            this.panel4.Location = new System.Drawing.Point(913, 3);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(449, 1160);
-            this.panel4.TabIndex = 6;
-            // 
-            // label3
-            // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(123, 18);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(190, 24);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Coronal Section";
-            // 
-            // hscroll_Coronal
-            // 
-            this.hscroll_Coronal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.hscroll_Coronal.Location = new System.Drawing.Point(32, 1094);
-            this.hscroll_Coronal.Name = "hscroll_Coronal";
-            this.hscroll_Coronal.Size = new System.Drawing.Size(284, 35);
-            this.hscroll_Coronal.TabIndex = 6;
-            this.hscroll_Coronal.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hscroll_Coronal_Scroll);
-            // 
-            // PicCor
-            // 
-            this.PicCor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.PicCor.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.PicCor.Location = new System.Drawing.Point(32, 63);
-            this.PicCor.Name = "PicCor";
-            this.PicCor.Size = new System.Drawing.Size(380, 982);
-            this.PicCor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PicCor.TabIndex = 3;
-            this.PicCor.TabStop = false;
-            this.PicCor.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.picCor_MouseWheel);
-            // 
-            // texdown_guan
-            // 
-            this.texdown_guan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.texdown_guan.Location = new System.Drawing.Point(334, 1094);
-            this.texdown_guan.Name = "texdown_guan";
-            this.texdown_guan.Size = new System.Drawing.Size(100, 35);
-            this.texdown_guan.TabIndex = 5;
-            this.texdown_guan.KeyDown += new System.Windows.Forms.KeyEventHandler(this.texdown_shi_KeyDown);
-            this.texdown_guan.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_KeyPress);
             // 
             // errorProvider1
             // 
@@ -627,20 +641,6 @@
             // errorProvider2
             // 
             this.errorProvider2.ContainerControl = this;
-            // 
-            // panel6
-            // 
-            this.panel6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel6.Controls.Add(this.texdown_heng);
-            this.panel6.Controls.Add(this.label2);
-            this.panel6.Controls.Add(this.PicTra);
-            this.panel6.Controls.Add(this.hscroll_transverse);
-            this.panel6.Location = new System.Drawing.Point(9, 485);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(426, 666);
-            this.panel6.TabIndex = 29;
             // 
             // Frm_RealTime_Navigation_ZLX
             // 
@@ -664,6 +664,8 @@
             this.panel11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicProCor)).EndInit();
             this.panel2.ResumeLayout(false);
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicTra)).EndInit();
             this.panel10.ResumeLayout(false);
             this.panel10.PerformLayout();
@@ -672,16 +674,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.num_increaseZ)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_increaseX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BrightnessBar)).EndInit();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PicSag)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicCor)).EndInit();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicSag)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).EndInit();
-            this.panel6.ResumeLayout(false);
-            this.panel6.PerformLayout();
             this.ResumeLayout(false);
 
         }
