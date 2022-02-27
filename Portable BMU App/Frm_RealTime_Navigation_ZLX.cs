@@ -61,7 +61,7 @@ namespace Portable_BMU_App
         public static float voxelWidth = 0f;
         public static float voxelHeight = 0f;
 
-        byte[][,] boxV = new byte[boxDepth][,];  
+        byte[][,] boxV = new byte[boxDepth][,];
         Mat coronalImage = null;
         Mat saggitalImage = null;
         bool navigationKeyFlag = false;
@@ -97,8 +97,8 @@ namespace Portable_BMU_App
         public int increasY;
         public int increasZ;
 
-        public int Brightnessvalue=100;
-        public int Contrastvalue=100;
+        public int Brightnessvalue = 100;
+        public int Contrastvalue = 100;
         public Mat SagittalProjectionMat;
         public Mat CoronalProjectionMat;
         public static short[][,] volume;
@@ -149,7 +149,7 @@ namespace Portable_BMU_App
 
         //Current size of pic box
 
-        
+
         public enum ColorMap
         {
             Bone,
@@ -305,7 +305,7 @@ namespace Portable_BMU_App
         {
             /// guan
             //HScrollBar hscroll_Coronal = new HScrollBar();
-            
+
             //hscroll_Coronal.Dock = DockStyle.Bottom;
             hscroll_Coronal.Maximum = volume[0].GetLength(0);
             //this.hscroll_Coronal.Maximum += this.hscroll_Coronal.LargeChange;
@@ -530,7 +530,7 @@ namespace Portable_BMU_App
 
                         Mat picshiMat = new Mat();
                         picshiMat = Out_ShorttoMat(PicSag, shi, 2);
-               
+
 
                         // 输出克隆面 /// 
                         Picshi_clone = picshiMat;
@@ -591,7 +591,7 @@ namespace Portable_BMU_App
 
                 Mat pichengMat = new Mat();
                 pichengMat = Out_ShorttoMat(PicTra, heng, 0);
-          
+
 
                 // 输出克隆面 /// 
                 Picheng_clone = pichengMat;
@@ -604,7 +604,7 @@ namespace Portable_BMU_App
 
                 ////////////////
                 //结束输出
-           
+
 
 
             }
@@ -639,7 +639,7 @@ namespace Portable_BMU_App
 
                         Mat pichengMat = new Mat();
                         pichengMat = Out_ShorttoMat(PicTra, heng, 0);
-                 
+
 
                         // 输出克隆面 /// 
                         Picheng_clone = pichengMat;
@@ -663,12 +663,12 @@ namespace Portable_BMU_App
         }
 
 
-
+        #region 导航部分
 
         private void ThreeD_Navigation_Standing(int x, int y, int z)
         {
 
-  
+
             Console.WriteLine("threed duanle  ", boxDepth, boxHeight, boxWidth);
             Console.WriteLine("threed duanle 3", Properties.Settings.Default.ScanPosition);
             int rectSize = 3;
@@ -738,7 +738,7 @@ namespace Portable_BMU_App
             // ----Coronal---- ///.
 
 
-          
+
 
 
             short[,] guan = new short[Original_Depth, Original_Width];
@@ -968,6 +968,8 @@ namespace Portable_BMU_App
             GC.Collect();
         }
 
+        #endregion
+
 
         /// <summary>
         ///  用于图片short 转换成可以resize的Mat类型
@@ -1118,8 +1120,7 @@ namespace Portable_BMU_App
 
 
 
-        ///
-        ///对比度部分
+        #region 对比度部分
 
         private void BrightnessBarContrastBar_Scroll(object sender, EventArgs e)
         {
@@ -1171,8 +1172,8 @@ namespace Portable_BMU_App
             PicProSag.Image = bitmap_sagpro;
 
             // 结束展现
-            
-            Picguan_clone = ConvertFile.BitmapToMat(new Bitmap( PicCor.Image));
+
+            Picguan_clone = ConvertFile.BitmapToMat(new Bitmap(PicCor.Image));
             Picshi_clone = ConvertFile.BitmapToMat(new Bitmap(PicSag.Image));
             Picheng_clone = ConvertFile.BitmapToMat(new Bitmap(PicTra.Image));
             PicSagPro_clone = ConvertFile.BitmapToMat(new Bitmap(PicProSag.Image));
@@ -1233,12 +1234,12 @@ namespace Portable_BMU_App
             }
             src.ConvertTo(modifiedSrc, src.Type(), alpha, beta);
         }
+        #endregion
 
 
 
-     
 
-
+        #region 数据输入部分
 
         public void toolStripMenuItemOpen_Click(object sender, EventArgs e)
         {
@@ -1258,7 +1259,7 @@ namespace Portable_BMU_App
                 this.OpenFilePath = filePath;
                 Console.WriteLine("Volume File: {0}", this.OpenFilePath);
 
-      
+
                 //return;
                 var mfr = new MatFileReader(filePath);
                 dataCount = mfr.Data.Count();
@@ -1272,9 +1273,9 @@ namespace Portable_BMU_App
                 PicSag.Width = (int)(PicTra.Width * height / width);  // 使得Sag面的宽度保持和Tra面的高度一致
                 int poX = (int)((panel3.Width - PicSag.Width) / 2);
                 int poY = 63;
-                PicSag.Location = new System.Drawing.Point(poX, poY);
+                PicSag.Location = new System.Drawing.Point(poX, PicSag.Location.Y);
                 PicProSag.Width = (int)(PicTra.Width * height / width);  // 使得Sag面的宽度保持和Tra面的高度一致
-                PicProSag.Location = new System.Drawing.Point(poX, poY);
+                PicProSag.Location = new System.Drawing.Point(poX, PicProSag.Location.Y);
                 Console.WriteLine(mlSquares);
 
                 Console.WriteLine("Volume size, height*width*depth : {0}, {1},{2}", height, width, depth);
@@ -1362,7 +1363,7 @@ namespace Portable_BMU_App
                 }
 
 
-           
+
 
                 volume_heng = new short[Original_Depth][,];
                 for (int i = 0; i < Original_Depth; i++)
@@ -1453,7 +1454,7 @@ namespace Portable_BMU_App
 
         public void Initialize_five_Picture()
         {
-          
+
 
             Original_Depth = volume.Length;
             Original_Height = volume[0].GetLength(0);
@@ -1594,7 +1595,7 @@ namespace Portable_BMU_App
             Console.WriteLine(dataCount);
         }
 
-
+        #endregion
 
 
         #region 图片缩放部分  注意这里记得在Design中给每个pictureBox 添加滚轮控件函数
@@ -1646,10 +1647,10 @@ namespace Portable_BMU_App
             {
                 compensation_Y_Value = (PicSag.Height - PicSag_ButtonClickOriginalBitmap.Height) / 2;
             }
-            if (WheelReadyZoomPicture && p.Y<PicSag.Height-compensation_Y_Value && p.Y>compensation_Y_Value)
+            if (WheelReadyZoomPicture && p.Y < PicSag.Height - compensation_Y_Value && p.Y > compensation_Y_Value)
             {
                 int i = e.Delta * SystemInformation.MouseWheelScrollLines;
-          
+
 
 
                 /// Zoom the picture
@@ -1669,7 +1670,7 @@ namespace Portable_BMU_App
                     //Cv2.Resize(PicSag_ImageMat, ZoomPictureMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
                     //PicSag_ImageMat = ZoomPictureMat;
                     //Bitmap bitmapFinal_1 = ConvertFile.MatToBitmap(ZoomPictureMat);
-                    
+
                     PicSag.Image = PicSag_ButtonClickOriginalBitmap;
                     scale_doubleSag = 1;
                 }
@@ -1677,7 +1678,7 @@ namespace Portable_BMU_App
                 {
                     ZoomDsize = new OpenCvSharp.Size(ZoomWidth, ZoomHeight);
                     Cv2.Resize(PicSag_ImageMat, ZoomPictureMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
-          
+
                     //获得放缩后的中心点坐标
                     Rect rect = new Rect((int)(scale_doubleSag * p.X) - p.X, (int)((scale_doubleSag - 1) * (p.Y - compensation_Y_Value)), PicSag_ButtonClickOriginalBitmap.Width, PicSag_ButtonClickOriginalBitmap.Height);
                     Mat matfinal = new Mat(ZoomPictureMat, rect);
@@ -1710,7 +1711,7 @@ namespace Portable_BMU_App
             if (WheelReadyZoomPicture && p.Y < PicCor.Height - compensation_Y_Value && p.Y > compensation_Y_Value)
             {
                 int i = e.Delta * SystemInformation.MouseWheelScrollLines;
-   
+
 
 
                 /// Zoom the picture
@@ -1735,7 +1736,7 @@ namespace Portable_BMU_App
                     Cv2.Resize(PicCor_ImageMat, ZoomPictureMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
                     //PicCor_ImageMat = ZoomPictureMat;
                     //获得放缩后的中心点坐标
-        
+
                     Rect rect = new Rect((int)(scale_doubleCor * p.X) - p.X, (int)((scale_doubleCor - 1) * (p.Y - compensation_Y_Value)), PicCor_ButtonClickOriginalBitmap.Width, PicCor_ButtonClickOriginalBitmap.Height);
                     Mat matfinal = new Mat(ZoomPictureMat, rect);
 
@@ -1764,7 +1765,7 @@ namespace Portable_BMU_App
             {
                 compensation_Y_Value = (PicTra.Height - PicTra_ButtonClickOriginalBitmap.Height) / 2;
             }
-           
+
             if (WheelReadyZoomPicture && p.Y < PicTra.Height - compensation_Y_Value && p.Y > compensation_Y_Value)
             {
                 int i = e.Delta * SystemInformation.MouseWheelScrollLines;
@@ -1783,7 +1784,7 @@ namespace Portable_BMU_App
                 int ZoomHeight = (int)Convert.ToInt32(PicTra_ButtonClickOriginalBitmap.Height * scale_doubleTra);
                 if (ZoomHeight < PicTra_ButtonClickOriginalBitmap.Height || ZoomWidth < PicTra_ButtonClickOriginalBitmap.Width)
                 {
-            
+
                     PicTra.Image = PicTra_ButtonClickOriginalBitmap;
                     scale_doubleTra = 1;
                 }
@@ -1794,7 +1795,7 @@ namespace Portable_BMU_App
                     //PicTra_ImageMat = ZoomPictureMat;
                     //获得放缩后的中心点坐标
 
-                    Rect rect = new Rect((int)(scale_doubleTra * p.X) - p.X, (int)((scale_doubleTra-1) * (p.Y - compensation_Y_Value)), PicTra_ButtonClickOriginalBitmap.Width, PicTra_ButtonClickOriginalBitmap.Height);
+                    Rect rect = new Rect((int)(scale_doubleTra * p.X) - p.X, (int)((scale_doubleTra - 1) * (p.Y - compensation_Y_Value)), PicTra_ButtonClickOriginalBitmap.Width, PicTra_ButtonClickOriginalBitmap.Height);
                     Mat matfinal = new Mat(ZoomPictureMat, rect);
 
                     Bitmap bitmapFinal_2 = ConvertFile.MatToBitmap(matfinal);
@@ -1823,7 +1824,7 @@ namespace Portable_BMU_App
             if (WheelReadyZoomPicture && p.Y < PicProSag.Height - compensation_Y_Value && p.Y > compensation_Y_Value)
             {
                 int i = e.Delta * SystemInformation.MouseWheelScrollLines;
-         
+
 
 
                 /// Zoom the picture
@@ -1838,7 +1839,7 @@ namespace Portable_BMU_App
                 int ZoomHeight = (int)Convert.ToInt32(PicProSag_ButtonClickOriginalBitmap.Height * scale_doubleProSag);
                 if (ZoomHeight < PicProSag_ButtonClickOriginalBitmap.Height || ZoomWidth < PicProSag_ButtonClickOriginalBitmap.Width)
                 {
-          
+
                     PicProSag.Image = PicProSag_ButtonClickOriginalBitmap;
                     scale_doubleProSag = 1;
                 }
@@ -1893,7 +1894,7 @@ namespace Portable_BMU_App
                 int ZoomHeight = (int)Convert.ToInt32(PicProCor_ButtonClickOriginalBitmap.Height * scale_doubleProCor);
                 if (ZoomHeight < PicProCor_ButtonClickOriginalBitmap.Height || ZoomWidth < PicProCor_ButtonClickOriginalBitmap.Width)
                 {
-       
+
                     PicProCor.Image = PicProCor_ButtonClickOriginalBitmap;
                     scale_doubleProCor = 1;
                 }
@@ -1923,19 +1924,19 @@ namespace Portable_BMU_App
         private void Zoombutton_Click(object sender, EventArgs e)
         {
 
-       
+
 
             WheelReadyZoomPicture = !WheelReadyZoomPicture;
 
             if (WheelReadyZoomPicture)
             {
-                if(navigationKeyFlag== true)
+                if (navigationKeyFlag == true)
                 {
                     navigationKeyFlag = false;  //停止Navigation
                     NavigationStop();
                 }
-    
-       
+
+
 
 
                 Zoombutton.BackColor = Color.Azure;
@@ -1975,9 +1976,270 @@ namespace Portable_BMU_App
         #endregion
 
 
+        #region 辅助手术部分
+        /// 该函数将图片中的坐标转化为相框中的坐标。
+        private System.Drawing.Point CoordinateCorrectionBoxToImage(PictureBox sender, System.Drawing.Point p)
+        {
+
+            System.Drawing.Point newP = new System.Drawing.Point();
+            newP.X = p.X;
+            int yGap = (sender.Height - sender.Image.Height) / 2;
+            newP.Y = p.Y - yGap;
+            return newP;
+        }
+
+        /// 该函数将图片中的左边转化为相框中的坐标
+        private System.Drawing.Point CoordinateCorrectionImageToBox(PictureBox sender, System.Drawing.Point p)
+        {
+            System.Drawing.Point newP = new System.Drawing.Point();
+            newP.X = p.X;
+            int yGap = (sender.Height - sender.Image.Height) / 2;
+            newP.Y = p.Y + yGap;
+            return newP;
+        }
+
+        ////该功能下的全局变量
+        //输出在CorPro面上的鼠标的位置信息 （相对于显示图像的位置而言）
+        private int CorProLocation_Deepth = 0;
+        private int CorProLocation_Width = 0;
+        //输出PicPro是否点击
+        private bool PicProMouseClickStart = false;
+
+        private void PicProCorMouseClick(object sender, MouseEventArgs e)
+        {
+
+            if(e.Button== MouseButtons.Left)
+            {
+                PicProMouseClickStart = true;
+                int rectSize = 3;
+                System.Drawing.Point orP = e.Location;
+                System.Drawing.Point p = CoordinateCorrectionBoxToImage(PicProCor, orP);
+
+                CorProLocation_Deepth = p.Y;
+                CorProLocation_Width = p.X;
+
+                int deepthThis = (int)((double)p.Y / PicProCor.Image.Height * Original_Depth);
+                int widthThis = (int)((double)p.X / PicProCor.Image.Width * Original_Width);
+
+
+                // ----Coronal_Pro---- ///.
 
 
 
+                Mat brightnessMat_Cor_Pro = new Mat();
+                updateBrightnessContrast(CoronalProjectionMat, brightnessMat_Cor_Pro, Brightnessvalue, Contrastvalue);
+
+                Mat CoronalImageColor_Pro = new Mat();
+                Cv2.ApplyColorMap(brightnessMat_Cor_Pro, CoronalImageColor_Pro, ColormapTypes.Bone);
+                Mat navigationCoronalImage = CoronalImageColor_Pro.Clone();
+                Mat dstGCoronal = new Mat();
+                float visual_Height_guan_Pro = (float)PicProCor.Width * Original_Depth * 2 / Original_Width;
+                int visualHeight_guan_Pro = (int)Math.Round((float)visual_Height_guan_Pro);
+                OpenCvSharp.Size dsize_Cornal = new OpenCvSharp.Size(PicProCor.Width, visualHeight_guan_Pro);
+                Cv2.Resize(navigationCoronalImage, dstGCoronal, dsize_Cornal);
+
+                OpenCvSharp.Point startPoint = new OpenCvSharp.Point(p.X, p.Y);
+                OpenCvSharp.Point endPoint = new OpenCvSharp.Point(p.X + rectSize, p.Y + rectSize);
+                Cv2.Rectangle(dstGCoronal, startPoint, endPoint, OpenCvSharp.Scalar.Red, 1);
+                Bitmap bitmapCor = ConvertFile.MatToBitmap(dstGCoronal);
+                this.PicProCor.BeginInvoke(new MethodInvoker(delegate { PictureBoxShow3D(PicProCor, bitmapCor); }));
+                navigationCoronalImage = null;
+
+
+                // ----Saggital_Pro---- ///.
+
+
+                Mat brightnessMat_Sag_Pro = new Mat();
+                updateBrightnessContrast(SagittalProjectionMat, brightnessMat_Sag_Pro, Brightnessvalue, Contrastvalue);
+
+
+
+                Mat SaggitalImageColor_Pro = new Mat();
+                Cv2.ApplyColorMap(brightnessMat_Sag_Pro, SaggitalImageColor_Pro, ColormapTypes.Bone);
+                Mat navigationSaggImage = SaggitalImageColor_Pro.Clone();
+                Mat dstGSagg = new Mat();
+                float visual_Height_shi_Pro = (float)PicProSag.Width * Original_Depth * 2 / Original_Height;
+                int visualHeight_shi_Pro = (int)Math.Round((float)visual_Height_shi_Pro);
+                OpenCvSharp.Size dsize_Sag = new OpenCvSharp.Size(PicProSag.Width, visualHeight_shi_Pro);
+                Cv2.Resize(navigationSaggImage, dstGSagg, dsize_Sag);
+
+                OpenCvSharp.Point startPoint2 = new OpenCvSharp.Point(0, p.Y);
+                OpenCvSharp.Point endPoint2 = new OpenCvSharp.Point(PicProSag.Image.Width, p.Y);
+
+
+                Cv2.Line(dstGSagg, startPoint2, endPoint2, OpenCvSharp.Scalar.Red, 1);
+                Bitmap bitmapSagg = ConvertFile.MatToBitmap(dstGSagg);
+                this.PicProSag.BeginInvoke(new MethodInvoker(delegate { PictureBoxShow3D(PicProSag, bitmapSagg); }));
+                navigationSaggImage = null;
+
+
+                // ----Coronal---- ///.
+
+                // 当前针显示
+
+
+
+
+                //  Bitmap guanTemp = new Bitmap(PicCor.Image);
+                //  Mat Guan_Mat = ConvertFile.BitmapToMat(guanTemp);
+                //  Mat Guan3 = new Mat();
+                //Guan3 = Guan3.CvtColor()
+
+                //Mat GuanImageColor = new Mat();
+                //Cv2.ApplyColorMap(Guan_Mat, GuanImageColor, ColormapTypes.Bone);
+                //Mat navigationGuanImage = GuanImageColor.Clone();
+                //Mat dstGGuan = new Mat();
+                //float visual_Height_Guan = (float)PicCor.Width * Original_Depth * 2 / Original_Width;
+                //int visualHeight_Guan = (int)Math.Round((float)visual_Height_Guan);
+                //OpenCvSharp.Size dsize_guan = new OpenCvSharp.Size(PicCor.Width, visualHeight_Guan);
+                //Cv2.Resize(navigationGuanImage, dstGGuan, dsize_guan);
+
+                //OpenCvSharp.Point startPoint3 = new OpenCvSharp.Point(p.X, p.Y);
+                //OpenCvSharp.Point endPoint3 = new OpenCvSharp.Point(p.X + rectSize, p.Y + rectSize);
+                //Cv2.Rectangle(dstGGuan, startPoint3, endPoint3, OpenCvSharp.Scalar.Red, 1);
+                //Bitmap bitmapGuan = ConvertFile.MatToBitmap(dstGGuan);
+                //this.PicCor.BeginInvoke(new MethodInvoker(delegate { PictureBoxShow3D(PicCor, bitmapGuan); }));
+                //navigationGuanImage = null;
+                //string tex_guan = string.Format("{0}/{1}", indexX + 1, Original_Height);
+                //texdown_guan.BeginInvoke(new MethodInvoker(delegate { textshow(texdown_guan, tex_guan); }));
+
+
+                // ----Saggital---- ///.
+
+                short[,] shi = new short[Original_Depth, Original_Width];
+                shi = volume_shi[widthThis];
+                Mat Shi_Mat = Out_ShorttoMat(PicSag, shi, 2);
+
+                Mat brightnessMat_Sag = new Mat();
+                updateBrightnessContrast(Shi_Mat, brightnessMat_Sag, Brightnessvalue, Contrastvalue);
+
+
+
+                Mat ShiImageColor = new Mat();
+                Cv2.ApplyColorMap(brightnessMat_Sag, ShiImageColor, ColormapTypes.Bone);
+                Mat navigationShiImage = ShiImageColor.Clone();
+                Mat dstGShi = new Mat();
+                float visual_Height_Shi = (float)PicSag.Width * Original_Depth * 2 / Original_Height;
+                int visualHeight_Shi = (int)Math.Round((float)visual_Height_Shi);
+                OpenCvSharp.Size dsize_shi = new OpenCvSharp.Size(PicSag.Width, visualHeight_Shi);
+                Cv2.Resize(navigationShiImage, dstGShi, dsize_shi);
+
+                //OpenCvSharp.Point startPoint4 = new OpenCvSharp.Point(resizedShiIndex_X, resizedShiIndex_Z);
+                OpenCvSharp.Point startPoint4 = new OpenCvSharp.Point(0, p.Y);
+                OpenCvSharp.Point endPoint4 = new OpenCvSharp.Point(PicSag.Width, p.Y);
+                Cv2.Rectangle(dstGShi, startPoint4, endPoint4, OpenCvSharp.Scalar.Red, 1);
+                Bitmap bitmapShi = ConvertFile.MatToBitmap(dstGShi);
+                this.PicSag.BeginInvoke(new MethodInvoker(delegate { PictureBoxShow3D(PicSag, bitmapShi); }));
+                navigationShiImage = null;
+                string tex_shi = string.Format("{0}/{1}", widthThis + 1, Original_Width);
+                texdown_guan.BeginInvoke(new MethodInvoker(delegate { textshow(texdown_shi, tex_shi); }));
+
+
+
+
+
+                // ----Cross----///
+                short[,] heng = new short[Original_Height, Original_Width];
+                heng = volume_heng[deepthThis];
+                Mat Heng_Mat = Out_ShorttoMat(PicTra, heng, 0);
+                Mat brightnessMat_Cross = new Mat();
+                updateBrightnessContrast(Heng_Mat, brightnessMat_Cross, Brightnessvalue, Contrastvalue);
+
+
+                Mat HengImageColor = new Mat();
+                Cv2.ApplyColorMap(brightnessMat_Cross, HengImageColor, ColormapTypes.Bone);
+                Mat navigationHengImage = HengImageColor.Clone();
+                Mat dstGHeng = new Mat();
+                float visual_Height_Heng = (float)PicTra.Width * Original_Height / Original_Height;
+                int visualHeight_Heng = (int)Math.Round((float)visual_Height_Heng);
+                OpenCvSharp.Size dsize_heng = new OpenCvSharp.Size(PicTra.Width, visualHeight_Heng);
+                Cv2.Resize(navigationHengImage, dstGHeng, dsize_heng);
+
+                //int resizedHengIndex_X = (int)(indexX * ((float)PicTra.Width / boxHeight));
+                //int resizedHengIndex_Y = (int)(indexY * ((float)visualHeight_Heng / boxWidth));
+                int TraXposition = (int)((double)widthThis / Original_Width * PicTra.Width);
+                OpenCvSharp.Point startPoint5 = new OpenCvSharp.Point(TraXposition, 0);
+                OpenCvSharp.Point endPoint5 = new OpenCvSharp.Point(TraXposition, PicTra.Image.Height);
+                //Cv2.Rectangle(dstGHeng, startPoint5, endPoint5, OpenCvSharp.Scalar.Red, -1);
+                Cv2.Line(dstGHeng, startPoint5, endPoint5, OpenCvSharp.Scalar.Red);
+                Bitmap bitmapHeng = ConvertFile.MatToBitmap(dstGHeng);
+                this.PicTra.BeginInvoke(new MethodInvoker(delegate { PictureBoxShow3D(PicTra, bitmapHeng); }));
+                navigationHengImage = null;
+                string tex_heng = string.Format("{0}/{1}", deepthThis + 1, Original_Depth);
+                texdown_guan.BeginInvoke(new MethodInvoker(delegate { textshow(texdown_heng, tex_heng); }));
+
+                // ----Coronal_Pro---- ///.
+
+
+
+                /////////////////////
+                GC.Collect();
+            }
+
+            
+        }
+        
+        private void MouseclopPicSag()
+        {
+
+            //System.Drawing.Point Temp_P_Sag = new System.Drawing.Point(e.Location.X, CorProLocation_Deepth);
+            //System.Drawing.Point p_Sag_Box = CoordinateCorrectionImageToBox(PicSag, Temp_P_Sag);
+            while (true)
+            {
+                Control ConPicSag = (Control)PicSag;
+                Control.CheckForIllegalCrossThreadCalls = false;
+                System.Drawing.Point PicSagPoint = ConPicSag.PointToClient(Control.MousePosition); //屏幕坐标转化为控件坐标
+                PicSagPoint.Y = CorProLocation_Deepth;
+                System.Drawing.Point p_Sag_Box = CoordinateCorrectionImageToBox(PicSag, PicSagPoint); //图像坐标转化为控件坐标
+                System.Drawing.Point ScreenPoint = ConPicSag.PointToScreen(p_Sag_Box);
+
+                Cursor.Position = ScreenPoint;
+            }
+          
+        }
+        private void SagMouseRightClick(object sender, System.Windows.Forms.MouseEventArgs  e)
+        {
+            bool temp = false;
+            if(e.Button == MouseButtons.Right)
+            {
+                temp = !temp;
+                Thread tt = new Thread(MouseclopPicSag);
+                if (temp == true)
+                {
+                    Thread.Sleep(20);
+                    tt.Start();
+
+                }
+                else
+                {
+                    Thread.Sleep(20);
+                    tt.Abort();
+                }
+            
+                //MouseclopPicSag();
+                //MessageBox.Show(Cursor.Position.X.ToString(), Cursor.Position.Y.ToString());
+
+
+            }
+        }
+
+
+        //private void PicSag_MouseEnter(object sender, EventArgs e)
+        //{
+        //    if (PicProMouseClickStart)
+        //    {
+        //        Control control = (Control)sender;
+        //        System.Drawing.Point p = Control.MousePosition;
+        //        System.Drawing.Point Temp_P_Sag = new System.Drawing.Point(, CorProLocation_Deepth);
+        //        System.Drawing.Point p_Sag_Box = CoordinateCorrectionImageToBox(PicSag, Temp_P_Sag);
+
+
+        //        System.Drawing.Point ScreenPoint = control.PointToScreen(p_Sag_Box);
+
+        //        Cursor.Position = ScreenPoint;
+        //    }
+        //}
+        #endregion
 
 
 
@@ -2490,6 +2752,8 @@ namespace Portable_BMU_App
 
 
         }
+
+
 
         void DisplayImage()
         {
