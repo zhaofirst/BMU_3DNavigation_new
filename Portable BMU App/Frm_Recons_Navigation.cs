@@ -138,7 +138,6 @@ namespace Portable_BMU_App
                         //savePreScanGPS.Add(xyzArray);
                         //savePreScanGPS.Add(quaternionArray);
                         isNavigation = true;
-
                         MainForm.g4Flag2 = false;
                     }
 
@@ -188,11 +187,6 @@ namespace Portable_BMU_App
                         Bitmap bitmapG2 = ConvertFile.MatToBitmap(dstGCoronal);
                         this.real3DPictureBox.BeginInvoke(new MethodInvoker(delegate { PictureBoxShow3D(bitmapG2); }));
                         
-
-
-
-
-
 
                         navigationCoronalImage = null;
                         GC.Collect();

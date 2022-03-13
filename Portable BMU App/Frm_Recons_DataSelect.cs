@@ -164,10 +164,12 @@ namespace Portable_BMU_App
                 if (this.checkBoxPlumbLine.Checked)
                 {
                     Frm_RealTime_Navigation_ZLX.calibrationMatrix = transformation.GetCalibrationMatrixWyHxForPlumbLine();
+                    Frm_RealTime_Navigation_ZLX_Short.calibrationMatrix = transformation.GetCalibrationMatrixWyHxForPlumbLine();
                 }
                 else
                 {
                     Frm_RealTime_Navigation_ZLX.calibrationMatrix = transformation.GetCalibrationMatrixWyHx();
+                    Frm_RealTime_Navigation_ZLX_Short.calibrationMatrix = transformation.GetCalibrationMatrixWyHx();
                 }
 
                 for (int k = 0; k < frameCounts; k++)
@@ -177,6 +179,7 @@ namespace Portable_BMU_App
                         Vector3 tempVector = new Vector3();
                         tempVector = rectsLR[k].v[i];
                         rectsLR[k].v[i] = Vector3.Transform(tempVector, Frm_RealTime_Navigation_ZLX.calibrationMatrix);
+                        rectsLR[k].v[i] = Vector3.Transform(tempVector, Frm_RealTime_Navigation_ZLX_Short.calibrationMatrix);
                     }
                 }
 
@@ -245,12 +248,13 @@ namespace Portable_BMU_App
                     {
                         //transformation.CoordinateTransformationForPortableUsingMIASWithPlumbLine();
                         Frm_RealTime_Navigation_ZLX.calibrationMatrix = transformation.GetCalibrationMatrixWyHxForPlumbLine();
-
+                        Frm_RealTime_Navigation_ZLX_Short.calibrationMatrix = transformation.GetCalibrationMatrixWyHxForPlumbLine();
                     }
                     else
                     {
                         //transformation.CoordinateTransformationForPortableUsingMIAS();
                         Frm_RealTime_Navigation_ZLX.calibrationMatrix = transformation.GetCalibrationMatrixWyHx();
+                        Frm_RealTime_Navigation_ZLX_Short.calibrationMatrix = transformation.GetCalibrationMatrixWyHx();
 
                         //transformation.CoordinateTransformationWithoutTopBottom();
                     }
@@ -263,6 +267,7 @@ namespace Portable_BMU_App
                         Vector3 tempVector = new Vector3();
                         tempVector = transformation.rects[k].v[i];
                         transformation.rects[k].v[i] = Vector3.Transform(tempVector, Frm_RealTime_Navigation_ZLX.calibrationMatrix);
+                        transformation.rects[k].v[i] = Vector3.Transform(tempVector, Frm_RealTime_Navigation_ZLX_Short.calibrationMatrix);
                     }
                 }
 

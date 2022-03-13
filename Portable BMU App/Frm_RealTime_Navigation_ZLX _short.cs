@@ -28,7 +28,7 @@ using System.Threading;
 namespace Portable_BMU_App
 {
 
-    public partial class Frm_RealTime_Navigation_ZLX_short : Form
+    public partial class Frm_RealTime_Navigation_ZLX_Short : Form
     {
         //----------------------- ----------------------------Start of parameter from Frm_RealTime_Navigation------------------ --------//
 
@@ -53,7 +53,7 @@ namespace Portable_BMU_App
         Thread threadRefreshNavigation;
 
         public static Vector3 boxOrg = new Vector3(0f, 0f, 0f);  // BoxSize and calibration Matrix
-        public static int boxWidth = 0;                                               // BoxSize and calibration Matrix
+        public static int boxWidth = 0;                                               // BoxSize and calibration Matrix    原始图像三数据
         public static int boxHeight = 0;                                              // BoxSize and calibration Matrix
         public static int boxDepth = 0;                                               // BoxSize and calibration Matrix
         public static Matrix4x4 calibrationMatrix = new Matrix4x4();                    // BoxSize and calibration Matrix
@@ -70,13 +70,13 @@ namespace Portable_BMU_App
         int visualHeight = 0;
         int visualWidth = 0;
 
-        //----------------------- ----------------------------End of parameter from Frm_RealTime_Navigation------------------ --------//
+        //------------------------------------------End of parameter from Frm_RealTime_Navigation--------------------------//
 
 
         #region
 
 
-        public Frm_RealTime_Navigation_ZLX_short()
+        public Frm_RealTime_Navigation_ZLX_Short()
         {
             InitializeComponent();
             //mainForm = this;
@@ -97,8 +97,8 @@ namespace Portable_BMU_App
         public int increasY;
         public int increasZ;
 
-        public int Brightnessvalue=100;
-        public int Contrastvalue=100;
+        public int Brightnessvalue = 100;
+        public int Contrastvalue = 100;
         public Mat SagittalProjectionMat;
         public Mat CoronalProjectionMat;
         public static short[][,] volume;
@@ -109,11 +109,16 @@ namespace Portable_BMU_App
         public static int Original_Width;
         public static int Original_Height;
 
-        public Mat Picguan_clone;
-        public Mat Picheng_clone;
-        public Mat Picshi_clone;
-        public Mat PicSagPro_clone;
-        public Mat PicCorPro_clone;
+
+
+        // 用作记录没个pictureBox上图片的全局变量
+        private Mat Picguan_clone;
+        private Mat Picheng_clone;
+        private Mat Picshi_clone;
+        private Mat PicSagPro_clone;
+        private Mat PicCorPro_clone;
+
+
 
         public static Mat volume_color;
         public static short[][,] volume_cut;
@@ -305,7 +310,7 @@ namespace Portable_BMU_App
         {
             /// guan
             //HScrollBar hscroll_Coronal = new HScrollBar();
-            
+
             //hscroll_Coronal.Dock = DockStyle.Bottom;
             hscroll_Coronal.Maximum = volume[0].GetLength(0);
             //this.hscroll_Coronal.Maximum += this.hscroll_Coronal.LargeChange;
@@ -352,25 +357,7 @@ namespace Portable_BMU_App
                 hscroll_Coronal.Maximum = volume[0].GetLength(0) - 2;
                 hscroll_Coronal.Maximum += hscroll_Coronal.LargeChange;
 
-
-                short[,] guan = volume_guan[numofguan];
-                Mat picguanMat = new Mat();
-                picguanMat = Out_ShorttoMat(PicCor, guan, 1);
-                // 输出一个冠状面
-
-                // 输出克隆面 /// 
-                Picguan_clone = picguanMat;
-                ///////////////
-
-                Mat brightnessMat = new Mat();
-                updateBrightnessContrast(picguanMat, brightnessMat, Brightnessvalue, Contrastvalue);
-
-
-
-
-
-                Bitmap showbitmap = new Bitmap(ConvertFile.MatToBitmap(brightnessMat));
-                PicCor.Image = showbitmap;
+                UpdataFivePictureBox_Zoom_And_Mark(); //输出显示 并更新信息
 
 
             }
@@ -461,38 +448,9 @@ namespace Portable_BMU_App
                 hscroll_Sagittal.Maximum = volume[0].GetLength(1) - 2;
                 hscroll_Sagittal.Maximum += hscroll_Sagittal.LargeChange;
 
-                // 输出一个矢状面
-                short[,] shi = new short[depth, height];
-                for (int i = 0; i < depth; i++)
-                {
-                    for (int j = 0; j < height; j++)
-                    {
-                        shi[i, j] = volume[i][j, numofshi];
-                    }
-                }
 
 
-
-
-                Mat picshiMat = new Mat();
-                picshiMat = Out_ShorttoMat(PicSag, shi, 2);
-                // 输出一个冠状面
-
-                // 输出克隆面 /// 
-                Picshi_clone = picshiMat;
-                ///////////////
-
-                Mat brightnessMat = new Mat();
-                updateBrightnessContrast(picshiMat, brightnessMat, Brightnessvalue, Contrastvalue);
-                Bitmap showbitmap = new Bitmap(ConvertFile.MatToBitmap(brightnessMat));
-                PicSag.Image = showbitmap;
-
-
-
-                ////////////////
-                ///  // 结束输出
-                /// ////////////
-                /// 
+                UpdataFivePictureBox_Zoom_And_Mark(); //输出显示 并更新信息
 
 
 
@@ -534,7 +492,7 @@ namespace Portable_BMU_App
 
                         Mat picshiMat = new Mat();
                         picshiMat = Out_ShorttoMat(PicSag, shi, 2);
-               
+
 
                         // 输出克隆面 /// 
                         Picshi_clone = picshiMat;
@@ -588,27 +546,9 @@ namespace Portable_BMU_App
                 hscroll_transverse.Maximum += hscroll_transverse.LargeChange;
 
 
+                UpdataFivePictureBox_Zoom_And_Mark();
 
-                // 输出一个横断面
-                short[,] heng = new short[height, width];
-                heng = volume[numofheng];
 
-                Mat pichengMat = new Mat();
-                pichengMat = Out_ShorttoMat(PicTra, heng, 0);
-          
-
-                // 输出克隆面 /// 
-                Picheng_clone = pichengMat;
-                ///////////////
-
-                Mat brightnessMat = new Mat();
-                updateBrightnessContrast(pichengMat, brightnessMat, Brightnessvalue, Contrastvalue);
-                Bitmap showbitmap = new Bitmap(ConvertFile.MatToBitmap(brightnessMat));
-                PicTra.Image = showbitmap;
-
-                ////////////////
-                //结束输出
-           
 
 
             }
@@ -643,7 +583,7 @@ namespace Portable_BMU_App
 
                         Mat pichengMat = new Mat();
                         pichengMat = Out_ShorttoMat(PicTra, heng, 0);
-                 
+
 
                         // 输出克隆面 /// 
                         Picheng_clone = pichengMat;
@@ -667,14 +607,15 @@ namespace Portable_BMU_App
         }
 
 
-
+        #region 导航部分
 
         private void ThreeD_Navigation_Standing(int x, int y, int z)
         {
 
-  
+
             Console.WriteLine("threed duanle  ", boxDepth, boxHeight, boxWidth);
             Console.WriteLine("threed duanle 3", Properties.Settings.Default.ScanPosition);
+            Console.WriteLine("stand");
             int rectSize = 3;
             int indexX = x - 1;
             int indexY = y - 1;
@@ -742,7 +683,7 @@ namespace Portable_BMU_App
             // ----Coronal---- ///.
 
 
-          
+
 
 
             short[,] guan = new short[Original_Depth, Original_Width];
@@ -972,14 +913,12 @@ namespace Portable_BMU_App
             GC.Collect();
         }
 
+        #endregion
+
 
         /// <summary>
         ///  用于图片short 转换成可以resize的Mat类型
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="pic_input"></param>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
+
         private Mat Out_ShorttoMat(object sender, short[,] pic_input, int parameter)
         {
             int Pic_Width;
@@ -1024,8 +963,6 @@ namespace Portable_BMU_App
 
             }
         }
-
-
 
         /// <summary>
         ///  Display ZLX
@@ -1106,6 +1043,7 @@ namespace Portable_BMU_App
         /// </summary>
 
 
+
         private void num_increaseX_ValueChanged(object sender, EventArgs e)
         {
             increasX = Convert.ToInt32(((NumericUpDown)sender).Value);
@@ -1122,48 +1060,14 @@ namespace Portable_BMU_App
 
 
 
-        ///
-        ///对比度部分
+        #region 对比度部分
 
-        private void BrightnessBar_Scroll(object sender, EventArgs e)
+        private void BrightnessBarContrastBar_Scroll(object sender, EventArgs e)
         {
 
-
+            Contrastvalue = ContrastBar.Value;
             Brightnessvalue = BrightnessBar.Value;
-            Mat newMat1 = new Mat();
-            Mat newMat2 = new Mat();
-            Mat newMat3 = new Mat();
-            Mat newMat4 = new Mat();
-            Mat newMat5 = new Mat();
-
-            updateBrightnessContrast(Picguan_clone, newMat1, BrightnessBar.Value, ContrastBar.Value);
-            updateBrightnessContrast(Picshi_clone, newMat2, BrightnessBar.Value, ContrastBar.Value);
-            updateBrightnessContrast(Picheng_clone, newMat3, BrightnessBar.Value, ContrastBar.Value);
-            updateBrightnessContrast(PicSagPro_clone, newMat4, BrightnessBar.Value, ContrastBar.Value);
-            updateBrightnessContrast(PicCorPro_clone, newMat5, BrightnessBar.Value, ContrastBar.Value);
-
-
-
-
-            Bitmap bit_guan = new Bitmap(ConvertFile.MatToBitmap(newMat1));
-            Bitmap bit_shi = new Bitmap(ConvertFile.MatToBitmap(newMat2));
-            Bitmap bit_heng = new Bitmap(ConvertFile.MatToBitmap(newMat3));
-            Bitmap bit_sag = new Bitmap(ConvertFile.MatToBitmap(newMat4));
-            Bitmap bit_cor = new Bitmap(ConvertFile.MatToBitmap(newMat5));
-            PicCor.Image = bit_guan;
-            PicSag.Image = bit_shi;
-            PicTra.Image = bit_heng;
-            PicProSag.Image = bit_sag;
-            PicProCor.Image = bit_cor;
-
-
-
-            newMat1 = null;
-            newMat2 = null;
-            newMat3 = null;
-            newMat4 = null;
-            newMat5 = null;
-            GC.Collect();
+            UpdataFivePictureBox_Zoom_And_Mark();
 
         }
 
@@ -1187,50 +1091,12 @@ namespace Portable_BMU_App
             }
             src.ConvertTo(modifiedSrc, src.Type(), alpha, beta);
         }
-
-
-
-        private void ContrastBar_Scroll(object sender, EventArgs e)
-        {
-            Contrastvalue = ContrastBar.Value;
-            Mat newMat1 = new Mat();
-            Mat newMat2 = new Mat();
-            Mat newMat3 = new Mat();
-            Mat newMat4 = new Mat();
-            Mat newMat5 = new Mat();
-
-            updateBrightnessContrast(Picguan_clone, newMat1, BrightnessBar.Value, ContrastBar.Value);
-            updateBrightnessContrast(Picshi_clone, newMat2, BrightnessBar.Value, ContrastBar.Value);
-            updateBrightnessContrast(Picheng_clone, newMat3, BrightnessBar.Value, ContrastBar.Value);
-            updateBrightnessContrast(PicSagPro_clone, newMat4, BrightnessBar.Value, ContrastBar.Value);
-            updateBrightnessContrast(PicCorPro_clone, newMat5, BrightnessBar.Value, ContrastBar.Value);
+        #endregion
 
 
 
 
-            Bitmap bit_guan = new Bitmap(ConvertFile.MatToBitmap(newMat1));
-            Bitmap bit_shi = new Bitmap(ConvertFile.MatToBitmap(newMat2));
-            Bitmap bit_heng = new Bitmap(ConvertFile.MatToBitmap(newMat3));
-            Bitmap bit_sag = new Bitmap(ConvertFile.MatToBitmap(newMat4));
-            Bitmap bit_cor = new Bitmap(ConvertFile.MatToBitmap(newMat5));
-            PicCor.Image = bit_guan;
-            PicSag.Image = bit_shi;
-            PicTra.Image = bit_heng;
-            PicProSag.Image = bit_sag;
-            PicProCor.Image = bit_cor;
-
-
-
-            newMat1 = null;
-            newMat2 = null;
-            newMat3 = null;
-            newMat4 = null;
-            newMat5 = null;
-            GC.Collect();
-        }
-
-
-
+        #region 数据输入部分
 
         public void toolStripMenuItemOpen_Click(object sender, EventArgs e)
         {
@@ -1251,9 +1117,6 @@ namespace Portable_BMU_App
                 Console.WriteLine("Volume File: {0}", this.OpenFilePath);
 
 
-
-
- 
                 //return;
                 var mfr = new MatFileReader(filePath);
                 dataCount = mfr.Data.Count();
@@ -1264,18 +1127,12 @@ namespace Portable_BMU_App
                 int width = mlSquares.Dimensions[1];
                 int depth = mlSquares.Dimensions[2];
 
-
-
                 PicSag.Width = (int)(PicTra.Width * height / width);  // 使得Sag面的宽度保持和Tra面的高度一致
                 int poX = (int)((panel3.Width - PicSag.Width) / 2);
                 int poY = 63;
-                PicSag.Location = new System.Drawing.Point(poX, poY);
+                PicSag.Location = new System.Drawing.Point(poX, PicSag.Location.Y);
                 PicProSag.Width = (int)(PicTra.Width * height / width);  // 使得Sag面的宽度保持和Tra面的高度一致
-                PicProSag.Location = new System.Drawing.Point(poX, poY);
-
-
-
-                PicSag.Width = (int)(PicTra.Width * height / width);
+                PicProSag.Location = new System.Drawing.Point(poX, PicProSag.Location.Y);
                 Console.WriteLine(mlSquares);
 
                 Console.WriteLine("Volume size, height*width*depth : {0}, {1},{2}", height, width, depth);
@@ -1363,7 +1220,7 @@ namespace Portable_BMU_App
                 }
 
 
-           
+
 
                 volume_heng = new short[Original_Depth][,];
                 for (int i = 0; i < Original_Depth; i++)
@@ -1411,7 +1268,7 @@ namespace Portable_BMU_App
                 Mat picguanMat = new Mat();
                 picguanMat = Out_ShorttoMat(PicCor, guan, 1);
                 Picguan_clone = picguanMat;
-                string tex_guan = string.Format("{0}/{1}", midWint + 1, Original_Height);
+                string tex_guan = string.Format("{0}/{1}", midHint + 1, Original_Height);
                 hscroll_Coronal.Value = midHint;
                 texdown_guan.Text = tex_guan;
                 PicCor.Image = ConvertFile.MatToBitmap(picguanMat);
@@ -1454,7 +1311,7 @@ namespace Portable_BMU_App
 
         public void Initialize_five_Picture()
         {
-          
+
 
             Original_Depth = volume.Length;
             Original_Height = volume[0].GetLength(0);
@@ -1463,15 +1320,6 @@ namespace Portable_BMU_App
             int depth = Original_Depth;
             int width = Original_Width;
             int height = Original_Height;
-
-
-
-            PicSag.Width = (int)(PicTra.Width * height / width);  // 使得Sag面的宽度保持和Tra面的高度一致
-            int poX = (int)((panel3.Width - PicSag.Width) / 2);
-            int poY = 63;
-            PicSag.Location = new System.Drawing.Point(poX,poY);
-            PicProSag.Width = (int)(PicTra.Width * height / width);  // 使得Sag面的宽度保持和Tra面的高度一致
-            PicProSag.Location = new System.Drawing.Point(poX, poY);
 
             //这里完成3个面的切片
             volume_guan = new short[Original_Height][,];
@@ -1592,396 +1440,609 @@ namespace Portable_BMU_App
 
 
 
+            PicSag.Width = (int)(PicTra.Width * height / width);  // 使得Sag面的宽度保持和Tra面的高度一致
+            int poX = (int)((panel3.Width - PicSag.Width) / 2);
+            int poY = 63;
+            PicSag.Location = new System.Drawing.Point(poX, poY);
+            PicProSag.Width = (int)(PicTra.Width * height / width);  // 使得Sag面的宽度保持和Tra面的高度一致
+            PicProSag.Location = new System.Drawing.Point(poX, poY);
 
 
             //ThreeD_Navigation(200, 100, 90);
             Console.WriteLine(dataCount);
         }
 
-
-
-
-        #region 图片缩放部分  注意这里记得在Design中给每个pictureBox 添加滚轮控件函数
-
-        // variable 
-        private bool WheelReadyZoomPicture = false;  //给滚轮使用 初始值为false
-        private Mat PicTra_ImageMat = null; // 用来给每个图像做变量
-        private Mat PicSag_ImageMat = null;
-        private Mat PicCor_ImageMat = null;
-        private Mat PicProSag_ImageMat = null;
-        private Mat PicProCor_ImageMat = null;
-        private Bitmap PicTra_ButtonClickOriginalBitmap = null; // 给button使 记录原始数据
-        private Bitmap PicSag_ButtonClickOriginalBitmap = null;
-        private Bitmap PicCor_ButtonClickOriginalBitmap = null;
-        private Bitmap PicProSag_ButtonClickOriginalBitmap = null;
-        private Bitmap PicProCor_ButtonClickOriginalBitmap = null;
-        private double scale_doubleSag = 1;  // 用于记录滚轮滚动带来的乘子变化
-        private double scale_doubleCor = 1;
-        private double scale_doubleTra = 1;
-        private double scale_doubleProSag = 1;
-        private double scale_doubleProCor = 1;
-
-
-
-        //-----------Fuction for each PictureBox--------//
-
-        // Sag box
-        void picSag_MouseWheel(object sender, MouseEventArgs e)
-        {
-            /*  variable from outside :
-                         PicSag_ImageMat: 用来更改的图像的数据
-                         PicSag         ：对应的picturebox    
-                         PicSag_ButtonClickOriginalBitmap  ： 原始图像的数据
-                         compensation_Y_Value 图像上边沿距离picbox上下边沿的距离
-                         */
-            System.Drawing.Point p = e.Location;
-            int compensation_Y_Value = 0;
-            if (WheelReadyZoomPicture)
-            {
-                compensation_Y_Value = (PicTra.Height - PicTra_ButtonClickOriginalBitmap.Height) / 2;
-            }
-            if (WheelReadyZoomPicture && p.Y<PicSag.Height-compensation_Y_Value && p.Y>compensation_Y_Value)
-            {
-                int i = e.Delta * SystemInformation.MouseWheelScrollLines;
-          
-
-
-                /// Zoom the picture
-                Mat ZoomPictureMat = new Mat();
-                OpenCvSharp.Size ZoomDsize = new OpenCvSharp.Size();
-
-                // zoom scale
-                //float scale_float = 1 + i / 3600f;
-                scale_doubleSag = scale_doubleSag + i / 3600.0; //表示当前乘子
-
-                int ZoomWidth = (int)Convert.ToInt32(PicSag_ButtonClickOriginalBitmap.Width * scale_doubleSag);
-                int ZoomHeight = (int)Convert.ToInt32(PicSag_ButtonClickOriginalBitmap.Height * scale_doubleSag);
-                if (ZoomHeight < PicSag_ButtonClickOriginalBitmap.Height || ZoomWidth < PicSag_ButtonClickOriginalBitmap.Width)
-                {
-                    ZoomDsize = new OpenCvSharp.Size(PicSag_ButtonClickOriginalBitmap.Width, PicSag_ButtonClickOriginalBitmap.Height);
-                    Cv2.Resize(PicSag_ImageMat, ZoomPictureMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
-                    PicSag_ImageMat = ZoomPictureMat;
-                    Bitmap bitmapFinal_1 = ConvertFile.MatToBitmap(ZoomPictureMat);
-                    PicSag.Image = bitmapFinal_1;
-                    scale_doubleSag = 1;
-                }
-                else
-                {
-                    ZoomDsize = new OpenCvSharp.Size(ZoomWidth, ZoomHeight);
-                    Cv2.Resize(PicSag_ImageMat, ZoomPictureMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
-                    PicSag_ImageMat = ZoomPictureMat;
-                    //获得放缩后的中心点坐标
-                    Rect rect = new Rect((int)(scale_doubleSag * p.X) - p.X, (int)((scale_doubleSag - 1) * (p.Y - compensation_Y_Value)), PicSag_ButtonClickOriginalBitmap.Width, PicSag_ButtonClickOriginalBitmap.Height);
-                    Mat matfinal = new Mat(ZoomPictureMat, rect);
-
-                    Bitmap bitmapFinal_2 = ConvertFile.MatToBitmap(matfinal);
-                    PicSag.Image = bitmapFinal_2;
-                    matfinal = null;
-                }
-                ZoomPictureMat = null;
-                GC.Collect();
-            }
-
-
-
-        }
-        // Cor box 
-        void picCor_MouseWheel(object sender, MouseEventArgs e)
-        {
-            /*  variable from outside :
-                         PicCor_ImageMat: 用来更改的图像的数据
-                         PicCor         ：对应的picturebox    
-                         PicCor_ButtonClickOriginalBitmap  ： 原始图像的数据
-                         */
-            System.Drawing.Point p = e.Location;
-            int compensation_Y_Value = 0;
-            if (WheelReadyZoomPicture)
-            {
-                compensation_Y_Value = (PicTra.Height - PicTra_ButtonClickOriginalBitmap.Height) / 2;
-            }
-            if (WheelReadyZoomPicture && p.Y < PicCor.Height - compensation_Y_Value && p.Y > compensation_Y_Value)
-            {
-                int i = e.Delta * SystemInformation.MouseWheelScrollLines;
-   
-
-
-                /// Zoom the picture
-                Mat ZoomPictureMat = new Mat();
-                OpenCvSharp.Size ZoomDsize = new OpenCvSharp.Size();
-
-                // zoom scale
-                //float scale_float = 1 + i / 3600f;
-                scale_doubleCor = scale_doubleCor + i / 3600.0; //表示当前乘子
-
-                int ZoomWidth = (int)Convert.ToInt32(PicCor_ButtonClickOriginalBitmap.Width * scale_doubleCor);
-                int ZoomHeight = (int)Convert.ToInt32(PicCor_ButtonClickOriginalBitmap.Height * scale_doubleCor);
-                if (ZoomHeight < PicCor_ButtonClickOriginalBitmap.Height || ZoomWidth < PicCor_ButtonClickOriginalBitmap.Width)
-                {
-                    ZoomDsize = new OpenCvSharp.Size(PicCor_ButtonClickOriginalBitmap.Width, PicCor_ButtonClickOriginalBitmap.Height);
-                    Cv2.Resize(PicCor_ImageMat, ZoomPictureMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
-                    PicCor_ImageMat = ZoomPictureMat;
-                    Bitmap bitmapFinal_1 = ConvertFile.MatToBitmap(ZoomPictureMat);
-                    PicCor.Image = bitmapFinal_1;
-                    scale_doubleCor = 1;
-                }
-                else
-                {
-                    ZoomDsize = new OpenCvSharp.Size(ZoomWidth, ZoomHeight);
-                    Cv2.Resize(PicCor_ImageMat, ZoomPictureMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
-                    PicCor_ImageMat = ZoomPictureMat;
-                    //获得放缩后的中心点坐标
-        
-                    Rect rect = new Rect((int)(scale_doubleCor * p.X) - p.X, (int)((scale_doubleCor - 1) * (p.Y - compensation_Y_Value)), PicCor_ButtonClickOriginalBitmap.Width, PicCor_ButtonClickOriginalBitmap.Height);
-                    Mat matfinal = new Mat(ZoomPictureMat, rect);
-
-                    Bitmap bitmapFinal_2 = ConvertFile.MatToBitmap(matfinal);
-                    PicCor.Image = bitmapFinal_2;
-                    matfinal = null;
-                }
-                ZoomPictureMat = null;
-                GC.Collect();
-            }
-
-
-
-        }
-        // Tra box
-        void picTra_MouseWheel(object sender, MouseEventArgs e)
-        {
-            /*  variable from outside :
-                         PicTra_ImageMat: 用来更改的图像的数据
-                         PicTra         ：对应的picturebox    
-                         PicTra_ButtonClickOriginalBitmap  ： 原始图像的数据
-                         */
-            System.Drawing.Point p = e.Location;
-            int compensation_Y_Value = 0;
-            if (WheelReadyZoomPicture)
-            {
-                compensation_Y_Value = (PicTra.Height - PicTra_ButtonClickOriginalBitmap.Height) / 2;
-            }
-           
-            if (WheelReadyZoomPicture && p.Y < PicTra.Height - compensation_Y_Value && p.Y > compensation_Y_Value)
-            {
-                int i = e.Delta * SystemInformation.MouseWheelScrollLines;
-
-
-
-                /// Zoom the picture
-                Mat ZoomPictureMat = new Mat();
-                OpenCvSharp.Size ZoomDsize = new OpenCvSharp.Size();
-
-                // zoom scale
-                //float scale_float = 1 + i / 3600f;
-                scale_doubleTra = scale_doubleTra + i / 3600.0; //表示当前乘子
-
-                int ZoomWidth = (int)Convert.ToInt32(PicTra_ButtonClickOriginalBitmap.Width * scale_doubleTra);
-                int ZoomHeight = (int)Convert.ToInt32(PicTra_ButtonClickOriginalBitmap.Height * scale_doubleTra);
-                if (ZoomHeight < PicTra_ButtonClickOriginalBitmap.Height || ZoomWidth < PicTra_ButtonClickOriginalBitmap.Width)
-                {
-                    ZoomDsize = new OpenCvSharp.Size(PicTra_ButtonClickOriginalBitmap.Width, PicTra_ButtonClickOriginalBitmap.Height);
-                    Cv2.Resize(PicTra_ImageMat, ZoomPictureMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
-                    PicTra_ImageMat = ZoomPictureMat;
-                    Bitmap bitmapFinal_1 = ConvertFile.MatToBitmap(ZoomPictureMat);
-                    PicTra.Image = bitmapFinal_1;
-                    scale_doubleTra = 1;
-                }
-                else
-                {
-                    ZoomDsize = new OpenCvSharp.Size(ZoomWidth, ZoomHeight);
-                    Cv2.Resize(PicTra_ImageMat, ZoomPictureMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
-                    PicTra_ImageMat = ZoomPictureMat;
-                    //获得放缩后的中心点坐标
-
-                    Rect rect = new Rect((int)(scale_doubleTra * p.X) - p.X, (int)((scale_doubleTra-1) * (p.Y - compensation_Y_Value)), PicTra_ButtonClickOriginalBitmap.Width, PicTra_ButtonClickOriginalBitmap.Height);
-                    Mat matfinal = new Mat(ZoomPictureMat, rect);
-
-                    Bitmap bitmapFinal_2 = ConvertFile.MatToBitmap(matfinal);
-                    PicTra.Image = bitmapFinal_2;
-                    matfinal = null;
-                }
-                ZoomPictureMat = null;
-                GC.Collect();
-            }
-
-        }
-        // ProSag box
-        void picProSag_MouseWheel(object sender, MouseEventArgs e)
-        {
-            /*  variable from outside :
-                         PicProSag_ImageMat: 用来更改的图像的数据
-                         PicProSag         ：对应的picturebox    
-                         PicProSag_ButtonClickOriginalBitmap  ： 原始图像的数据
-                         */
-            System.Drawing.Point p = e.Location;
-            int compensation_Y_Value = 0;
-            if (WheelReadyZoomPicture)
-            {
-                compensation_Y_Value = (PicTra.Height - PicTra_ButtonClickOriginalBitmap.Height) / 2;
-            }
-            if (WheelReadyZoomPicture && p.Y < PicProSag.Height - compensation_Y_Value && p.Y > compensation_Y_Value)
-            {
-                int i = e.Delta * SystemInformation.MouseWheelScrollLines;
-         
-
-
-                /// Zoom the picture
-                Mat ZoomPictureMat = new Mat();
-                OpenCvSharp.Size ZoomDsize = new OpenCvSharp.Size();
-
-                // zoom scale
-                //float scale_float = 1 + i / 3600f;
-                scale_doubleProSag = scale_doubleProSag + i / 3600.0; //表示当前乘子
-
-                int ZoomWidth = (int)Convert.ToInt32(PicProSag_ButtonClickOriginalBitmap.Width * scale_doubleProSag);
-                int ZoomHeight = (int)Convert.ToInt32(PicProSag_ButtonClickOriginalBitmap.Height * scale_doubleProSag);
-                if (ZoomHeight < PicProSag_ButtonClickOriginalBitmap.Height || ZoomWidth < PicProSag_ButtonClickOriginalBitmap.Width)
-                {
-                    ZoomDsize = new OpenCvSharp.Size(PicProSag_ButtonClickOriginalBitmap.Width, PicProSag_ButtonClickOriginalBitmap.Height);
-                    Cv2.Resize(PicProSag_ImageMat, ZoomPictureMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
-                    PicProSag_ImageMat = ZoomPictureMat;
-                    Bitmap bitmapFinal_1 = ConvertFile.MatToBitmap(ZoomPictureMat);
-                    PicProSag.Image = bitmapFinal_1;
-                    scale_doubleProSag = 1;
-                }
-                else
-                {
-                    ZoomDsize = new OpenCvSharp.Size(ZoomWidth, ZoomHeight);
-                    Cv2.Resize(PicProSag_ImageMat, ZoomPictureMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
-                    PicProSag_ImageMat = ZoomPictureMat;
-                    //获得放缩后的中心点坐标
-                    //int compensation_Y_Value = (PicProSag.Height - PicProSag_ButtonClickOriginalBitmap.Height) / 2;
-                    Rect rect = new Rect((int)(scale_doubleProSag * p.X) - p.X, (int)((scale_doubleProSag - 1) * (p.Y - compensation_Y_Value)), PicProSag_ButtonClickOriginalBitmap.Width, PicProSag_ButtonClickOriginalBitmap.Height);
-                    Mat matfinal = new Mat(ZoomPictureMat, rect);
-
-                    Bitmap bitmapFinal_2 = ConvertFile.MatToBitmap(matfinal);
-                    PicProSag.Image = bitmapFinal_2;
-                    matfinal = null;
-                }
-                ZoomPictureMat = null;
-                GC.Collect();
-            }
-
-        }
-        // ProCor box
-        void picProCor_MouseWheel(object sender, MouseEventArgs e)
-        {
-            /*  variable from outside :
-                         PicProCor_ImageMat: 用来更改的图像的数据
-                         PicProCor         ：对应的picturebox    
-                         PicProCor_ButtonClickOriginalBitmap  ： 原始图像的数据
-                         */
-            System.Drawing.Point p = e.Location;
-            int compensation_Y_Value = 0;
-            if (WheelReadyZoomPicture)
-            {
-                compensation_Y_Value = (PicTra.Height - PicTra_ButtonClickOriginalBitmap.Height) / 2;
-            }
-            if (WheelReadyZoomPicture && p.Y < PicProCor.Height - compensation_Y_Value && p.Y > compensation_Y_Value)
-            {
-                int i = e.Delta * SystemInformation.MouseWheelScrollLines;
-                //System.Drawing.Point p = e.Location;
-
-
-                /// Zoom the picture
-                Mat ZoomPictureMat = new Mat();
-                OpenCvSharp.Size ZoomDsize = new OpenCvSharp.Size();
-
-                // zoom scale
-                //float scale_float = 1 + i / 3600f;
-                scale_doubleProCor = scale_doubleProCor + i / 3600.0; //表示当前乘子
-
-                int ZoomWidth = (int)Convert.ToInt32(PicProCor_ButtonClickOriginalBitmap.Width * scale_doubleProCor);
-                int ZoomHeight = (int)Convert.ToInt32(PicProCor_ButtonClickOriginalBitmap.Height * scale_doubleProCor);
-                if (ZoomHeight < PicProCor_ButtonClickOriginalBitmap.Height || ZoomWidth < PicProCor_ButtonClickOriginalBitmap.Width)
-                {
-                    ZoomDsize = new OpenCvSharp.Size(PicProCor_ButtonClickOriginalBitmap.Width, PicProCor_ButtonClickOriginalBitmap.Height);
-                    Cv2.Resize(PicProCor_ImageMat, ZoomPictureMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
-                    PicProCor_ImageMat = ZoomPictureMat;
-                    Bitmap bitmapFinal_1 = ConvertFile.MatToBitmap(ZoomPictureMat);
-                    PicProCor.Image = bitmapFinal_1;
-                    scale_doubleProCor = 1;
-                }
-                else
-                {
-                    ZoomDsize = new OpenCvSharp.Size(ZoomWidth, ZoomHeight);
-                    Cv2.Resize(PicProCor_ImageMat, ZoomPictureMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
-                    PicProCor_ImageMat = ZoomPictureMat;
-                    //获得放缩后的中心点坐标
-                    //int compensation_Y_Value = (PicProCor.Height - PicProCor_ButtonClickOriginalBitmap.Height) / 2;
-                    Rect rect = new Rect((int)(scale_doubleProCor * p.X) - p.X, (int)((scale_doubleProCor - 1) * (p.Y - compensation_Y_Value)), PicProCor_ButtonClickOriginalBitmap.Width, PicProCor_ButtonClickOriginalBitmap.Height);
-                    Mat matfinal = new Mat(ZoomPictureMat, rect);
-
-                    Bitmap bitmapFinal_2 = ConvertFile.MatToBitmap(matfinal);
-                    PicProCor.Image = bitmapFinal_2;
-                    matfinal = null;
-                }
-                ZoomPictureMat = null;
-                GC.Collect();
-            }
-
-        }
-
-
-
-        //----------- ZoomButton ----------//
-        private void Zoombutton_Click(object sender, EventArgs e)
-        {
-
-       
-
-            WheelReadyZoomPicture = !WheelReadyZoomPicture;
-
-            if (WheelReadyZoomPicture)
-            {
-                navigationKeyFlag = false;  //停止Navigation
-                NavigationStop();
-
-
-                Zoombutton.BackColor = Color.Azure;
-                PicTra_ButtonClickOriginalBitmap = new Bitmap(PicTra.Image); // recording the raw data
-                PicTra_ImageMat = ConvertFile.BitmapToMat(PicTra_ButtonClickOriginalBitmap).Clone(); // 用於以後更改的MAT数据
-
-                PicSag_ButtonClickOriginalBitmap = new Bitmap(PicSag.Image); // recording the raw data
-                PicSag_ImageMat = ConvertFile.BitmapToMat(PicSag_ButtonClickOriginalBitmap).Clone(); // 用於以後更改的MAT数据
-
-                PicCor_ButtonClickOriginalBitmap = new Bitmap(PicCor.Image); // recording the raw data
-                PicCor_ImageMat = ConvertFile.BitmapToMat(PicCor_ButtonClickOriginalBitmap).Clone(); // 用於以後更改的MAT数据
-
-                PicProSag_ButtonClickOriginalBitmap = new Bitmap(PicProSag.Image); // recording the raw data
-                PicProSag_ImageMat = ConvertFile.BitmapToMat(PicProSag_ButtonClickOriginalBitmap).Clone(); // 用於以後更改的MAT数据
-
-                PicProCor_ButtonClickOriginalBitmap = new Bitmap(PicProCor.Image); // recording the raw data
-                PicProCor_ImageMat = ConvertFile.BitmapToMat(PicProCor_ButtonClickOriginalBitmap).Clone(); // 用於以後更改的MAT数据
-
-
-            }
-            else
-            {
-                Zoombutton.BackColor = Color.Bisque;
-                PicTra_ImageMat = null; // 用来给每个图像做变量
-                PicSag_ImageMat = null;
-                PicCor_ImageMat = null;
-                PicProSag_ImageMat = null;
-                PicProCor_ImageMat = null;
-                PicTra.Image = PicTra_ButtonClickOriginalBitmap;
-                PicCor.Image = PicCor_ButtonClickOriginalBitmap;
-                PicSag.Image = PicSag_ButtonClickOriginalBitmap;
-                PicProSag.Image = PicProSag_ButtonClickOriginalBitmap;
-                PicProCor.Image = PicProCor_ButtonClickOriginalBitmap;
-            }
-        }
-
         #endregion
 
 
+        #region 图片缩放与标记  注意这里记得在Design中给每个pictureBox 添加滚轮控件函数
+        //该部分目前有个bug，每次Click原地都会自动加一，猜测是由于int float类型转换的时候计算不精准出现的问题。
+
+        // Zoom Button //
+
+        int Click_Depth = 0; // 记录标记点在Volume中的位置
+        int Click_Width = 0;
+        int Click_Height = 0;
+
+        Mat PictureCor_Original_Zoom = new Mat(); //原始图像
+        Mat PictureSag_Original_Zoom = new Mat(); //原始图像
+        Mat PictureTra_Original_Zoom = new Mat(); //原始图像
+        Mat PictureProCor_Original_Zoom = new Mat(); //原始图像
+        Mat PictureProSag_Original_Zoom = new Mat(); //原始图像
+
+        System.Drawing.Point LocationCor_Point_Zoom = new System.Drawing.Point(0, 0);  //记录放缩位置在原始图像中的位置
+        System.Drawing.Point LocationSag_Point_Zoom = new System.Drawing.Point(0, 0);  //记录放缩位置在原始图像中的位置
+        System.Drawing.Point LocationTra_Point_Zoom = new System.Drawing.Point(0, 0);  //记录放缩位置在原始图像中的位置
+        System.Drawing.Point LocationProCor_Point_Zoom = new System.Drawing.Point(0, 0);  //记录放缩位置在原始图像中的位置
+        System.Drawing.Point LocationProSag_Point_Zoom = new System.Drawing.Point(0, 0);  //记录放缩位置在原始图像中的位置
+
+
+        bool MarkExist = false; //判断是否存在Mark
+
+        System.Drawing.Point ShowPosition_Cor_Point_Mark = new System.Drawing.Point(0, 0);  //记录标记位置在要显示的图像中的位置
+        System.Drawing.Point ShowPosition_Sag_Point_Mark = new System.Drawing.Point(0, 0);  //记录标记位置在要显示的图像中的位置
+        System.Drawing.Point ShowPosition_Tra_Point_Mark = new System.Drawing.Point(0, 0);  //记录标记位置在要显示的图像中的位置
+        System.Drawing.Point ShowPosition_ProCor_Point_Mark = new System.Drawing.Point(0, 0);  //记录标记位置在要显示的图像中的位置
+        System.Drawing.Point ShowPosition_ProSag_Point_Mark = new System.Drawing.Point(0, 0);  //记录标记位置在要显示的图像中的位置
+
+
+
+        // 放缩用放缩因子是否大于一判断图片是否处于放缩状态
+        double Cor_Scale_Zoom = 1; //记录放缩倍数 （>=1）
+        double Sag_Scale_Zoom = 1; //记录放缩倍数 （>=1）
+        double Tra_Scale_Zoom = 1; //记录放缩倍数 （>=1）
+        double ProCor_Scale_Zoom = 1; //记录放缩倍数 （>=1）
+        double ProSag_Scale_Zoom = 1; //记录放缩倍数 （>=1）
 
 
 
 
+        // 辅助功能函数 //
+        void UpdataTextAndScroll() //更新TextBox的值和Scroll的值
+        {
+            string tex_guan = string.Format("{0}/{1}", Click_Height + 1, Original_Height);
+            hscroll_Coronal.Value = Click_Height;
+            texdown_guan.Text = tex_guan;
+
+            hscroll_transverse.Value = Click_Depth;
+            string tex_heng = string.Format("{0}/{1}", Click_Depth + 1, Original_Depth);
+            texdown_heng.Text = tex_heng;
+
+            hscroll_Sagittal.Value = Click_Width;
+            string tex_shi = string.Format("{0}/{1}", Click_Width + 1, Original_Width);
+            texdown_shi.Text = tex_shi;
+        }
+        void TextToMat_Zoom()//依据TextBox上的数值从volume读取五个mat的图像 （初始化上述的原始图像五个参数）
+        {
+            int Tran = System.Convert.ToInt32(texdown_heng.Text.Substring(0, texdown_heng.Text.IndexOf("/")));
+            int Sag = System.Convert.ToInt32(texdown_shi.Text.Substring(0, texdown_shi.Text.IndexOf("/")));
+            int Cor = System.Convert.ToInt32(texdown_guan.Text.Substring(0, texdown_guan.Text.IndexOf("/")));
+
+
+            short[,] Transverse = volume[Tran];
+            short[,] Sagittal = volume_shi[Sag];
+            short[,] Coronal = volume_guan[Cor];
+
+            PictureCor_Original_Zoom = Out_ShorttoMat(PicCor, Coronal, 1);
+            PictureSag_Original_Zoom = Out_ShorttoMat(PicSag, Sagittal, 2);
+            PictureTra_Original_Zoom = Out_ShorttoMat(PicTra, Transverse, 0);
+
+
+            Mat SagPro = new Mat();
+            SagPro = SagittalProjectionMat.Clone();
+            Mat CorPro = new Mat();
+            CorPro = CoronalProjectionMat.Clone();
+
+            OpenCvSharp.Size dsize_shi_Pro = new OpenCvSharp.Size(PicSag.Image.Width, PicSag.Image.Height);
+            OpenCvSharp.Size dsize_guan_Pro = new OpenCvSharp.Size(PicCor.Image.Width, PicCor.Image.Height);
+
+            Cv2.Resize(SagPro, PictureProSag_Original_Zoom, dsize_shi_Pro);
+            Cv2.Resize(CorPro, PictureProCor_Original_Zoom, dsize_guan_Pro);
+
+        }
+
+        void VolumePosition_To_ShowpicturePositon()//将Mark在Volume中坐标换成要显示的图片中的坐标
+        {
+            Click_Depth = System.Convert.ToInt32(texdown_heng.Text.Substring(0, texdown_heng.Text.IndexOf("/")));
+            Click_Width = System.Convert.ToInt32(texdown_shi.Text.Substring(0, texdown_shi.Text.IndexOf("/")));
+            Click_Height = System.Convert.ToInt32(texdown_guan.Text.Substring(0, texdown_guan.Text.IndexOf("/")));
+
+
+            int PicDepth = (int)(((double)Click_Depth / Original_Depth) * PicCor.Image.Height);
+            int PicWidth = (int)(((double)Click_Width / Original_Width) * PicCor.Image.Width);
+            int PicHeight = (int)(((double)Click_Height / Original_Height) * PicSag.Image.Width); //从Volume中的位置转化为原始显示图像中的位置
+
+            //Cor
+            int CorX = (int)(PicWidth * Cor_Scale_Zoom - LocationCor_Point_Zoom.X * (Cor_Scale_Zoom - 1));
+            int CorY = (int)(PicDepth * Cor_Scale_Zoom - LocationCor_Point_Zoom.Y * (Cor_Scale_Zoom - 1));
+            ShowPosition_Cor_Point_Mark = new System.Drawing.Point(CorX, CorY);
+
+            //ProCor
+            int ProCorX = (int)(PicWidth * ProCor_Scale_Zoom - LocationProCor_Point_Zoom.X * (ProCor_Scale_Zoom - 1));
+            int ProCorY = (int)(PicDepth * ProCor_Scale_Zoom - LocationProCor_Point_Zoom.Y * (ProCor_Scale_Zoom - 1));
+            ShowPosition_ProCor_Point_Mark = new System.Drawing.Point(ProCorX, ProCorY);
+            //Sag
+            int SagX = (int)(PicHeight * Sag_Scale_Zoom - LocationSag_Point_Zoom.X * (Sag_Scale_Zoom - 1));
+            int SagY = (int)(PicDepth * Sag_Scale_Zoom - LocationSag_Point_Zoom.Y * (Sag_Scale_Zoom - 1));
+            ShowPosition_Sag_Point_Mark = new System.Drawing.Point(SagX, SagY);
+            //ProSag
+            int ProSagX = (int)(PicHeight * ProSag_Scale_Zoom - LocationProSag_Point_Zoom.X * (ProSag_Scale_Zoom - 1));
+            int ProSagY = (int)(PicDepth * ProSag_Scale_Zoom - LocationProSag_Point_Zoom.Y * (ProSag_Scale_Zoom - 1));
+            ShowPosition_ProSag_Point_Mark = new System.Drawing.Point(ProSagX, ProSagY);
+            //Tra
+            int TraX = (int)(PicWidth * Tra_Scale_Zoom - LocationTra_Point_Zoom.X * (Tra_Scale_Zoom - 1));
+            int TraY = (int)(PicHeight * Tra_Scale_Zoom - LocationTra_Point_Zoom.Y * (Tra_Scale_Zoom - 1));
+            ShowPosition_Tra_Point_Mark = new System.Drawing.Point(TraX, TraY);
+        }
+
+        void RedCross(PictureBox sender, System.Drawing.Point p)//给图像画上红叉 并显示图像
+        {
+            Bitmap OrBitMap = new Bitmap(sender.Image);
+            Mat OrMat = new Mat();
+            OrMat = ConvertFile.BitmapToMat(OrBitMap);
+            OrMat = OrMat.CvtColor(ColorConversionCodes.RGBA2RGB, 3);
+            OpenCvSharp.Point startPointY = new OpenCvSharp.Point(0, p.Y);
+            OpenCvSharp.Point endPointY = new OpenCvSharp.Point(sender.Image.Width, p.Y);
+            Cv2.Line(OrMat, startPointY, endPointY, OpenCvSharp.Scalar.Red, 1);
+
+            OpenCvSharp.Point startPointX = new OpenCvSharp.Point(p.X, 0);
+            OpenCvSharp.Point endPointX = new OpenCvSharp.Point(p.X, sender.Image.Height);
+            Cv2.Line(OrMat, startPointX, endPointX, OpenCvSharp.Scalar.Red, 1);
+            Mat NewMat = new Mat();
+            updateBrightnessContrast(OrMat, NewMat, Brightnessvalue, Contrastvalue);
+            Bitmap NewBitMap = ConvertFile.MatToBitmap(NewMat);
+            //NewBitMap 
+            sender.Image = NewBitMap;
+        }
+
+
+        void UpdataFivePictureBox_Zoom_And_Mark()//更新五个picbox参数，采用先放缩后标点的方式 并在标记时更新对比度和亮度   ///该函数以用于全局图像的更新Date: March 4
+        {
+            TextToMat_Zoom();
+            VolumePosition_To_ShowpicturePositon();
+            //Cor
+            ShowZoomPictureCorMat();
+            ShowZoomPictureSagMat();
+            ShowZoomPictureTraMat();
+            ShowZoomPictureProCorMat();
+            ShowZoomPictureProSagMat();
+            Console.WriteLine(MarkExist);
+            if (MarkExist)
+            {
+                RedCross(PicCor, ShowPosition_Cor_Point_Mark);
+                RedCross(PicSag, ShowPosition_Sag_Point_Mark);
+                RedCross(PicTra, ShowPosition_Tra_Point_Mark);
+                RedCross(PicProCor, ShowPosition_ProCor_Point_Mark);
+                RedCross(PicProSag, ShowPosition_ProSag_Point_Mark);
+            }
+            else
+            {
+                //Cor
+                Bitmap PicCorBitmap = new Bitmap(PicCor.Image);
+                Mat PicCorMat = new Mat();
+                PicCorMat = ConvertFile.BitmapToMat(PicCorBitmap);
+                Mat NewMatCor = new Mat();
+                updateBrightnessContrast(PicCorMat, NewMatCor, Brightnessvalue, Contrastvalue);
+                Bitmap NewBitMapCor = ConvertFile.MatToBitmap(NewMatCor);
+                PicCor.Image = NewBitMapCor;
+                //Sag
+                Bitmap PicSagBitmap = new Bitmap(PicSag.Image);
+                Mat PicSagMat = new Mat();
+                PicSagMat = ConvertFile.BitmapToMat(PicSagBitmap);
+                Mat NewMatSag = new Mat();
+                updateBrightnessContrast(PicSagMat, NewMatSag, Brightnessvalue, Contrastvalue);
+                Bitmap NewBitMapSag = ConvertFile.MatToBitmap(NewMatSag);
+                PicSag.Image = NewBitMapSag;
+                //Tra
+                Bitmap PicTraBitmap = new Bitmap(PicTra.Image);
+                Mat PicTraMat = new Mat();
+                PicTraMat = ConvertFile.BitmapToMat(PicTraBitmap);
+                Mat NewMatTra = new Mat();
+                updateBrightnessContrast(PicTraMat, NewMatTra, Brightnessvalue, Contrastvalue);
+                Bitmap NewBitMapTra = ConvertFile.MatToBitmap(NewMatTra);
+                PicTra.Image = NewBitMapTra;
+                //SagPro
+                Bitmap PicProSagBitmap = new Bitmap(PicProSag.Image);
+                Mat PicProSagMat = new Mat();
+                PicProSagMat = ConvertFile.BitmapToMat(PicProSagBitmap);
+                Mat NewMatProSag = new Mat();
+                updateBrightnessContrast(PicProSagMat, NewMatProSag, Brightnessvalue, Contrastvalue);
+                Bitmap NewBitMapProSag = ConvertFile.MatToBitmap(NewMatProSag);
+                PicProSag.Image = NewBitMapProSag;
+                //CorPro
+                Bitmap PicProCorBitmap = new Bitmap(PicProCor.Image);
+                Mat PicProCorMat = new Mat();
+                PicProCorMat = ConvertFile.BitmapToMat(PicProCorBitmap);
+                Mat NewMatProCor = new Mat();
+                updateBrightnessContrast(PicProCorMat, NewMatProCor, Brightnessvalue, Contrastvalue);
+                Bitmap NewBitMapProCor = ConvertFile.MatToBitmap(NewMatProCor);
+                PicProCor.Image = NewBitMapProCor;
+            }
+
+
+        }
+
+        private void Mark_Clean_Button_Click(object sender, EventArgs e)//用于删去Mark
+        {
+            MarkExist = false;
+            UpdataFivePictureBox_Zoom_And_Mark();
+        }
+
+
+        /* Cor面 */
+        void ShowZoomPictureCorMat()// 图像显示 用到的参数：Mat PicOriginalMat,Point Location_Zoom,int ZoomScale
+        {
+            Mat OutMat = new Mat();
+            OpenCvSharp.Size ZoomDsize = new OpenCvSharp.Size();
+            System.Drawing.Point p = LocationCor_Point_Zoom;
+
+
+            int ZoomWidth = (int)Convert.ToInt32(PictureCor_Original_Zoom.Width * Cor_Scale_Zoom);
+            int ZoomHeight = (int)Convert.ToInt32(PictureCor_Original_Zoom.Height * Cor_Scale_Zoom);
+            Mat ZoomTempMat = new Mat();
+            if (Cor_Scale_Zoom <= 1)
+            {
+                Cor_Scale_Zoom = 1;
+                OutMat = PictureCor_Original_Zoom;
+                //updateBrightnessContrast(PictureCor_Original_Zoom, OutMat, Brightnessvalue, Contrastvalue);
+            }
+            else
+            {
+                ZoomDsize = new OpenCvSharp.Size(ZoomWidth, ZoomHeight);
+                Cv2.Resize(PictureCor_Original_Zoom, ZoomTempMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
+                Rect rect = new Rect((int)(Cor_Scale_Zoom * p.X) - p.X, (int)((Cor_Scale_Zoom - 1) * p.Y), PictureCor_Original_Zoom.Width, PictureCor_Original_Zoom.Height);
+                OutMat = new Mat(ZoomTempMat, rect);
+                //updateBrightnessContrast(OutMat, OutMat, Brightnessvalue, Contrastvalue);  //改变对比度
+            }
+            Bitmap bitmapFinal = ConvertFile.MatToBitmap(OutMat);
+            PicCor.Image = bitmapFinal;
+            //return OutMat;
+        }
+        void LocationChange_Cor_Zoom(System.Drawing.Point p_using)//坐标变换：从pintureBox中的坐标变换到未放缩的图像中的坐标 并更新放缩位置(用于滚轮）
+        {
+            int compensation_Y_Value = 0;
+            compensation_Y_Value = (PicCor.Height - PictureCor_Original_Zoom.Height) / 2; //记录补偿缺口大小
+            p_using.Y = p_using.Y - compensation_Y_Value;
+            LocationCor_Point_Zoom.X = (int)((LocationCor_Point_Zoom.X * (Cor_Scale_Zoom - 1) + p_using.X) / Cor_Scale_Zoom);
+            LocationCor_Point_Zoom.Y = (int)((LocationCor_Point_Zoom.Y * (Cor_Scale_Zoom - 1) + p_using.Y) / Cor_Scale_Zoom);
+        }
+        System.Drawing.Point LocationToOrPictureChange_Cor_Mark(System.Drawing.Point p_using)//坐标变换 从pintureBox中的坐标变换到未放缩的图像中的坐标 并输出坐标位置（用于鼠标左点击）
+        {
+            System.Drawing.Point Outp = new System.Drawing.Point();
+            int compensation_Y_Value = 0;
+            compensation_Y_Value = (PicCor.Height - PictureCor_Original_Zoom.Height) / 2; //记录补偿缺口大小
+            p_using.Y = p_using.Y - compensation_Y_Value;
+            Outp.X = (int)((LocationCor_Point_Zoom.X * (Cor_Scale_Zoom - 1) + p_using.X) / Cor_Scale_Zoom);
+            Outp.Y = (int)((LocationCor_Point_Zoom.Y * (Cor_Scale_Zoom - 1) + p_using.Y) / Cor_Scale_Zoom);
+            return Outp;
+        }
+        void ZoomCorFunction_MouseWheel(object sender, MouseEventArgs e) //更新放缩位置与放缩大小
+        {
+            int i = e.Delta * SystemInformation.MouseWheelScrollLines;
+            Cor_Scale_Zoom = Cor_Scale_Zoom + i / 3600.0; //表示当前乘子
+            System.Drawing.Point p_using = e.Location;
+            LocationChange_Cor_Zoom(p_using); //更新放缩位置
+
+            UpdataFivePictureBox_Zoom_And_Mark();//更新图像
+
+        }
+        private void Mark_CorFunction_MouseClick(object sender, MouseEventArgs e) //更新Mark点在volume中的位置（更新Click_Depth,Click_Height,Click_width的参数）
+        {
+
+            if (e.Button == MouseButtons.Left)
+            {
+
+                MarkExist = true;
+                System.Drawing.Point orP = e.Location;
+                System.Drawing.Point p = LocationToOrPictureChange_Cor_Mark(orP);
+                Click_Depth = (int)((double)p.Y / PicCor.Image.Height * Original_Depth);
+                Click_Height = System.Convert.ToInt32(texdown_guan.Text.Substring(0, texdown_guan.Text.IndexOf("/")));
+                Click_Width = (int)((double)p.X / PicCor.Image.Width * Original_Width);
+                UpdataTextAndScroll(); //更新TextBox的值和Scroll的值
+                UpdataFivePictureBox_Zoom_And_Mark();//更新图像
 
 
 
 
+            }
+
+        }
+
+
+        /* Sag面 */
+        void ShowZoomPictureSagMat()// 图像显示 用到的参数：Mat PiSagiginalMat,Point Location_Zoom,int ZoomScale
+        {
+            Mat OutMat = new Mat();
+            OpenCvSharp.Size ZoomDsize = new OpenCvSharp.Size();
+            System.Drawing.Point p = LocationSag_Point_Zoom;
+
+
+            int ZoomWidth = (int)Convert.ToInt32(PictureSag_Original_Zoom.Width * Sag_Scale_Zoom);
+            int ZoomHeight = (int)Convert.ToInt32(PictureSag_Original_Zoom.Height * Sag_Scale_Zoom);
+            Mat ZoomTempMat = new Mat();
+            if (Sag_Scale_Zoom <= 1)
+            {
+                Sag_Scale_Zoom = 1;
+                OutMat = PictureSag_Original_Zoom;
+                //updateBrightnessContrast(PictureSag_Original_Zoom, OutMat, Brightnessvalue, Contrastvalue);
+            }
+            else
+            {
+                ZoomDsize = new OpenCvSharp.Size(ZoomWidth, ZoomHeight);
+                Cv2.Resize(PictureSag_Original_Zoom, ZoomTempMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
+                Rect rect = new Rect((int)(Sag_Scale_Zoom * p.X) - p.X, (int)((Sag_Scale_Zoom - 1) * p.Y), PictureSag_Original_Zoom.Width, PictureSag_Original_Zoom.Height);
+                OutMat = new Mat(ZoomTempMat, rect);
+                //updateBrightnessContrast(OutMat, OutMat, Brightnessvalue, Contrastvalue);  //改变对比度
+            }
+            Bitmap bitmapFinal = ConvertFile.MatToBitmap(OutMat);
+            PicSag.Image = bitmapFinal;
+            //return OutMat;
+        }
+        void LocationChange_Sag_Zoom(System.Drawing.Point p_using)//坐标变换：从pintureBox中的坐标变换到未放缩的图像中的坐标 并更新放缩位置
+        {
+            int compensation_Y_Value = 0;
+            compensation_Y_Value = (PicSag.Height - PictureSag_Original_Zoom.Height) / 2; //记录补偿缺口大小
+            p_using.Y = p_using.Y - compensation_Y_Value;
+            LocationSag_Point_Zoom.X = (int)((LocationSag_Point_Zoom.X * (Sag_Scale_Zoom - 1) + p_using.X) / Sag_Scale_Zoom);
+            LocationSag_Point_Zoom.Y = (int)((LocationSag_Point_Zoom.Y * (Sag_Scale_Zoom - 1) + p_using.Y) / Sag_Scale_Zoom);
+        }
+        System.Drawing.Point LocationToOrPictureChange_Sag_Mark(System.Drawing.Point p_using)//坐标变换 从pintureBox中的坐标变换到未放缩的图像中的坐标 并输出坐标位置
+        {
+            System.Drawing.Point Outp = new System.Drawing.Point();
+            int compensation_Y_Value = 0;
+            compensation_Y_Value = (PicSag.Height - PictureSag_Original_Zoom.Height) / 2; //记录补偿缺口大小
+            p_using.Y = p_using.Y - compensation_Y_Value;
+            Outp.X = (int)((LocationSag_Point_Zoom.X * (Sag_Scale_Zoom - 1) + p_using.X) / Sag_Scale_Zoom);
+            Outp.Y = (int)((LocationSag_Point_Zoom.Y * (Sag_Scale_Zoom - 1) + p_using.Y) / Sag_Scale_Zoom);
+            return Outp;
+        }
+        void ZoomSagFunction_MouseWheel(object sender, MouseEventArgs e) //更新放缩位置与放缩大小
+        {
+            int i = e.Delta * SystemInformation.MouseWheelScrollLines;
+            Sag_Scale_Zoom = Sag_Scale_Zoom + i / 3600.0; //表示当前乘子
+            System.Drawing.Point p_using = e.Location;
+            LocationChange_Sag_Zoom(p_using); //更新放缩位置
+            UpdataFivePictureBox_Zoom_And_Mark();//更新图像
+        }
+        private void Mark_SagFunction_MouseClick(object sender, MouseEventArgs e) //更新Mark点在volume中的位置（更新Click_Depth,Click_Height,Click_width的参数）
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                MarkExist = true;
+                System.Drawing.Point orP = e.Location;
+                System.Drawing.Point p = LocationToOrPictureChange_Sag_Mark(orP);
+                Click_Depth = (int)((double)p.Y / PicSag.Image.Height * Original_Depth);
+                Click_Height = (int)((double)p.X / PicSag.Image.Width * Original_Height);
+                Click_Width = System.Convert.ToInt32(texdown_shi.Text.Substring(0, texdown_shi.Text.IndexOf("/")));
+                UpdataTextAndScroll(); //更新TextBox的值和Scroll的值
+                UpdataFivePictureBox_Zoom_And_Mark();//更新图像
+            }
+        }
+        /* Tra面 */
+        void ShowZoomPictureTraMat()// 图像显示 用到的参数：Mat PiTraiginalMat,Point Location_Zoom,int ZoomScale
+        {
+            Mat OutMat = new Mat();
+            OpenCvSharp.Size ZoomDsize = new OpenCvSharp.Size();
+            System.Drawing.Point p = LocationTra_Point_Zoom;
+
+
+            int ZoomWidth = (int)Convert.ToInt32(PictureTra_Original_Zoom.Width * Tra_Scale_Zoom);
+            int ZoomHeight = (int)Convert.ToInt32(PictureTra_Original_Zoom.Height * Tra_Scale_Zoom);
+            Mat ZoomTempMat = new Mat();
+            if (Tra_Scale_Zoom <= 1)
+            {
+                Tra_Scale_Zoom = 1;
+                OutMat = PictureTra_Original_Zoom;
+                //updateBrightnessContrast(PictureTra_Original_Zoom, OutMat, Brightnessvalue, Contrastvalue);
+            }
+            else
+            {
+                ZoomDsize = new OpenCvSharp.Size(ZoomWidth, ZoomHeight);
+                Cv2.Resize(PictureTra_Original_Zoom, ZoomTempMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
+                Rect rect = new Rect((int)(Tra_Scale_Zoom * p.X) - p.X, (int)((Tra_Scale_Zoom - 1) * p.Y), PictureTra_Original_Zoom.Width, PictureTra_Original_Zoom.Height);
+                OutMat = new Mat(ZoomTempMat, rect);
+                //updateBrightnessContrast(OutMat, OutMat, Brightnessvalue, Contrastvalue);  //改变对比度
+            }
+            Bitmap bitmapFinal = ConvertFile.MatToBitmap(OutMat);
+            PicTra.Image = bitmapFinal;
+            //return OutMat;
+        }
+        void LocationChange_Tra_Zoom(System.Drawing.Point p_using)//坐标变换：从pintureBox中的坐标变换到未放缩的图像中的坐标 并更新放缩位置
+        {
+            int compensation_Y_Value = 0;
+            compensation_Y_Value = (PicTra.Height - PictureTra_Original_Zoom.Height) / 2; //记录补偿缺口大小
+            p_using.Y = p_using.Y - compensation_Y_Value;
+            LocationTra_Point_Zoom.X = (int)((LocationTra_Point_Zoom.X * (Tra_Scale_Zoom - 1) + p_using.X) / Tra_Scale_Zoom);
+            LocationTra_Point_Zoom.Y = (int)((LocationTra_Point_Zoom.Y * (Tra_Scale_Zoom - 1) + p_using.Y) / Tra_Scale_Zoom);
+        }
+        System.Drawing.Point LocationToOrPictureChange_Tra_Mark(System.Drawing.Point p_using)//坐标变换 从pintureBox中的坐标变换到未放缩的图像中的坐标 并输出坐标位置
+        {
+            System.Drawing.Point Outp = new System.Drawing.Point();
+            int compensation_Y_Value = 0;
+            compensation_Y_Value = (PicTra.Height - PictureTra_Original_Zoom.Height) / 2; //记录补偿缺口大小
+            p_using.Y = p_using.Y - compensation_Y_Value;
+            Outp.X = (int)((LocationTra_Point_Zoom.X * (Tra_Scale_Zoom - 1) + p_using.X) / Tra_Scale_Zoom);
+            Outp.Y = (int)((LocationTra_Point_Zoom.Y * (Tra_Scale_Zoom - 1) + p_using.Y) / Tra_Scale_Zoom);
+            return Outp;
+        }
+        void ZoomTraFunction_MouseWheel(object sender, MouseEventArgs e) //更新放缩位置与放缩大小
+        {
+            int i = e.Delta * SystemInformation.MouseWheelScrollLines;
+            Tra_Scale_Zoom = Tra_Scale_Zoom + i / 3600.0; //表示当前乘子
+            System.Drawing.Point p_using = e.Location;
+            LocationChange_Tra_Zoom(p_using); //更新放缩位置
+            UpdataFivePictureBox_Zoom_And_Mark();//更新图像
+
+        }
+        private void Mark_TraFunction_MouseClick(object sender, MouseEventArgs e) //更新Mark点在volume中的位置（更新Click_Depth,Click_Height,Click_width的参数）
+        {
+
+            if (e.Button == MouseButtons.Left)
+            {
+                MarkExist = true;
+                System.Drawing.Point orP = e.Location;
+                System.Drawing.Point p = LocationToOrPictureChange_Tra_Mark(orP);
+
+                Click_Depth = System.Convert.ToInt32(texdown_heng.Text.Substring(0, texdown_heng.Text.IndexOf("/")));
+
+                Click_Height = (int)((double)p.Y / PicTra.Image.Height * Original_Height);
+
+                Click_Width = (int)((double)p.X / PicTra.Image.Width * Original_Width);
+
+                UpdataTextAndScroll(); //更新TextBox的值和Scroll的值
+                UpdataFivePictureBox_Zoom_And_Mark();//更新图像
+
+            }
+        }
+        /* ProCor面 */
+        void ShowZoomPictureProCorMat()// 图像显示 用到的参数：Mat PiProcOriginalMat,Point Location_Zoom,int ZoomScale
+        {
+            Mat OutMat = new Mat();
+            OpenCvSharp.Size ZoomDsize = new OpenCvSharp.Size();
+            System.Drawing.Point p = LocationProCor_Point_Zoom;
+
+
+            int ZoomWidth = (int)Convert.ToInt32(PictureProCor_Original_Zoom.Width * ProCor_Scale_Zoom);
+            int ZoomHeight = (int)Convert.ToInt32(PictureProCor_Original_Zoom.Height * ProCor_Scale_Zoom);
+            Mat ZoomTempMat = new Mat();
+            if (ProCor_Scale_Zoom <= 1)
+            {
+                ProCor_Scale_Zoom = 1;
+                OutMat = PictureProCor_Original_Zoom;
+                //updateBrightnessContrast(PictureProCor_Original_Zoom, OutMat, Brightnessvalue, Contrastvalue);
+            }
+            else
+            {
+                ZoomDsize = new OpenCvSharp.Size(ZoomWidth, ZoomHeight);
+                Cv2.Resize(PictureProCor_Original_Zoom, ZoomTempMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
+                Rect rect = new Rect((int)(ProCor_Scale_Zoom * p.X) - p.X, (int)((ProCor_Scale_Zoom - 1) * p.Y), PictureProCor_Original_Zoom.Width, PictureProCor_Original_Zoom.Height);
+                OutMat = new Mat(ZoomTempMat, rect);
+                //updateBrightnessContrast(OutMat, OutMat, Brightnessvalue, Contrastvalue);  //改变对比度
+            }
+            Bitmap bitmapFinal = ConvertFile.MatToBitmap(OutMat);
+            PicProCor.Image = bitmapFinal;
+            //return OutMat;
+        }
+        void LocationChange_ProCor_Zoom(System.Drawing.Point p_using)//坐标变换：从pintureBox中的坐标变换到未放缩的图像中的坐标 并更新放缩位置(用于滚轮）
+        {
+            int compensation_Y_Value = 0;
+            compensation_Y_Value = (PicProCor.Height - PictureProCor_Original_Zoom.Height) / 2; //记录补偿缺口大小
+            p_using.Y = p_using.Y - compensation_Y_Value;
+            LocationProCor_Point_Zoom.X = (int)((LocationProCor_Point_Zoom.X * (ProCor_Scale_Zoom - 1) + p_using.X) / ProCor_Scale_Zoom);
+            LocationProCor_Point_Zoom.Y = (int)((LocationProCor_Point_Zoom.Y * (ProCor_Scale_Zoom - 1) + p_using.Y) / ProCor_Scale_Zoom);
+        }
+        System.Drawing.Point LocationToOrPictureChange_ProCor_Mark(System.Drawing.Point p_using)//坐标变换 从pintureBox中的坐标变换到未放缩的图像中的坐标 并输出坐标位置（用于鼠标左点击）
+        {
+            System.Drawing.Point Outp = new System.Drawing.Point();
+            int compensation_Y_Value = 0;
+            compensation_Y_Value = (PicProCor.Height - PictureProCor_Original_Zoom.Height) / 2; //记录补偿缺口大小
+            p_using.Y = p_using.Y - compensation_Y_Value;
+            Outp.X = (int)((LocationProCor_Point_Zoom.X * (ProCor_Scale_Zoom - 1) + p_using.X) / ProCor_Scale_Zoom);
+            Outp.Y = (int)((LocationProCor_Point_Zoom.Y * (ProCor_Scale_Zoom - 1) + p_using.Y) / ProCor_Scale_Zoom);
+            return Outp;
+        }
+        void ZoomProCorFunction_MouseWheel(object sender, MouseEventArgs e) //更新放缩位置与放缩大小
+        {
+            int i = e.Delta * SystemInformation.MouseWheelScrollLines;
+            ProCor_Scale_Zoom = ProCor_Scale_Zoom + i / 3600.0; //表示当前乘子
+            System.Drawing.Point p_using = e.Location;
+            LocationChange_ProCor_Zoom(p_using); //更新放缩位置
+
+            UpdataFivePictureBox_Zoom_And_Mark();//更新图像
+
+        }
+        private void Mark_ProCorFunction_MouseClick(object sender, MouseEventArgs e) //更新Mark点在volume中的位置（更新Click_Depth,Click_Height,Click_width的参数）
+        {
+
+            if (e.Button == MouseButtons.Left)
+            {
+
+                MarkExist = true;
+                System.Drawing.Point orP = e.Location;
+                System.Drawing.Point p = LocationToOrPictureChange_ProCor_Mark(orP);
+                Click_Depth = (int)((double)p.Y / PicProCor.Image.Height * Original_Depth);
+                //Click_Height = System.Convert.ToInt32(texdown_guan.Text.Substring(0, texdown_guan.Text.IndexOf("/")));
+                Click_Width = (int)((double)p.X / PicProCor.Image.Width * Original_Width);
+                UpdataTextAndScroll(); //更新TextBox的值和Scroll的值
+                UpdataFivePictureBox_Zoom_And_Mark();//更新图像
+
+            }
+
+        }
+        /* ProSag面 */
+        void ShowZoomPictureProSagMat()// 图像显示 用到的参数：Mat PiProSagiginalMat,Point Location_Zoom,int ZoomScale
+        {
+            Mat OutMat = new Mat();
+            OpenCvSharp.Size ZoomDsize = new OpenCvSharp.Size();
+            System.Drawing.Point p = LocationProSag_Point_Zoom;
+
+
+            int ZoomWidth = (int)Convert.ToInt32(PictureProSag_Original_Zoom.Width * ProSag_Scale_Zoom);
+            int ZoomHeight = (int)Convert.ToInt32(PictureProSag_Original_Zoom.Height * ProSag_Scale_Zoom);
+            Mat ZoomTempMat = new Mat();
+            if (ProSag_Scale_Zoom <= 1)
+            {
+                ProSag_Scale_Zoom = 1;
+                OutMat = PictureProSag_Original_Zoom;
+                //updateBrightnessContrast(PictureProSag_Original_Zoom, OutMat, Brightnessvalue, Contrastvalue);
+            }
+            else
+            {
+                ZoomDsize = new OpenCvSharp.Size(ZoomWidth, ZoomHeight);
+                Cv2.Resize(PictureProSag_Original_Zoom, ZoomTempMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
+                Rect rect = new Rect((int)(ProSag_Scale_Zoom * p.X) - p.X, (int)((ProSag_Scale_Zoom - 1) * p.Y), PictureProSag_Original_Zoom.Width, PictureProSag_Original_Zoom.Height);
+                OutMat = new Mat(ZoomTempMat, rect);
+                //updateBrightnessContrast(OutMat, OutMat, Brightnessvalue, Contrastvalue);  //改变对比度
+            }
+            Bitmap bitmapFinal = ConvertFile.MatToBitmap(OutMat);
+            PicProSag.Image = bitmapFinal;
+            //return OutMat;
+        }
+        void LocationChange_ProSag_Zoom(System.Drawing.Point p_using)//坐标变换：从pintureBox中的坐标变换到未放缩的图像中的坐标 并更新放缩位置
+        {
+            int compensation_Y_Value = 0;
+            compensation_Y_Value = (PicProSag.Height - PictureProSag_Original_Zoom.Height) / 2; //记录补偿缺口大小
+            p_using.Y = p_using.Y - compensation_Y_Value;
+            LocationProSag_Point_Zoom.X = (int)((LocationProSag_Point_Zoom.X * (ProSag_Scale_Zoom - 1) + p_using.X) / ProSag_Scale_Zoom);
+            LocationProSag_Point_Zoom.Y = (int)((LocationProSag_Point_Zoom.Y * (ProSag_Scale_Zoom - 1) + p_using.Y) / ProSag_Scale_Zoom);
+        }
+        System.Drawing.Point LocationToOrPictureChange_ProSag_Mark(System.Drawing.Point p_using)//坐标变换 从pintureBox中的坐标变换到未放缩的图像中的坐标 并输出坐标位置
+        {
+            System.Drawing.Point Outp = new System.Drawing.Point();
+            int compensation_Y_Value = 0;
+            compensation_Y_Value = (PicProSag.Height - PictureProSag_Original_Zoom.Height) / 2; //记录补偿缺口大小
+            p_using.Y = p_using.Y - compensation_Y_Value;
+            Outp.X = (int)((LocationProSag_Point_Zoom.X * (ProSag_Scale_Zoom - 1) + p_using.X) / ProSag_Scale_Zoom);
+            Outp.Y = (int)((LocationProSag_Point_Zoom.Y * (ProSag_Scale_Zoom - 1) + p_using.Y) / ProSag_Scale_Zoom);
+            return Outp;
+        }
+        void ZoomProSagFunction_MouseWheel(object sender, MouseEventArgs e) //更新放缩位置与放缩大小
+        {
+            int i = e.Delta * SystemInformation.MouseWheelScrollLines;
+            ProSag_Scale_Zoom = ProSag_Scale_Zoom + i / 3600.0; //表示当前乘子
+            System.Drawing.Point p_using = e.Location;
+            LocationChange_ProSag_Zoom(p_using); //更新放缩位置
+            UpdataFivePictureBox_Zoom_And_Mark();//更新图像
+        }
+        private void Mark_ProSagFunction_MouseClick(object sender, MouseEventArgs e) //更新Mark点在volume中的位置（更新Click_Depth,Click_Height,Click_width的参数）
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                MarkExist = true;
+                System.Drawing.Point orP = e.Location;
+                System.Drawing.Point p = LocationToOrPictureChange_ProSag_Mark(orP);
+                Click_Depth = (int)((double)p.Y / PicProSag.Image.Height * Original_Depth);
+                Click_Height = (int)((double)p.X / PicProSag.Image.Width * Original_Height);
+                Click_Width = System.Convert.ToInt32(texdown_shi.Text.Substring(0, texdown_shi.Text.IndexOf("/")));
+                UpdataTextAndScroll(); //更新TextBox的值和Scroll的值
+                UpdataFivePictureBox_Zoom_And_Mark();//更新图像
+            }
+        }
+
+
+
+
+        #endregion
 
 
 
@@ -2000,7 +2061,7 @@ namespace Portable_BMU_App
         //Navigation 2, Use scale
         public void NavigationProcess()
         {
-          
+
             byte[,] b8Frame = new byte[boxHeight, boxWidth];
             MainForm.g4Flag2 = false;
             while (true)
@@ -2008,15 +2069,17 @@ namespace Portable_BMU_App
                 float[] xyzArray = new float[3]; float[] quaternionArray = new float[4];
                 Object thisLock = new Object();
                 bool isNavigation = false;
-
+                
                 lock (thisLock)
                 {
 
                     if (MainForm.g4Flag2 == true)
                     {
-                        Array.Copy(MainForm.sourceXYZ2, xyzArray, MainForm.sourceXYZ.Length);
-                        Array.Copy(MainForm.sourceAER2, quaternionArray, MainForm.sourceAER.Length);
-                        //Console.WriteLine("x:{0},y:{1},z:{2}",xyzArray[0],xyzArray[1],xyzArray[2]);
+                  
+                        Array.Copy(MainForm.sourceXYZ2, xyzArray, MainForm.sourceXYZ2.Length);
+                        Array.Copy(MainForm.sourceAER2, quaternionArray, MainForm.sourceAER2.Length);
+                        //Console.WriteLine("x:{0},y:{1},z:{2}", xyzArray[0], xyzArray[1], xyzArray[2]);
+                        //Console.WriteLine("xyz2:{0} {1} {2}", MainForm.sourceXYZ2[0], MainForm.sourceXYZ2[1], MainForm.sourceXYZ2[2]);
                         //savePreScanGPS.Add(xyzArray);
                         //savePreScanGPS.Add(quaternionArray);
                         isNavigation = true;
@@ -2027,17 +2090,13 @@ namespace Portable_BMU_App
 
                 if (isNavigation)
                 {
+                    
                     Vector3 tempVector = new Vector3(xyzArray[0] * 10, xyzArray[1] * 10, xyzArray[2] * 10);
+                    //Console.WriteLine("{0} {1} {2} before cal",tempVector)
                     Vector3 sensor2Location = Vector3.Transform(tempVector, calibrationMatrix);
                     sensor2Location.X = 0f - sensor2Location.X;
 
                     Vector3 sensor2InVolume = sensor2Location - boxOrg;
-
-
-
-
-
-
 
                     //Tex_increaseX.BeginInvoke(new MethodInvoker(delegate { textshow(texdown_guan, tex_guan); }));
 
@@ -2045,36 +2104,34 @@ namespace Portable_BMU_App
 
                     int indexY = (int)Math.Round(sensor2InVolume.Y / voxelWidth) + increasY;
                     int indexZ = (int)Math.Round(sensor2InVolume.Z / voxelDepth) + increasZ;
-          
+
 
 
                     Console.WriteLine("x,y,z is {0},{1},{2}", indexX, indexY, indexZ);
                     Console.WriteLine("boxd boxh boxw is {0},{1},{2} ", boxDepth, boxHeight, boxWidth);
-                    Console.WriteLine("zishi:{0}  ", Properties.Settings.Default.ScanPosition);
-                    if(Properties.Settings.Default.ScanPosition == "Standing Position")
+                    //Console.WriteLine("zishi:{0}  ", Properties.Settings.Default.ScanPosition);
+                    if (Properties.Settings.Default.ScanPosition == "Standing Position")
                     {
                         if (indexZ >= 1 && indexZ < boxDepth && indexX >= 1 && indexX <= boxHeight && indexY >= 1 && indexY <= boxWidth)
                         {
-                            Console.WriteLine("x,y,z is {0},{1},{2}", indexX, indexY, indexZ);
-                            Console.WriteLine("boxd boxh boxw is {0},{1},{2} ", boxDepth, boxHeight, boxWidth);
+                            //Console.WriteLine("x,y,z is {0},{1},{2}", indexX, indexY, indexZ);
+                            //Console.WriteLine("boxd boxh boxw is {0},{1},{2} ", boxDepth, boxHeight, boxWidth);
+                          
                             //BeginInvoke((new MethodInvoker(delegate { ThreeD_Navigation_Standing(indexX, indexY, indexZ); })));
                             ThreeD_Navigation_Standing(indexX, indexY, indexZ);
 
                         }
                     }
-                    else if(Properties.Settings.Default.ScanPosition == "Prone Position")
+                    else if (Properties.Settings.Default.ScanPosition == "Prone Position")
                     {
                         if (indexZ >= 1 && indexZ < boxDepth && indexX >= 1 && indexX <= boxHeight && indexY >= 1 && indexY <= boxWidth)
                         {
-
                             ThreeD_Navigation_Standing(indexX, indexY, indexZ);
                             //BeginInvoke((new MethodInvoker(delegate { ThreeD_Navigation_Standing(indexX, indexY, indexZ); })));
-
-
                         }
 
                     }
-               
+
 
                 }
             }
@@ -2083,8 +2140,8 @@ namespace Portable_BMU_App
         public void PictureBoxShow3D(object sender, Bitmap bitmapG)
         {
             ((PictureBox)sender).Image = bitmapG;
-       
-            
+
+
         }
 
         public void textshow(object sender, string text)
@@ -2181,7 +2238,7 @@ namespace Portable_BMU_App
             //Array.Copy(volume,volume_cut,volume.Length* volume[0].GetLength(0)* volume[0].GetLength(1));
 
 
-  
+
             //MainForm.volume.CopyTo(volume_cut,0); ;
             int height = volume[0].GetLength(0);
             int width = volume[0].GetLength(1);
@@ -2361,7 +2418,49 @@ namespace Portable_BMU_App
 
         }
 
-        private void label5_Click(object sender, EventArgs e)
+
+        // 根据textbox 中的数字将5张图片合理的展示出来//
+        //目前已经用UpdataFivePictureBox_Zoom_And_Mark()实现
+        //private void Display_zlx_fivepicture()
+
+
+        // 整体进行拉伸时图片的缩放 //
+        private void PictureSizeChanged(object sender, EventArgs e)
+        {
+            if (volume != null)
+            {
+                Original_Depth = volume.Length;
+                Original_Height = volume[0].GetLength(0);
+                Original_Width = volume[0].GetLength(1);
+
+                //// 保持所有图片比例不变化
+                PicSag.Width = (int)(PicTra.Width * Original_Height / Original_Width);  // 使得Sag面的宽度保持和Tra面的高度一致
+                int poXSag = (int)((panel3.Width - PicSag.Width) / 2);
+                int poXProSag = (int)((panel12.Width - PicProSag.Width) / 2);
+                int poY = 63;
+                PicSag.Location = new System.Drawing.Point(poXSag, poY);
+                PicProSag.Width = (int)(PicTra.Width * Original_Height / Original_Width);  // 使得Sag面的宽度保持和Tra面的高度一致
+                PicProSag.Location = new System.Drawing.Point(poXProSag, poY);  // 使其居中显示
+
+                PicCor.Width = PicTra.Width;
+                PicProCor.Width = PicTra.Width;
+                int poXCor = (int)((panel4.Width - PicCor.Width) / 2);
+                int poXProCor = (int)((panel11.Width - PicProCor.Width) / 2);
+                PicProCor.Location = new System.Drawing.Point(poXProCor, poY);
+                PicCor.Location = new System.Drawing.Point(poXCor, poY);
+                /// 结束
+                /// 
+
+                //Display_zlx_fivepicture();
+                UpdataFivePictureBox_Zoom_And_Mark();
+
+
+            }
+
+
+        }
+
+        private void PicCor_Click(object sender, EventArgs e)
         {
 
         }

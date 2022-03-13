@@ -36,11 +36,11 @@
             this.Direction = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel12 = new System.Windows.Forms.Panel();
-            this.PicProSag = new System.Windows.Forms.PictureBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.panel11 = new System.Windows.Forms.Panel();
-            this.PicProCor = new System.Windows.Forms.PictureBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.PicProCor = new System.Windows.Forms.PictureBox();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.PicProSag = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.texdown_heng = new System.Windows.Forms.TextBox();
@@ -72,14 +72,15 @@
             this.PicSag = new System.Windows.Forms.PictureBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.Mark_Clean_Button = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel5.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel12.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PicProSag)).BeginInit();
-            this.panel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicProCor)).BeginInit();
+            this.panel11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicProSag)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicTra)).BeginInit();
@@ -180,8 +181,8 @@
             // 
             // panel12
             // 
-            this.panel12.Controls.Add(this.PicProSag);
-            this.panel12.Controls.Add(this.label5);
+            this.panel12.Controls.Add(this.label4);
+            this.panel12.Controls.Add(this.PicProCor);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel12.Location = new System.Drawing.Point(446, 5);
             this.panel12.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -189,18 +190,41 @@
             this.panel12.Size = new System.Drawing.Size(435, 1049);
             this.panel12.TabIndex = 13;
             // 
-            // PicProSag
+            // label4
             // 
-            this.PicProSag.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(105, 8);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(226, 24);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "Coronal Projection";
+            // 
+            // PicProCor
+            // 
+            this.PicProCor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.PicProSag.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.PicProSag.Location = new System.Drawing.Point(36, 53);
-            this.PicProSag.Name = "PicProSag";
-            this.PicProSag.Size = new System.Drawing.Size(375, 981);
-            this.PicProSag.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PicProSag.TabIndex = 4;
-            this.PicProSag.TabStop = false;
+            this.PicProCor.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.PicProCor.Location = new System.Drawing.Point(30, 52);
+            this.PicProCor.Name = "PicProCor";
+            this.PicProCor.Size = new System.Drawing.Size(380, 981);
+            this.PicProCor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PicProCor.TabIndex = 5;
+            this.PicProCor.TabStop = false;
+            this.PicProCor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Mark_ProCorFunction_MouseClick);
+            this.PicProCor.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.ZoomProCorFunction_MouseWheel);
+            // 
+            // panel11
+            // 
+            this.panel11.Controls.Add(this.label5);
+            this.panel11.Controls.Add(this.PicProSag);
+            this.panel11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel11.Location = new System.Drawing.Point(4, 5);
+            this.panel11.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(434, 1049);
+            this.panel11.TabIndex = 13;
             // 
             // label5
             // 
@@ -212,40 +236,20 @@
             this.label5.TabIndex = 11;
             this.label5.Text = "Sagittal Projection";
             // 
-            // panel11
+            // PicProSag
             // 
-            this.panel11.Controls.Add(this.PicProCor);
-            this.panel11.Controls.Add(this.label4);
-            this.panel11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel11.Location = new System.Drawing.Point(4, 5);
-            this.panel11.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(434, 1049);
-            this.panel11.TabIndex = 13;
-            // 
-            // PicProCor
-            // 
-            this.PicProCor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PicProSag.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.PicProCor.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.PicProCor.Location = new System.Drawing.Point(30, 53);
-            this.PicProCor.Name = "PicProCor";
-            this.PicProCor.Size = new System.Drawing.Size(380, 981);
-            this.PicProCor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PicProCor.TabIndex = 5;
-            this.PicProCor.TabStop = false;
-            this.PicProCor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PicProCorMouseClick);
-            // 
-            // label4
-            // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(102, 8);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(226, 24);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "Coronal Projection";
+            this.PicProSag.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.PicProSag.Location = new System.Drawing.Point(35, 54);
+            this.PicProSag.Name = "PicProSag";
+            this.PicProSag.Size = new System.Drawing.Size(375, 981);
+            this.PicProSag.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PicProSag.TabIndex = 4;
+            this.PicProSag.TabStop = false;
+            this.PicProSag.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Mark_ProSagFunction_MouseClick);
+            this.PicProSag.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.ZoomProSagFunction_MouseWheel);
             // 
             // panel2
             // 
@@ -323,6 +327,7 @@
             this.panel10.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel10.Controls.Add(this.Mark_Clean_Button);
             this.panel10.Controls.Add(this.ContrastBar);
             this.panel10.Controls.Add(this.label6);
             this.panel10.Controls.Add(this.label7);
@@ -630,6 +635,16 @@
             // 
             this.errorProvider2.ContainerControl = this;
             // 
+            // Mark_Clean_Button
+            // 
+            this.Mark_Clean_Button.Location = new System.Drawing.Point(50, 63);
+            this.Mark_Clean_Button.Name = "Mark_Clean_Button";
+            this.Mark_Clean_Button.Size = new System.Drawing.Size(134, 48);
+            this.Mark_Clean_Button.TabIndex = 28;
+            this.Mark_Clean_Button.Text = "MarkClean";
+            this.Mark_Clean_Button.UseVisualStyleBackColor = true;
+            this.Mark_Clean_Button.Click += new System.EventHandler(this.Mark_Clean_Button_Click);
+            // 
             // Frm_RealTime_Navigation_ZLX
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -647,10 +662,10 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel12.ResumeLayout(false);
             this.panel12.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PicProSag)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicProCor)).EndInit();
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PicProCor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicProSag)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
@@ -724,6 +739,7 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Button Mark_Clean_Button;
     }
 }
 

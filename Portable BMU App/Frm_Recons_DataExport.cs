@@ -213,6 +213,7 @@ namespace Portable_BMU_App
             }
 
             // Transfer these paras to mainform after pre-scan
+            // If Width/Deepth is about 1:2
             Frm_RealTime_Navigation_ZLX.boxWidth = reconstructionMethods.mboxWidth;
             Frm_RealTime_Navigation_ZLX.boxHeight = reconstructionMethods.mboxHeight;
             Frm_RealTime_Navigation_ZLX.boxDepth = reconstructionMethods.mboxDepth;
@@ -220,7 +221,15 @@ namespace Portable_BMU_App
             Frm_RealTime_Navigation_ZLX.voxelDepth = reconstructionMethods.voxelDepth;
             Frm_RealTime_Navigation_ZLX.voxelHeight = reconstructionMethods.voxelHeight;
             Frm_RealTime_Navigation_ZLX.voxelWidth = reconstructionMethods.voxelWidth;
-            
+
+            //If Width/Deepth is about 1:1
+            Frm_RealTime_Navigation_ZLX_Short.boxWidth = reconstructionMethods.mboxWidth;
+            Frm_RealTime_Navigation_ZLX_Short.boxHeight = reconstructionMethods.mboxHeight;
+            Frm_RealTime_Navigation_ZLX_Short.boxDepth = reconstructionMethods.mboxDepth;
+            Frm_RealTime_Navigation_ZLX_Short.boxOrg = reconstructionMethods.mboxOrg;
+            Frm_RealTime_Navigation_ZLX_Short.voxelDepth = reconstructionMethods.voxelDepth;
+            Frm_RealTime_Navigation_ZLX_Short.voxelHeight = reconstructionMethods.voxelHeight;
+            Frm_RealTime_Navigation_ZLX_Short.voxelWidth = reconstructionMethods.voxelWidth;
 
         }
 
@@ -313,6 +322,25 @@ namespace Portable_BMU_App
                     }
                 }
 
+                //Short 
+                Frm_RealTime_Navigation_ZLX_Short.volume = new short[depth][,];
+                for (int i = 0; i < depth; i++)
+                {
+                    Frm_RealTime_Navigation_ZLX_Short.volume[i] = new short[height, width];
+                }
+
+                for (int k = 0; k < ReconstructedVolume.Length; k++)
+                {
+                    for (int i = 0; i < height; i++)
+                    {
+                        for (int j = 0; j < width; j++)
+                        {
+                            Frm_RealTime_Navigation_ZLX_Short.volume[k][height - 1 - i, j] = ReconstructedVolume[k][i, j];
+                            // Console.WriteLine("9999");
+                        }
+                    }
+                }
+
                 // ---------------------------- save to mat for MIAS--------------------------//
                 SaveVolume2Mat(m_usDataCollection.savedPath, ReconstructedVolume, 
                     m_usDataCollection.fileName, 
@@ -323,31 +351,69 @@ namespace Portable_BMU_App
 
                 this.Close();
 
-                Frm_RealTime_Navigation_ZLX frm_RealTime_Navigation_ZLX = new Frm_RealTime_Navigation_ZLX();
-                frm_RealTime_Navigation_ZLX.Initialize_five_Picture();
-                frm_RealTime_Navigation_ZLX.Show();
-                // ---------------------------- save to mat for MIAS--------------------------//
-                // Open Remove muscle UI and display result in Mainform
-                //Frm_RealTime_Navigation_ZLX.Frm_RealTime_Navigation_ZLX.panelMain.Visible = true;
+                short[,] coronalImage;
 
-                short[,] coronalImage = VolumeProjection.SaggitalProjection(Frm_RealTime_Navigation_ZLX.volume);
-                //Console.WriteLine(frm_RealTime_Navigation_ZLX.vol)
+                if (depth < (int)(1.8 * width) || depth < (int)(1.8 * height))//判断是否是短图像
+                {
+                    Frm_RealTime_Navigation_ZLX_Short frm_RealTime_Navigation_ZLX_Short = new Frm_RealTime_Navigation_ZLX_Short();
+                    frm_RealTime_Navigation_ZLX_Short.Show();
+                    frm_RealTime_Navigation_ZLX_Short.Initialize_five_Picture();
+                    
+                    // ---------------------------- save to mat for MIAS--------------------------//
+                    // Open Remove muscle UI and display result in Mainform
+                    //Frm_RealTime_Navigation_ZLX_Short.Frm_RealTime_Navigation_ZLX_Short.panelMain.Visible = true;
+                    coronalImage = VolumeProjection.SaggitalProjection(Frm_RealTime_Navigation_ZLX_Short.volume);
 
-                byte[,] byteG_c = ConvertFile.ShortArrayToByte(coronalImage);
-                Mat srcG_c = ConvertFile.ArrayToMat(byteG_c);
-                Bitmap bitmap = ConvertFile.MatToBitmap(srcG_c);
+                    byte[,] byteG_c = ConvertFile.ShortArrayToByte(coronalImage);
+                    Mat srcG_c = ConvertFile.ArrayToMat(byteG_c);
+                    Bitmap bitmap = ConvertFile.MatToBitmap(srcG_c);
 
 
-                Show_Saggital top_showSag = new Show_Saggital();
-                top_showSag.InitializeComponent();
-                top_showSag.pictureBox1.Image = bitmap;
+                    Show_Saggital top_showSag = new Show_Saggital();
+                    top_showSag.InitializeComponent();
+                    top_showSag.pictureBox1.Image = bitmap;
 
-                //top_showSag.FormClosed += Frm_RealTime_Navigation_ZLX.frm_RealTime_Navigation_ZLX.top_showSag_closed;
-                top_showSag.FormClosed += frm_RealTime_Navigation_ZLX.top_showSag_closed;
-                //return;
+                    //top_showSag.FormClosed += Frm_RealTime_Navigation_ZLX.frm_RealTime_Navigation_ZLX.top_showSag_closed;
+                    top_showSag.FormClosed += frm_RealTime_Navigation_ZLX_Short.top_showSag_closed;
+                    //return;
 
-                top_showSag.Text = "Top"; 
-                top_showSag.ShowDialog();
+                    top_showSag.Text = "Top";
+                    top_showSag.ShowDialog();
+
+                }
+                else
+                {
+                    Frm_RealTime_Navigation_ZLX frm_RealTime_Navigation_ZLX = new Frm_RealTime_Navigation_ZLX();
+                    frm_RealTime_Navigation_ZLX.Show();
+                    frm_RealTime_Navigation_ZLX.Initialize_five_Picture();
+                    
+                    // ---------------------------- save to mat for MIAS--------------------------//
+                    // Open Remove muscle UI and display result in Mainform
+                    //Frm_RealTime_Navigation_ZLX.Frm_RealTime_Navigation_ZLX.panelMain.Visible = true;
+
+                    coronalImage = VolumeProjection.SaggitalProjection(Frm_RealTime_Navigation_ZLX.volume);
+                    //Console.WriteLine(frm_RealTime_Navigation_ZLX.vol)
+
+
+                    byte[,] byteG_c = ConvertFile.ShortArrayToByte(coronalImage);
+                    Mat srcG_c = ConvertFile.ArrayToMat(byteG_c);
+                    Bitmap bitmap = ConvertFile.MatToBitmap(srcG_c);
+
+
+                    Show_Saggital top_showSag = new Show_Saggital();
+                    top_showSag.InitializeComponent();
+                    top_showSag.pictureBox1.Image = bitmap;
+
+                    //top_showSag.FormClosed += Frm_RealTime_Navigation_ZLX.frm_RealTime_Navigation_ZLX.top_showSag_closed;
+                    top_showSag.FormClosed += frm_RealTime_Navigation_ZLX.top_showSag_closed;
+                    //return;
+
+                    top_showSag.Text = "Top";
+                    top_showSag.ShowDialog();
+
+                }
+
+
 
             }
         }

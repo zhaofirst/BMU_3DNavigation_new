@@ -404,11 +404,12 @@ namespace Portable_BMU_App
             Object thisLock = new Object();
             lock (thisLock)
             {
-                if (g4Info.nSnsID == 0) // If there has two sensor
+                if (g4Info.nSnsID == 0) // If there has two sensor  这里0代表sensor1
                 {
                     Array.Copy(g4Info.pos, sourceXYZ, g4Info.pos.Length);
                     Array.Copy(g4Info.ori, sourceAER, g4Info.ori.Length);
                     g4Flag = true;
+                    Console.WriteLine("gengxin1?");
                     //Console.WriteLine("G4");
 
                 }
@@ -416,15 +417,16 @@ namespace Portable_BMU_App
                 {
                     Array.Copy(g4Info.pos, sourceXYZ2, g4Info.pos.Length);
                     Array.Copy(g4Info.ori, sourceAER2, g4Info.ori.Length);
+                    Console.WriteLine("gengxin2?");
                     g4Flag2 = true;
                 }
             }
-            //Console.Write("SensorID is : {0},FrameC is {1}", g4Info.nSnsID, v2);
-            //Console.Write("{0}, {1}, {2}", sourceXYZ[0].ToString("0.00"), sourceXYZ[1].ToString("0.00"), sourceXYZ[2].ToString("0.00"));
-            //Console.WriteLine();
-            //Console.Write(" | ");
-            //Console.WriteLine("{0}, {1}, {2},{3}", sourceAER[0].ToString("0.00"), sourceAER[1].ToString("0.00"), sourceAER[2].ToString("0.00"), sourceAER[3].ToString("0.00"));
-            //Console.WriteLine("Here");
+            Console.Write("SensorID is : {0},FrameC is {1}", g4Info.nSnsID, v2);
+            Console.Write("{0}, {1}, {2}", sourceXYZ2[0].ToString("0.00"), sourceXYZ2[1].ToString("0.00"), sourceXYZ2[2].ToString("0.00"));
+            Console.WriteLine();
+            Console.Write(" | ");
+            Console.WriteLine("{0}, {1}, {2},{3}", sourceAER[0].ToString("0.00"), sourceAER[1].ToString("0.00"), sourceAER[2].ToString("0.00"), sourceAER[3].ToString("0.00"));
+            Console.WriteLine("Here");
         }
 
         void InitializeG4()
@@ -669,9 +671,9 @@ namespace Portable_BMU_App
             byte[] buff = new byte[size];
             Marshal.Copy(buffPointer, buff, 0, size);
 
-            byte[] b8FrameVector = new byte[480 * 640];
+            byte[] b8FrameVector = new byte[480 * 640]; // 超声探头输出矩阵
 
-            for (int i = 0; i < size / 4; i++)
+            for (int i = 0; i < size / 4; i++)  // 这里是由于探头为4通道
             {
                 int idx = 4 * i;
                 b8FrameVector[i] = buff[idx];
@@ -692,7 +694,7 @@ namespace Portable_BMU_App
 
             }
 
-            UnitInterFaceV733.G4Listener_GetSinglePno(g4NewInfo);
+            UnitInterFaceV733.G4Listener_GetSinglePno(g4NewInfo); // 获取定位信息 XYZ ARE
 
 
         }
