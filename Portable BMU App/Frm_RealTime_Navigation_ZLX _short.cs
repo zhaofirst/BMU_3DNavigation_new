@@ -99,6 +99,7 @@ namespace Portable_BMU_App
 
         public int Brightnessvalue = 100;
         public int Contrastvalue = 100;
+        public double gammaValue = 1;
         public Mat SagittalProjectionMat;
         public Mat CoronalProjectionMat;
         public static short[][,] volume;
@@ -309,34 +310,19 @@ namespace Portable_BMU_App
         private void InitializeMyScrollBar()
         {
             /// guan
-            //HScrollBar hscroll_Coronal = new HScrollBar();
 
             //hscroll_Coronal.Dock = DockStyle.Bottom;
-            hscroll_Coronal.Maximum = volume[0].GetLength(0);
-            //this.hscroll_Coronal.Maximum += this.hscroll_Coronal.LargeChange;
-
+            hscroll_Coronal.Maximum = volume[0].GetLength(0) - 3;
+            hscroll_Coronal.Maximum += hscroll_Coronal.LargeChange;
 
             /// shi
-            //HScrollBar hscroll_Sagittal = new HScrollBar();
 
+            hscroll_Sagittal.Maximum = volume[0].GetLength(1) - 3 + hscroll_Sagittal.LargeChange;
 
-            //hscroll_Sagittal.Dock = DockStyle.Bottom;
-            hscroll_Sagittal.Maximum = volume[0].GetLength(1);
-            Console.WriteLine(hscroll_Sagittal.Maximum);
-            //this.hscroll_Sagittal.Maximum += this.hscroll_Sagittal.LargeChange;
-
-            Console.WriteLine(hscroll_Sagittal.Maximum);
             /// heng
             //HScrollBar hscroll_transverse = new HScrollBar();
+            hscroll_transverse.Maximum = volume.Length - 3 + hscroll_transverse.LargeChange;
 
-
-            //hscroll_transverse.Dock = DockStyle.Bottom;
-            hscroll_transverse.Maximum = volume.Length;
-            //this.hscroll_transverse.Maximum += this.hscroll_transverse.LargeChange;
-
-
-            // Add the scroll bar to the form.
-            //Controls.Add(hscroll_Coronal);
         }
 
         // picture 1 
@@ -354,8 +340,8 @@ namespace Portable_BMU_App
 
                 numofguan = hscroll_Coronal.Value;
                 texdown_guan.Text = string.Format("{0}/{1}", numofguan + 1, Original_Height);
-                hscroll_Coronal.Maximum = volume[0].GetLength(0) - 2;
-                hscroll_Coronal.Maximum += hscroll_Coronal.LargeChange;
+                //hscroll_Coronal.Maximum = volume[0].GetLength(0) - 2;
+
 
                 UpdataFivePictureBox_Zoom_And_Mark(); //输出显示 并更新信息
 
@@ -405,7 +391,7 @@ namespace Portable_BMU_App
                         ///////////////
 
                         Mat brightnessMat = new Mat();
-                        updateBrightnessContrast(picshiMat, brightnessMat, Brightnessvalue, Contrastvalue);
+                        updateBrightnessContrast(picshiMat, brightnessMat, Brightnessvalue, Contrastvalue, gammaValue);
                         Bitmap showbitmap = new Bitmap(ConvertFile.MatToBitmap(brightnessMat));
                         PicSag.Image = showbitmap;
 
@@ -445,14 +431,9 @@ namespace Portable_BMU_App
                 int width = volume[0].GetLength(1);
 
                 texdown_shi.Text = string.Format("{0}/{1}", numofshi + 1, width);
-                hscroll_Sagittal.Maximum = volume[0].GetLength(1) - 2;
-                hscroll_Sagittal.Maximum += hscroll_Sagittal.LargeChange;
-
 
 
                 UpdataFivePictureBox_Zoom_And_Mark(); //输出显示 并更新信息
-
-
 
             }
 
@@ -499,7 +480,7 @@ namespace Portable_BMU_App
                         ///////////////
 
                         Mat brightnessMat = new Mat();
-                        updateBrightnessContrast(picshiMat, brightnessMat, Brightnessvalue, Contrastvalue);
+                        updateBrightnessContrast(picshiMat, brightnessMat, Brightnessvalue, Contrastvalue, gammaValue);
                         Bitmap showbitmap = new Bitmap(ConvertFile.MatToBitmap(brightnessMat));
                         PicSag.Image = showbitmap;
 
@@ -542,9 +523,6 @@ namespace Portable_BMU_App
                 int width = volume[0].GetLength(1);
 
                 texdown_heng.Text = string.Format("{0}/{1}", numofheng + 1, depth);
-                hscroll_transverse.Maximum = volume.Length - 2;
-                hscroll_transverse.Maximum += hscroll_transverse.LargeChange;
-
 
                 UpdataFivePictureBox_Zoom_And_Mark();
 
@@ -590,7 +568,7 @@ namespace Portable_BMU_App
                         ///////////////
 
                         Mat brightnessMat = new Mat();
-                        updateBrightnessContrast(pichengMat, brightnessMat, Brightnessvalue, Contrastvalue);
+                        updateBrightnessContrast(pichengMat, brightnessMat, Brightnessvalue, Contrastvalue, gammaValue);
                         Bitmap showbitmap = new Bitmap(ConvertFile.MatToBitmap(brightnessMat));
                         PicTra.Image = showbitmap;
 
@@ -615,7 +593,6 @@ namespace Portable_BMU_App
 
             Console.WriteLine("threed duanle  ", boxDepth, boxHeight, boxWidth);
             Console.WriteLine("threed duanle 3", Properties.Settings.Default.ScanPosition);
-            Console.WriteLine("stand");
             int rectSize = 3;
             int indexX = x - 1;
             int indexY = y - 1;
@@ -627,7 +604,7 @@ namespace Portable_BMU_App
 
 
             Mat brightnessMat_Cor_Pro = new Mat();
-            updateBrightnessContrast(CoronalProjectionMat, brightnessMat_Cor_Pro, Brightnessvalue, Contrastvalue);
+            updateBrightnessContrast(CoronalProjectionMat, brightnessMat_Cor_Pro, Brightnessvalue, Contrastvalue, gammaValue);
 
             Mat CoronalImageColor_Pro = new Mat();
             Cv2.ApplyColorMap(brightnessMat_Cor_Pro, CoronalImageColor_Pro, ColormapTypes.Bone);
@@ -652,7 +629,7 @@ namespace Portable_BMU_App
 
 
             Mat brightnessMat_Sag_Pro = new Mat();
-            updateBrightnessContrast(SagittalProjectionMat, brightnessMat_Sag_Pro, Brightnessvalue, Contrastvalue);
+            updateBrightnessContrast(SagittalProjectionMat, brightnessMat_Sag_Pro, Brightnessvalue, Contrastvalue, gammaValue);
 
 
 
@@ -693,7 +670,7 @@ namespace Portable_BMU_App
             Mat Guan_Mat = Out_ShorttoMat(PicCor, guan, 1);
 
             Mat brightnessMat_Cor = new Mat();
-            updateBrightnessContrast(Guan_Mat, brightnessMat_Cor, Brightnessvalue, Contrastvalue);
+            updateBrightnessContrast(Guan_Mat, brightnessMat_Cor, Brightnessvalue, Contrastvalue, gammaValue);
 
 
             Mat GuanImageColor = new Mat();
@@ -723,7 +700,7 @@ namespace Portable_BMU_App
             Mat Shi_Mat = Out_ShorttoMat(PicSag, shi, 2);
 
             Mat brightnessMat_Sag = new Mat();
-            updateBrightnessContrast(Shi_Mat, brightnessMat_Sag, Brightnessvalue, Contrastvalue);
+            updateBrightnessContrast(Shi_Mat, brightnessMat_Sag, Brightnessvalue, Contrastvalue, gammaValue);
 
 
 
@@ -756,7 +733,7 @@ namespace Portable_BMU_App
             Mat Heng_Mat = Out_ShorttoMat(PicTra, heng, 0);
 
             Mat brightnessMat_Cross = new Mat();
-            updateBrightnessContrast(Heng_Mat, brightnessMat_Cross, Brightnessvalue, Contrastvalue);
+            updateBrightnessContrast(Heng_Mat, brightnessMat_Cross, Brightnessvalue, Contrastvalue, gammaValue);
 
 
             Mat HengImageColor = new Mat();
@@ -1066,12 +1043,18 @@ namespace Portable_BMU_App
         {
 
             Contrastvalue = ContrastBar.Value;
+            gammaValue = (double)gammaBar.Value / 100.0;
             Brightnessvalue = BrightnessBar.Value;
             UpdataFivePictureBox_Zoom_And_Mark();
 
         }
 
-        public void updateBrightnessContrast(Mat src, Mat modifiedSrc, int brightness, int contrast)
+
+
+
+
+
+        public void updateBrightnessContrast(Mat src, Mat modifiedSrc, int brightness, int contrast, double gamma)
         {
             brightness = brightness - 100;
             contrast = contrast - 100;
@@ -1090,7 +1073,34 @@ namespace Portable_BMU_App
                 beta = alpha * brightness + delta;
             }
             src.ConvertTo(modifiedSrc, src.Type(), alpha, beta);
+
+            //使用Gama因子对 对比度和亮度进行了调整 https://blog.csdn.net/phinoo/article/details/112761590
+
+            Mat lookUpTable = new Mat(1, 256, MatType.CV_8U);
+
+            for (int i = 0; i < lookUpTable.Width; i++)
+            {
+                lookUpTable.Set<byte>(0, i, saturate_cast_Byte(Math.Pow(i / 255.0, gamma) * 255.0));
+                //Console.WriteLine(i);
+            }
+            Cv2.LUT(modifiedSrc, lookUpTable, modifiedSrc);
+
         }
+
+        byte saturate_cast_Byte(double doubleInput) // 辅助updateBrightnessContrast的函数，使得byte的取值再0到255之间（不进入-1=255这样的循环）
+        {
+            if (doubleInput < 0)
+            {
+                return (byte)0;
+            }
+            if (doubleInput > 255)
+            {
+                return (byte)255;
+            }
+            return (byte)doubleInput;
+        }
+
+
         #endregion
 
 
@@ -1263,6 +1273,11 @@ namespace Portable_BMU_App
                 int midWint = (int)Math.Round(midWf);
 
 
+
+
+
+
+
                 //Guan
                 short[,] guan = volume_guan[midHint];
                 Mat picguanMat = new Mat();
@@ -1296,8 +1311,7 @@ namespace Portable_BMU_App
                 PicTra.Image = ConvertFile.MatToBitmap(pichengMat);
 
 
-
-
+                UpdataFivePictureBox_Zoom_And_Mark();
 
                 Console.WriteLine(dataCount);
 
@@ -1320,6 +1334,7 @@ namespace Portable_BMU_App
             int depth = Original_Depth;
             int width = Original_Width;
             int height = Original_Height;
+
 
             //这里完成3个面的切片
             volume_guan = new short[Original_Height][,];
@@ -1405,12 +1420,14 @@ namespace Portable_BMU_App
             int midWint = (int)Math.Round(midWf);
 
 
+
+
             //Guan
             short[,] guan = volume_guan[midHint];
             Mat picguanMat = new Mat();
             picguanMat = Out_ShorttoMat(PicCor, guan, 1);
             Picguan_clone = picguanMat;
-            string tex_guan = string.Format("{0}/{1}", midWint + 1, Original_Height);
+            string tex_guan = string.Format("{0}/{1}", midHint + 1, Original_Height);
             hscroll_Coronal.Value = midHint;
             texdown_guan.Text = tex_guan;
             PicCor.Image = ConvertFile.MatToBitmap(picguanMat);
@@ -1440,16 +1457,14 @@ namespace Portable_BMU_App
 
 
 
+
             PicSag.Width = (int)(PicTra.Width * height / width);  // 使得Sag面的宽度保持和Tra面的高度一致
             int poX = (int)((panel3.Width - PicSag.Width) / 2);
             int poY = 63;
             PicSag.Location = new System.Drawing.Point(poX, poY);
             PicProSag.Width = (int)(PicTra.Width * height / width);  // 使得Sag面的宽度保持和Tra面的高度一致
             PicProSag.Location = new System.Drawing.Point(poX, poY);
-
-
-            //ThreeD_Navigation(200, 100, 90);
-            Console.WriteLine(dataCount);
+            UpdataFivePictureBox_Zoom_And_Mark();
         }
 
         #endregion
@@ -1500,17 +1515,19 @@ namespace Portable_BMU_App
         // 辅助功能函数 //
         void UpdataTextAndScroll() //更新TextBox的值和Scroll的值
         {
-            string tex_guan = string.Format("{0}/{1}", Click_Height + 1, Original_Height);
+            string tex_guan = string.Format("{0}/{1}", Click_Height, Original_Height);
             hscroll_Coronal.Value = Click_Height;
             texdown_guan.Text = tex_guan;
 
             hscroll_transverse.Value = Click_Depth;
-            string tex_heng = string.Format("{0}/{1}", Click_Depth + 1, Original_Depth);
+            string tex_heng = string.Format("{0}/{1}", Click_Depth, Original_Depth);
             texdown_heng.Text = tex_heng;
 
             hscroll_Sagittal.Value = Click_Width;
-            string tex_shi = string.Format("{0}/{1}", Click_Width + 1, Original_Width);
+            string tex_shi = string.Format("{0}/{1}", Click_Width, Original_Width);
             texdown_shi.Text = tex_shi;
+
+
         }
         void TextToMat_Zoom()//依据TextBox上的数值从volume读取五个mat的图像 （初始化上述的原始图像五个参数）
         {
@@ -1589,7 +1606,7 @@ namespace Portable_BMU_App
             OpenCvSharp.Point endPointX = new OpenCvSharp.Point(p.X, sender.Image.Height);
             Cv2.Line(OrMat, startPointX, endPointX, OpenCvSharp.Scalar.Red, 1);
             Mat NewMat = new Mat();
-            updateBrightnessContrast(OrMat, NewMat, Brightnessvalue, Contrastvalue);
+            updateBrightnessContrast(OrMat, NewMat, Brightnessvalue, Contrastvalue, gammaValue);
             Bitmap NewBitMap = ConvertFile.MatToBitmap(NewMat);
             //NewBitMap 
             sender.Image = NewBitMap;
@@ -1606,7 +1623,7 @@ namespace Portable_BMU_App
             ShowZoomPictureTraMat();
             ShowZoomPictureProCorMat();
             ShowZoomPictureProSagMat();
-            Console.WriteLine(MarkExist);
+            //Console.WriteLine(MarkExist);
             if (MarkExist)
             {
                 RedCross(PicCor, ShowPosition_Cor_Point_Mark);
@@ -1622,7 +1639,7 @@ namespace Portable_BMU_App
                 Mat PicCorMat = new Mat();
                 PicCorMat = ConvertFile.BitmapToMat(PicCorBitmap);
                 Mat NewMatCor = new Mat();
-                updateBrightnessContrast(PicCorMat, NewMatCor, Brightnessvalue, Contrastvalue);
+                updateBrightnessContrast(PicCorMat, NewMatCor, Brightnessvalue, Contrastvalue, gammaValue);
                 Bitmap NewBitMapCor = ConvertFile.MatToBitmap(NewMatCor);
                 PicCor.Image = NewBitMapCor;
                 //Sag
@@ -1630,7 +1647,7 @@ namespace Portable_BMU_App
                 Mat PicSagMat = new Mat();
                 PicSagMat = ConvertFile.BitmapToMat(PicSagBitmap);
                 Mat NewMatSag = new Mat();
-                updateBrightnessContrast(PicSagMat, NewMatSag, Brightnessvalue, Contrastvalue);
+                updateBrightnessContrast(PicSagMat, NewMatSag, Brightnessvalue, Contrastvalue, gammaValue);
                 Bitmap NewBitMapSag = ConvertFile.MatToBitmap(NewMatSag);
                 PicSag.Image = NewBitMapSag;
                 //Tra
@@ -1638,7 +1655,7 @@ namespace Portable_BMU_App
                 Mat PicTraMat = new Mat();
                 PicTraMat = ConvertFile.BitmapToMat(PicTraBitmap);
                 Mat NewMatTra = new Mat();
-                updateBrightnessContrast(PicTraMat, NewMatTra, Brightnessvalue, Contrastvalue);
+                updateBrightnessContrast(PicTraMat, NewMatTra, Brightnessvalue, Contrastvalue, gammaValue);
                 Bitmap NewBitMapTra = ConvertFile.MatToBitmap(NewMatTra);
                 PicTra.Image = NewBitMapTra;
                 //SagPro
@@ -1646,7 +1663,7 @@ namespace Portable_BMU_App
                 Mat PicProSagMat = new Mat();
                 PicProSagMat = ConvertFile.BitmapToMat(PicProSagBitmap);
                 Mat NewMatProSag = new Mat();
-                updateBrightnessContrast(PicProSagMat, NewMatProSag, Brightnessvalue, Contrastvalue);
+                updateBrightnessContrast(PicProSagMat, NewMatProSag, Brightnessvalue, Contrastvalue, gammaValue);
                 Bitmap NewBitMapProSag = ConvertFile.MatToBitmap(NewMatProSag);
                 PicProSag.Image = NewBitMapProSag;
                 //CorPro
@@ -1654,12 +1671,10 @@ namespace Portable_BMU_App
                 Mat PicProCorMat = new Mat();
                 PicProCorMat = ConvertFile.BitmapToMat(PicProCorBitmap);
                 Mat NewMatProCor = new Mat();
-                updateBrightnessContrast(PicProCorMat, NewMatProCor, Brightnessvalue, Contrastvalue);
+                updateBrightnessContrast(PicProCorMat, NewMatProCor, Brightnessvalue, Contrastvalue, gammaValue);
                 Bitmap NewBitMapProCor = ConvertFile.MatToBitmap(NewMatProCor);
                 PicProCor.Image = NewBitMapProCor;
             }
-
-
         }
 
         private void Mark_Clean_Button_Click(object sender, EventArgs e)//用于删去Mark
@@ -1684,7 +1699,7 @@ namespace Portable_BMU_App
             {
                 Cor_Scale_Zoom = 1;
                 OutMat = PictureCor_Original_Zoom;
-                //updateBrightnessContrast(PictureCor_Original_Zoom, OutMat, Brightnessvalue, Contrastvalue);
+                //updateBrightnessContrast(PictureCor_Original_Zoom, OutMat, Brightnessvalue, Contrastvalue,gammaValue);
             }
             else
             {
@@ -1692,7 +1707,7 @@ namespace Portable_BMU_App
                 Cv2.Resize(PictureCor_Original_Zoom, ZoomTempMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
                 Rect rect = new Rect((int)(Cor_Scale_Zoom * p.X) - p.X, (int)((Cor_Scale_Zoom - 1) * p.Y), PictureCor_Original_Zoom.Width, PictureCor_Original_Zoom.Height);
                 OutMat = new Mat(ZoomTempMat, rect);
-                //updateBrightnessContrast(OutMat, OutMat, Brightnessvalue, Contrastvalue);  //改变对比度
+                //updateBrightnessContrast(OutMat, OutMat, Brightnessvalue, Contrastvalue,gammaValue);  //改变对比度
             }
             Bitmap bitmapFinal = ConvertFile.MatToBitmap(OutMat);
             PicCor.Image = bitmapFinal;
@@ -1737,6 +1752,7 @@ namespace Portable_BMU_App
                 System.Drawing.Point p = LocationToOrPictureChange_Cor_Mark(orP);
                 Click_Depth = (int)((double)p.Y / PicCor.Image.Height * Original_Depth);
                 Click_Height = System.Convert.ToInt32(texdown_guan.Text.Substring(0, texdown_guan.Text.IndexOf("/")));
+                //Console.WriteLine("{0}",Click_Height);
                 Click_Width = (int)((double)p.X / PicCor.Image.Width * Original_Width);
                 UpdataTextAndScroll(); //更新TextBox的值和Scroll的值
                 UpdataFivePictureBox_Zoom_And_Mark();//更新图像
@@ -1747,7 +1763,6 @@ namespace Portable_BMU_App
             }
 
         }
-
 
         /* Sag面 */
         void ShowZoomPictureSagMat()// 图像显示 用到的参数：Mat PiSagiginalMat,Point Location_Zoom,int ZoomScale
@@ -1764,7 +1779,7 @@ namespace Portable_BMU_App
             {
                 Sag_Scale_Zoom = 1;
                 OutMat = PictureSag_Original_Zoom;
-                //updateBrightnessContrast(PictureSag_Original_Zoom, OutMat, Brightnessvalue, Contrastvalue);
+                //updateBrightnessContrast(PictureSag_Original_Zoom, OutMat, Brightnessvalue, Contrastvalue,gammaValue);
             }
             else
             {
@@ -1772,7 +1787,7 @@ namespace Portable_BMU_App
                 Cv2.Resize(PictureSag_Original_Zoom, ZoomTempMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
                 Rect rect = new Rect((int)(Sag_Scale_Zoom * p.X) - p.X, (int)((Sag_Scale_Zoom - 1) * p.Y), PictureSag_Original_Zoom.Width, PictureSag_Original_Zoom.Height);
                 OutMat = new Mat(ZoomTempMat, rect);
-                //updateBrightnessContrast(OutMat, OutMat, Brightnessvalue, Contrastvalue);  //改变对比度
+                //updateBrightnessContrast(OutMat, OutMat, Brightnessvalue, Contrastvalue,gammaValue);  //改变对比度
             }
             Bitmap bitmapFinal = ConvertFile.MatToBitmap(OutMat);
             PicSag.Image = bitmapFinal;
@@ -1818,6 +1833,7 @@ namespace Portable_BMU_App
                 UpdataFivePictureBox_Zoom_And_Mark();//更新图像
             }
         }
+
         /* Tra面 */
         void ShowZoomPictureTraMat()// 图像显示 用到的参数：Mat PiTraiginalMat,Point Location_Zoom,int ZoomScale
         {
@@ -1833,7 +1849,7 @@ namespace Portable_BMU_App
             {
                 Tra_Scale_Zoom = 1;
                 OutMat = PictureTra_Original_Zoom;
-                //updateBrightnessContrast(PictureTra_Original_Zoom, OutMat, Brightnessvalue, Contrastvalue);
+                //updateBrightnessContrast(PictureTra_Original_Zoom, OutMat, Brightnessvalue, Contrastvalue,gammaValue);
             }
             else
             {
@@ -1841,7 +1857,7 @@ namespace Portable_BMU_App
                 Cv2.Resize(PictureTra_Original_Zoom, ZoomTempMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
                 Rect rect = new Rect((int)(Tra_Scale_Zoom * p.X) - p.X, (int)((Tra_Scale_Zoom - 1) * p.Y), PictureTra_Original_Zoom.Width, PictureTra_Original_Zoom.Height);
                 OutMat = new Mat(ZoomTempMat, rect);
-                //updateBrightnessContrast(OutMat, OutMat, Brightnessvalue, Contrastvalue);  //改变对比度
+                //updateBrightnessContrast(OutMat, OutMat, Brightnessvalue, Contrastvalue,gammaValue);  //改变对比度
             }
             Bitmap bitmapFinal = ConvertFile.MatToBitmap(OutMat);
             PicTra.Image = bitmapFinal;
@@ -1894,6 +1910,7 @@ namespace Portable_BMU_App
 
             }
         }
+
         /* ProCor面 */
         void ShowZoomPictureProCorMat()// 图像显示 用到的参数：Mat PiProcOriginalMat,Point Location_Zoom,int ZoomScale
         {
@@ -1909,7 +1926,7 @@ namespace Portable_BMU_App
             {
                 ProCor_Scale_Zoom = 1;
                 OutMat = PictureProCor_Original_Zoom;
-                //updateBrightnessContrast(PictureProCor_Original_Zoom, OutMat, Brightnessvalue, Contrastvalue);
+                //updateBrightnessContrast(PictureProCor_Original_Zoom, OutMat, Brightnessvalue, Contrastvalue,gammaValue);
             }
             else
             {
@@ -1917,7 +1934,7 @@ namespace Portable_BMU_App
                 Cv2.Resize(PictureProCor_Original_Zoom, ZoomTempMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
                 Rect rect = new Rect((int)(ProCor_Scale_Zoom * p.X) - p.X, (int)((ProCor_Scale_Zoom - 1) * p.Y), PictureProCor_Original_Zoom.Width, PictureProCor_Original_Zoom.Height);
                 OutMat = new Mat(ZoomTempMat, rect);
-                //updateBrightnessContrast(OutMat, OutMat, Brightnessvalue, Contrastvalue);  //改变对比度
+                //updateBrightnessContrast(OutMat, OutMat, Brightnessvalue, Contrastvalue,gammaValue);  //改变对比度
             }
             Bitmap bitmapFinal = ConvertFile.MatToBitmap(OutMat);
             PicProCor.Image = bitmapFinal;
@@ -1969,6 +1986,7 @@ namespace Portable_BMU_App
             }
 
         }
+
         /* ProSag面 */
         void ShowZoomPictureProSagMat()// 图像显示 用到的参数：Mat PiProSagiginalMat,Point Location_Zoom,int ZoomScale
         {
@@ -1984,7 +2002,7 @@ namespace Portable_BMU_App
             {
                 ProSag_Scale_Zoom = 1;
                 OutMat = PictureProSag_Original_Zoom;
-                //updateBrightnessContrast(PictureProSag_Original_Zoom, OutMat, Brightnessvalue, Contrastvalue);
+                //updateBrightnessContrast(PictureProSag_Original_Zoom, OutMat, Brightnessvalue, Contrastvalue,gammaValue);
             }
             else
             {
@@ -1992,7 +2010,7 @@ namespace Portable_BMU_App
                 Cv2.Resize(PictureProSag_Original_Zoom, ZoomTempMat, ZoomDsize, 0, 0, InterpolationFlags.Cubic);
                 Rect rect = new Rect((int)(ProSag_Scale_Zoom * p.X) - p.X, (int)((ProSag_Scale_Zoom - 1) * p.Y), PictureProSag_Original_Zoom.Width, PictureProSag_Original_Zoom.Height);
                 OutMat = new Mat(ZoomTempMat, rect);
-                //updateBrightnessContrast(OutMat, OutMat, Brightnessvalue, Contrastvalue);  //改变对比度
+                //updateBrightnessContrast(OutMat, OutMat, Brightnessvalue, Contrastvalue,gammaValue);  //改变对比度
             }
             Bitmap bitmapFinal = ConvertFile.MatToBitmap(OutMat);
             PicProSag.Image = bitmapFinal;
@@ -2069,17 +2087,15 @@ namespace Portable_BMU_App
                 float[] xyzArray = new float[3]; float[] quaternionArray = new float[4];
                 Object thisLock = new Object();
                 bool isNavigation = false;
-                
+
                 lock (thisLock)
                 {
 
                     if (MainForm.g4Flag2 == true)
                     {
-                  
-                        Array.Copy(MainForm.sourceXYZ2, xyzArray, MainForm.sourceXYZ2.Length);
-                        Array.Copy(MainForm.sourceAER2, quaternionArray, MainForm.sourceAER2.Length);
-                        //Console.WriteLine("x:{0},y:{1},z:{2}", xyzArray[0], xyzArray[1], xyzArray[2]);
-                        //Console.WriteLine("xyz2:{0} {1} {2}", MainForm.sourceXYZ2[0], MainForm.sourceXYZ2[1], MainForm.sourceXYZ2[2]);
+                        Array.Copy(MainForm.sourceXYZ2, xyzArray, MainForm.sourceXYZ.Length);
+                        Array.Copy(MainForm.sourceAER2, quaternionArray, MainForm.sourceAER.Length);
+                        //Console.WriteLine("x:{0},y:{1},z:{2}",xyzArray[0],xyzArray[1],xyzArray[2]);
                         //savePreScanGPS.Add(xyzArray);
                         //savePreScanGPS.Add(quaternionArray);
                         isNavigation = true;
@@ -2090,13 +2106,13 @@ namespace Portable_BMU_App
 
                 if (isNavigation)
                 {
-                    
                     Vector3 tempVector = new Vector3(xyzArray[0] * 10, xyzArray[1] * 10, xyzArray[2] * 10);
-                    //Console.WriteLine("{0} {1} {2} before cal",tempVector)
                     Vector3 sensor2Location = Vector3.Transform(tempVector, calibrationMatrix);
                     sensor2Location.X = 0f - sensor2Location.X;
 
                     Vector3 sensor2InVolume = sensor2Location - boxOrg;
+
+
 
                     //Tex_increaseX.BeginInvoke(new MethodInvoker(delegate { textshow(texdown_guan, tex_guan); }));
 
@@ -2109,14 +2125,13 @@ namespace Portable_BMU_App
 
                     Console.WriteLine("x,y,z is {0},{1},{2}", indexX, indexY, indexZ);
                     Console.WriteLine("boxd boxh boxw is {0},{1},{2} ", boxDepth, boxHeight, boxWidth);
-                    //Console.WriteLine("zishi:{0}  ", Properties.Settings.Default.ScanPosition);
+                    Console.WriteLine("zishi:{0}  ", Properties.Settings.Default.ScanPosition);
                     if (Properties.Settings.Default.ScanPosition == "Standing Position")
                     {
                         if (indexZ >= 1 && indexZ < boxDepth && indexX >= 1 && indexX <= boxHeight && indexY >= 1 && indexY <= boxWidth)
                         {
-                            //Console.WriteLine("x,y,z is {0},{1},{2}", indexX, indexY, indexZ);
-                            //Console.WriteLine("boxd boxh boxw is {0},{1},{2} ", boxDepth, boxHeight, boxWidth);
-                          
+                            Console.WriteLine("x,y,z is {0},{1},{2}", indexX, indexY, indexZ);
+                            Console.WriteLine("boxd boxh boxw is {0},{1},{2} ", boxDepth, boxHeight, boxWidth);
                             //BeginInvoke((new MethodInvoker(delegate { ThreeD_Navigation_Standing(indexX, indexY, indexZ); })));
                             ThreeD_Navigation_Standing(indexX, indexY, indexZ);
 
@@ -2460,10 +2475,7 @@ namespace Portable_BMU_App
 
         }
 
-        private void PicCor_Click(object sender, EventArgs e)
-        {
 
-        }
 
         void DisplayImage()
         {
