@@ -19,6 +19,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Numerics;
 using System.Threading;
+using Portable_BMU_App.NavigationControls;
 
 
 
@@ -591,13 +592,17 @@ namespace Portable_BMU_App
         {
 
 
-            Console.WriteLine("threed duanle  ", boxDepth, boxHeight, boxWidth);
-            Console.WriteLine("threed duanle 3", Properties.Settings.Default.ScanPosition);
+            //Console.WriteLine("threed duanle  ", boxDepth, boxHeight, boxWidth);
+            //Console.WriteLine("threed duanle 3", Properties.Settings.Default.ScanPosition);
             int rectSize = 3;
             int indexX = x - 1;
             int indexY = y - 1;
             int indexZ = z - 1;
 
+            /* 
+              resizedCoronalIndex_ 表示sensor位置经过坐标变换后在图像中显示的位置（Height方向上需要镜像一下坐标）
+              数据详情参照Siggtal面的注释 
+             */
 
             // ----Coronal_Pro---- ///.
 
@@ -641,9 +646,7 @@ namespace Portable_BMU_App
             Cv2.Resize(navigationSaggImage, dstGSagg, dsize_Sag);
             int resizedSaggIndex_X = (int)(indexX * ((float)PicProSag.Width / boxHeight));
             int resizedSaggIndex_Z = (int)(indexZ * ((float)visualHeight_shi_Pro / boxDepth));
-            //OpenCvSharp.Point startPoint2 = new OpenCvSharp.Point(resizedSaggIndex_X, resizedSaggIndex_Z);
-            //OpenCvSharp.Point endPoint2 = new OpenCvSharp.Point(resizedSaggIndex_X + rectSize, resizedSaggIndex_Z + rectSize);
-
+ 
 
             OpenCvSharp.Point startPoint2 = new OpenCvSharp.Point(PicSag.Width - resizedSaggIndex_X - rectSize, resizedSaggIndex_Z);
             OpenCvSharp.Point endPoint2 = new OpenCvSharp.Point(PicSag.Width - resizedSaggIndex_X, resizedSaggIndex_Z + rectSize);
@@ -657,20 +660,14 @@ namespace Portable_BMU_App
 
             // ----Coronal---- ///.
 
-
-
-
-
             short[,] guan = new short[Original_Depth, Original_Width];
             guan = volume_guan[indexX];
             short[][,] test = volume_guan;
             short[][,] test2 = volume_heng;
             Mat Guan_Mat = Out_ShorttoMat(PicCor, guan, 1);
-
+     
             Mat brightnessMat_Cor = new Mat();
             updateBrightnessContrast(Guan_Mat, brightnessMat_Cor, Brightnessvalue, Contrastvalue,gammaValue);
-
-
             Mat GuanImageColor = new Mat();
             Cv2.ApplyColorMap(brightnessMat_Cor, GuanImageColor, ColormapTypes.Bone);
             Mat navigationGuanImage = GuanImageColor.Clone();
@@ -685,6 +682,22 @@ namespace Portable_BMU_App
             OpenCvSharp.Point endPoint3 = new OpenCvSharp.Point(resizedGuanIndex_Y + rectSize, resizedGuanIndex_Z + rectSize);
             Cv2.Rectangle(dstGGuan, startPoint3, endPoint3, OpenCvSharp.Scalar.Red, -1);
             Bitmap bitmapGuan = ConvertFile.MatToBitmap(dstGGuan);
+            // 使用graphics类将bitmap添加导航辅助线
+            if (Click_Depth>0 && Click_Width>0 && Click_Width>0){
+
+
+
+
+
+                //当存在mark的时候显示辅助线
+                PointF arrowStart = new PointF(resizedCoronalIndex_Y, resizedCoronalIndex_Z);
+                int markY = (int)(Click_Width * ((float)PicCor.Width / boxWidth));
+                int markZ = (int)(Click_Depth * ((float)visualHeight_Guan / boxDepth));
+                PointF arrowEnd = new PointF(markY, markZ);
+                Console.WriteLine("Navigation mark is working");
+                Pen penGuan = new Pen(Brushes.Red);
+                bitmapGuan = DrawGraphs.DrawArrows(bitmapGuan, arrowStart, arrowEnd, Brushes.Red, penGuan);
+            }
             this.PicCor.BeginInvoke(new MethodInvoker(delegate { PictureBoxShow3D(PicCor, bitmapGuan); }));
             navigationGuanImage = null;
             string tex_guan = string.Format("{0}/{1}", indexX + 1, Original_Height);
@@ -699,9 +712,6 @@ namespace Portable_BMU_App
 
             Mat brightnessMat_Sag = new Mat();
             updateBrightnessContrast(Shi_Mat, brightnessMat_Sag, Brightnessvalue, Contrastvalue,gammaValue);
-
-
-
             Mat ShiImageColor = new Mat();
             Cv2.ApplyColorMap(brightnessMat_Sag, ShiImageColor, ColormapTypes.Bone);
             Mat navigationShiImage = ShiImageColor.Clone();
@@ -710,13 +720,31 @@ namespace Portable_BMU_App
             int visualHeight_Shi = (int)Math.Round((float)visual_Height_Shi);
             OpenCvSharp.Size dsize_shi = new OpenCvSharp.Size(PicSag.Width, visualHeight_Shi);
             Cv2.Resize(navigationShiImage, dstGShi, dsize_shi);
+            // resizedShiIndex_X 表示在picSag中横坐标的位置
+            // resizedShiIndex_Z 表示在picSag中纵坐标的位置
             int resizedShiIndex_X = (int)(indexX * ((float)PicSag.Width / boxHeight));
             int resizedShiIndex_Z = (int)(indexZ * ((float)visualHeight_Shi / boxDepth));
-            //OpenCvSharp.Point startPoint4 = new OpenCvSharp.Point(resizedShiIndex_X, resizedShiIndex_Z);
-            OpenCvSharp.Point startPoint4 = new OpenCvSharp.Point(PicSag.Width - resizedShiIndex_X - rectSize, resizedShiIndex_Z);
-            OpenCvSharp.Point endPoint4 = new OpenCvSharp.Point(PicSag.Width - resizedShiIndex_X, resizedShiIndex_Z + rectSize);
+            // 由于读入数据的方向在X（height）方向是反向的，所以这里要镜像一下数据
+            resizedShiIndex_X = PicSag.Width - resizedShiIndex_X - rectSize;
+            
+            OpenCvSharp.Point startPoint4 = new OpenCvSharp.Point(resizedShiIndex_X, resizedShiIndex_Z);
+            OpenCvSharp.Point endPoint4 = new OpenCvSharp.Point(resizedShiIndex_X+rectSize, resizedShiIndex_Z + rectSize);
+
             Cv2.Rectangle(dstGShi, startPoint4, endPoint4, OpenCvSharp.Scalar.Red, -1);
             Bitmap bitmapShi = ConvertFile.MatToBitmap(dstGShi);
+            //使用graphics类将bitmap添加导航辅助线
+            if (MarkExist == true)
+            {
+                //当存在mark的时候显示辅助线
+                PointF arrowStartShi = new PointF(resizedShiIndex_X, resizedShiIndex_Z);
+                int markX = (int)(Click_Height * ((float)PicSag.Width / boxHeight));
+                int markZ = (int)(Click_Depth * ((float)visualHeight_Shi / boxDepth));
+                PointF arrowEndShi = new PointF(markX, markZ);
+                Pen penShi = new Pen(Brushes.Red);
+                bitmapShi = DrawGraphs.DrawArrows(bitmapShi, arrowStartShi, arrowEndShi, Brushes.Red, penShi);
+            }
+
+
             this.PicSag.BeginInvoke(new MethodInvoker(delegate { PictureBoxShow3D(PicSag, bitmapShi); }));
             navigationShiImage = null;
             string tex_shi = string.Format("{0}/{1}", indexY + 1, Original_Width);
@@ -732,22 +760,40 @@ namespace Portable_BMU_App
 
             Mat brightnessMat_Cross = new Mat();
             updateBrightnessContrast(Heng_Mat, brightnessMat_Cross, Brightnessvalue, Contrastvalue,gammaValue);
-
-
             Mat HengImageColor = new Mat();
             Cv2.ApplyColorMap(brightnessMat_Cross, HengImageColor, ColormapTypes.Bone);
             Mat navigationHengImage = HengImageColor.Clone();
             Mat dstGHeng = new Mat();
-            float visual_Height_Heng = (float)PicTra.Width * Original_Height / Original_Height;
+
+            float visual_Height_Heng = (float)PicTra.Width * Original_Height / Original_Width;
             int visualHeight_Heng = (int)Math.Round((float)visual_Height_Heng);
             OpenCvSharp.Size dsize_heng = new OpenCvSharp.Size(PicTra.Width, visualHeight_Heng);
             Cv2.Resize(navigationHengImage, dstGHeng, dsize_heng);
-            int resizedHengIndex_X = (int)(indexX * ((float)PicTra.Width / boxHeight));
-            int resizedHengIndex_Y = (int)(indexY * ((float)visualHeight_Heng / boxWidth));
-            OpenCvSharp.Point startPoint5 = new OpenCvSharp.Point(resizedHengIndex_Y, visualHeight_Heng - resizedHengIndex_X - rectSize);
-            OpenCvSharp.Point endPoint5 = new OpenCvSharp.Point(resizedHengIndex_Y + rectSize, visualHeight_Heng - resizedHengIndex_X);
+
+            // 这里的X，Y代表的是3D图像中的X和Y不是 PicTra中的X和Y
+            int resizedHengIndex_X = (int)(indexX * ((float)visual_Height_Heng / boxHeight));
+            int resizedHengIndex_Y = (int)(indexY * ((float)PicTra.Width / boxWidth));
+            //X（height）方向镜像
+            resizedHengIndex_X = visualHeight_Heng - resizedHengIndex_X - rectSize;
+            // 图像显示
+            OpenCvSharp.Point startPoint5 = new OpenCvSharp.Point(resizedHengIndex_Y,resizedHengIndex_X);
+            OpenCvSharp.Point endPoint5 = new OpenCvSharp.Point(resizedHengIndex_Y + rectSize, resizedHengIndex_X+rectSize);
             Cv2.Rectangle(dstGHeng, startPoint5, endPoint5, OpenCvSharp.Scalar.Red, -1);
             Bitmap bitmapHeng = ConvertFile.MatToBitmap(dstGHeng);
+
+            //使用graphics类将bitmap添加导航辅助线
+            if (MarkExist == true)
+            {
+                //当存在mark的时候显示辅助线
+                PointF arrowStartHeng = new PointF(resizedHengIndex_Y, resizedHengIndex_X);
+                // X , Y 表示的是3D图像中的X和Y，不是二维图像中的X和Y
+                int markX = (int)(Click_Height * ((float)visual_Height_Heng / boxHeight));
+                int markY = (int)(Click_Width * ((float)PicTra.Width / boxWidth));
+                PointF arrowEndHeng = new PointF(markY, markX);
+                Pen penHeng = new Pen(Brushes.Red);
+                bitmapHeng = DrawGraphs.DrawArrows(bitmapHeng, arrowStartHeng, arrowEndHeng, Brushes.Red, penHeng);
+            }
+
             this.PicTra.BeginInvoke(new MethodInvoker(delegate { PictureBoxShow3D(PicTra, bitmapHeng); }));
             navigationHengImage = null;
             string tex_heng = string.Format("{0}/{1}", indexZ + 1, Original_Depth);
@@ -1469,7 +1515,7 @@ namespace Portable_BMU_App
 
 
         #region 图片缩放与标记  注意这里记得在Design中给每个pictureBox 添加滚轮控件函数
-        //该部分目前有个bug，每次Click原地都会自动加一，猜测是由于int float类型转换的时候计算不精准出现的问题。
+        
 
         // Zoom Button //
 
@@ -1595,7 +1641,7 @@ namespace Portable_BMU_App
             Bitmap OrBitMap = new Bitmap(sender.Image);
             Mat OrMat = new Mat();
             OrMat = ConvertFile.BitmapToMat(OrBitMap);
-            OrMat = OrMat.CvtColor(ColorConversionCodes.RGBA2RGB, 3);
+            OrMat = OrMat.CvtColor(ColorConversionCodes.RGBA2RGB, 3); // 改成3通道数据
             OpenCvSharp.Point startPointY = new OpenCvSharp.Point(0, p.Y);
             OpenCvSharp.Point endPointY = new OpenCvSharp.Point(sender.Image.Width, p.Y);
             Cv2.Line(OrMat, startPointY, endPointY, OpenCvSharp.Scalar.Red, 1);
@@ -1609,8 +1655,6 @@ namespace Portable_BMU_App
             //NewBitMap 
             sender.Image = NewBitMap;
         }
-
-
         void UpdataFivePictureBox_Zoom_And_Mark()//更新五个picbox参数，采用先放缩后标点的方式 并在标记时更新对比度和亮度   ///该函数以用于全局图像的更新Date: March 4
         {
             TextToMat_Zoom();
@@ -1675,9 +1719,34 @@ namespace Portable_BMU_App
             }
         }
 
-        private void Mark_Clean_Button_Click(object sender, EventArgs e)//用于删去Mark
+        private void Mark_Clean_Button_Click(object sender, MouseEventArgs e)//用于删去Mark
         {
-            MarkExist = false;
+            //判断点击鼠标左键或右键
+            if (e.Button == MouseButtons.Left)
+            {
+                if (MarkExist == true)
+                {//不显示标记
+                    MarkExist = false;
+                    Mark_Clean_Label.Text = "MarkExist";
+                    Mark_Clean_Label.BackColor = SystemColors.ControlLight;
+                }
+                else
+                {// 显示标记
+                    MarkExist = true;
+                    Mark_Clean_Label.Text = "MarkExist";
+                    Mark_Clean_Label.BackColor = SystemColors.Info;
+                }
+                
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                //右键点击，清除标记点位置
+                MarkExist = false;
+                Mark_Clean_Label.Text = "MarkCleared";
+                Click_Height = 0;
+                Click_Depth = 0;
+                Click_Width = 0;
+            }
             UpdataFivePictureBox_Zoom_And_Mark();
         }
 
@@ -1746,6 +1815,8 @@ namespace Portable_BMU_App
             {
 
                 MarkExist = true;
+                Mark_Clean_Label.Text = "MarkExist";
+                Mark_Clean_Label.BackColor = SystemColors.Info;
                 System.Drawing.Point orP = e.Location;
                 System.Drawing.Point p = LocationToOrPictureChange_Cor_Mark(orP);
                 Click_Depth = (int)((double)p.Y / PicCor.Image.Height * Original_Depth);
@@ -1754,9 +1825,6 @@ namespace Portable_BMU_App
                 Click_Width = (int)((double)p.X / PicCor.Image.Width * Original_Width);
                 UpdataTextAndScroll(); //更新TextBox的值和Scroll的值
                 UpdataFivePictureBox_Zoom_And_Mark();//更新图像
-
-
-
 
             }
 
@@ -1822,6 +1890,8 @@ namespace Portable_BMU_App
             if (e.Button == MouseButtons.Left)
             {
                 MarkExist = true;
+                Mark_Clean_Label.Text = "MarkExist";
+                Mark_Clean_Label.BackColor = SystemColors.Info;
                 System.Drawing.Point orP = e.Location;
                 System.Drawing.Point p = LocationToOrPictureChange_Sag_Mark(orP);
                 Click_Depth = (int)((double)p.Y / PicSag.Image.Height * Original_Depth);
@@ -1894,6 +1964,8 @@ namespace Portable_BMU_App
             if (e.Button == MouseButtons.Left)
             {
                 MarkExist = true;
+                Mark_Clean_Label.Text = "MarkExist";
+                Mark_Clean_Label.BackColor = SystemColors.Info;
                 System.Drawing.Point orP = e.Location;
                 System.Drawing.Point p = LocationToOrPictureChange_Tra_Mark(orP);
 
@@ -1973,6 +2045,8 @@ namespace Portable_BMU_App
             {
 
                 MarkExist = true;
+                Mark_Clean_Label.Text = "MarkExist";
+                Mark_Clean_Label.BackColor = SystemColors.Info;
                 System.Drawing.Point orP = e.Location;
                 System.Drawing.Point p = LocationToOrPictureChange_ProCor_Mark(orP);
                 Click_Depth = (int)((double)p.Y / PicProCor.Image.Height * Original_Depth);
@@ -2045,6 +2119,8 @@ namespace Portable_BMU_App
             if (e.Button == MouseButtons.Left)
             {
                 MarkExist = true;
+                Mark_Clean_Label.Text = "MarkExist";
+                Mark_Clean_Label.BackColor = SystemColors.Info;
                 System.Drawing.Point orP = e.Location;
                 System.Drawing.Point p = LocationToOrPictureChange_ProSag_Mark(orP);
                 Click_Depth = (int)((double)p.Y / PicProSag.Image.Height * Original_Depth);
@@ -2054,10 +2130,6 @@ namespace Portable_BMU_App
                 UpdataFivePictureBox_Zoom_And_Mark();//更新图像
             }
         }
-
-
-
-
         #endregion
 
 
@@ -2132,6 +2204,7 @@ namespace Portable_BMU_App
                             Console.WriteLine("boxd boxh boxw is {0},{1},{2} ", boxDepth, boxHeight, boxWidth);
                             //BeginInvoke((new MethodInvoker(delegate { ThreeD_Navigation_Standing(indexX, indexY, indexZ); })));
                             ThreeD_Navigation_Standing(indexX, indexY, indexZ);
+
 
                         }
                     }
@@ -2432,12 +2505,13 @@ namespace Portable_BMU_App
         }
 
 
-        // 根据textbox 中的数字将5张图片合理的展示出来//
-        //目前已经用UpdataFivePictureBox_Zoom_And_Mark()实现
-        //private void Display_zlx_fivepicture()
+
 
 
         // 整体进行拉伸时图片的缩放 //
+        // 根据textbox 中的数字将5张图片合理的展示出来//
+        //目前已经用UpdataFivePictureBox_Zoom_And_Mark()实现
+        //private void Display_zlx_fivepicture()
         private void PictureSizeChanged(object sender, EventArgs e)
         {
             if (volume != null)
@@ -2473,7 +2547,13 @@ namespace Portable_BMU_App
 
         }
 
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
 
+        }
+
+
+     
 
         void DisplayImage()
         {

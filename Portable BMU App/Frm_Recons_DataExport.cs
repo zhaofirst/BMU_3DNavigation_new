@@ -353,7 +353,8 @@ namespace Portable_BMU_App
 
                 short[,] coronalImage;
 
-                if (depth < (int)(1.8 * width) || depth < (int)(1.8 * height))//判断是否是短图像
+                //if (depth < (int)(1.3 * width) || depth < (int)(1.3 * height))//判断是否是短图像
+                if(false)
                 {
                     Frm_RealTime_Navigation_ZLX_Short frm_RealTime_Navigation_ZLX_Short = new Frm_RealTime_Navigation_ZLX_Short();
                     frm_RealTime_Navigation_ZLX_Short.Show();

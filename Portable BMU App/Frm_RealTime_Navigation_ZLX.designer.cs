@@ -48,7 +48,7 @@
             this.PicTra = new System.Windows.Forms.PictureBox();
             this.hscroll_transverse = new System.Windows.Forms.HScrollBar();
             this.panel10 = new System.Windows.Forms.Panel();
-            this.Mark_Clean_Button = new System.Windows.Forms.Button();
+            this.gammaBar = new System.Windows.Forms.TrackBar();
             this.ContrastBar = new System.Windows.Forms.TrackBar();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -73,7 +73,7 @@
             this.PicSag = new System.Windows.Forms.PictureBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.gammaBar = new System.Windows.Forms.TrackBar();
+            this.Mark_Clean_Label = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -86,6 +86,7 @@
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicTra)).BeginInit();
             this.panel10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gammaBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ContrastBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_increaseY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_increaseZ)).BeginInit();
@@ -97,7 +98,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.PicSag)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gammaBar)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -113,7 +113,7 @@
             this.tableLayoutPanel1.Controls.Add(this.panel3, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -128,7 +128,7 @@
             this.panel1.Controls.Add(this.panel5);
             this.panel1.Controls.Add(this.tableLayoutPanel2);
             this.panel1.Location = new System.Drawing.Point(770, 2);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(511, 655);
             this.panel1.TabIndex = 3;
@@ -141,7 +141,7 @@
             this.panel5.Controls.Add(this.toolStripMenuItemOpen);
             this.panel5.Controls.Add(this.Direction);
             this.panel5.Location = new System.Drawing.Point(0, 596);
-            this.panel5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel5.Margin = new System.Windows.Forms.Padding(2);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(509, 59);
             this.panel5.TabIndex = 3;
@@ -150,7 +150,7 @@
             // 
             this.toolStripMenuItemOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.toolStripMenuItemOpen.Location = new System.Drawing.Point(346, 18);
-            this.toolStripMenuItemOpen.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.toolStripMenuItemOpen.Margin = new System.Windows.Forms.Padding(2);
             this.toolStripMenuItemOpen.Name = "toolStripMenuItemOpen";
             this.toolStripMenuItemOpen.Size = new System.Drawing.Size(81, 26);
             this.toolStripMenuItemOpen.TabIndex = 0;
@@ -163,7 +163,7 @@
             this.Direction.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Direction.Location = new System.Drawing.Point(37, 21);
-            this.Direction.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Direction.Margin = new System.Windows.Forms.Padding(2);
             this.Direction.Name = "Direction";
             this.Direction.Size = new System.Drawing.Size(279, 25);
             this.Direction.TabIndex = 1;
@@ -213,7 +213,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PicProCor.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.PicProCor.Location = new System.Drawing.Point(20, 32);
-            this.PicProCor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PicProCor.Margin = new System.Windows.Forms.Padding(2);
             this.PicProCor.Name = "PicProCor";
             this.PicProCor.Size = new System.Drawing.Size(206, 543);
             this.PicProCor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -249,8 +249,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PicProSag.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.PicProSag.Location = new System.Drawing.Point(23, 34);
-            this.PicProSag.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PicProSag.Location = new System.Drawing.Point(20, 32);
+            this.PicProSag.Margin = new System.Windows.Forms.Padding(2);
             this.PicProSag.Name = "PicProSag";
             this.PicProSag.Size = new System.Drawing.Size(204, 543);
             this.PicProSag.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -267,7 +267,7 @@
             this.panel2.Controls.Add(this.panel6);
             this.panel2.Controls.Add(this.panel10);
             this.panel2.Location = new System.Drawing.Point(2, 2);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(252, 655);
             this.panel2.TabIndex = 4;
@@ -282,7 +282,7 @@
             this.panel6.Controls.Add(this.PicTra);
             this.panel6.Controls.Add(this.hscroll_transverse);
             this.panel6.Location = new System.Drawing.Point(6, 303);
-            this.panel6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel6.Margin = new System.Windows.Forms.Padding(2);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(238, 346);
             this.panel6.TabIndex = 29;
@@ -291,7 +291,7 @@
             // 
             this.texdown_heng.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.texdown_heng.Location = new System.Drawing.Point(163, 311);
-            this.texdown_heng.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.texdown_heng.Margin = new System.Windows.Forms.Padding(2);
             this.texdown_heng.Name = "texdown_heng";
             this.texdown_heng.Size = new System.Drawing.Size(68, 25);
             this.texdown_heng.TabIndex = 7;
@@ -316,7 +316,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PicTra.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.PicTra.Location = new System.Drawing.Point(15, 38);
-            this.PicTra.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PicTra.Margin = new System.Windows.Forms.Padding(2);
             this.PicTra.Name = "PicTra";
             this.PicTra.Size = new System.Drawing.Size(207, 242);
             this.PicTra.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -340,8 +340,8 @@
             this.panel10.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel10.Controls.Add(this.Mark_Clean_Label);
             this.panel10.Controls.Add(this.gammaBar);
-            this.panel10.Controls.Add(this.Mark_Clean_Button);
             this.panel10.Controls.Add(this.ContrastBar);
             this.panel10.Controls.Add(this.label6);
             this.panel10.Controls.Add(this.label7);
@@ -359,16 +359,21 @@
             this.panel10.Size = new System.Drawing.Size(231, 287);
             this.panel10.TabIndex = 8;
             // 
-            // Mark_Clean_Button
+            // gammaBar
             // 
-            this.Mark_Clean_Button.Location = new System.Drawing.Point(33, 39);
-            this.Mark_Clean_Button.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.Mark_Clean_Button.Name = "Mark_Clean_Button";
-            this.Mark_Clean_Button.Size = new System.Drawing.Size(89, 30);
-            this.Mark_Clean_Button.TabIndex = 28;
-            this.Mark_Clean_Button.Text = "MarkClean";
-            this.Mark_Clean_Button.UseVisualStyleBackColor = true;
-            this.Mark_Clean_Button.Click += new System.EventHandler(this.Mark_Clean_Button_Click);
+            this.gammaBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gammaBar.AutoSize = false;
+            this.gammaBar.Cursor = System.Windows.Forms.Cursors.Default;
+            this.gammaBar.Location = new System.Drawing.Point(144, 39);
+            this.gammaBar.Margin = new System.Windows.Forms.Padding(1);
+            this.gammaBar.Maximum = 700;
+            this.gammaBar.Minimum = 30;
+            this.gammaBar.Name = "gammaBar";
+            this.gammaBar.Size = new System.Drawing.Size(71, 30);
+            this.gammaBar.TabIndex = 29;
+            this.gammaBar.Value = 100;
+            this.gammaBar.Scroll += new System.EventHandler(this.BrightnessBarContrastBar_Scroll);
             // 
             // ContrastBar
             // 
@@ -376,7 +381,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ContrastBar.AutoSize = false;
             this.ContrastBar.Location = new System.Drawing.Point(144, 221);
-            this.ContrastBar.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.ContrastBar.Margin = new System.Windows.Forms.Padding(1);
             this.ContrastBar.Maximum = 200;
             this.ContrastBar.Name = "ContrastBar";
             this.ContrastBar.Size = new System.Drawing.Size(71, 49);
@@ -423,7 +428,7 @@
             // 
             this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox3.Location = new System.Drawing.Point(6, 179);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(2);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(24, 18);
             this.textBox3.TabIndex = 26;
@@ -433,7 +438,7 @@
             // 
             this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox2.Location = new System.Drawing.Point(6, 137);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(2);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(24, 18);
             this.textBox2.TabIndex = 25;
@@ -443,7 +448,7 @@
             // 
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.Location = new System.Drawing.Point(6, 89);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(24, 18);
             this.textBox1.TabIndex = 24;
@@ -493,7 +498,7 @@
             this.buttonNavigation.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.buttonNavigation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonNavigation.Location = new System.Drawing.Point(33, 207);
-            this.buttonNavigation.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonNavigation.Margin = new System.Windows.Forms.Padding(2);
             this.buttonNavigation.Name = "buttonNavigation";
             this.buttonNavigation.Size = new System.Drawing.Size(89, 69);
             this.buttonNavigation.TabIndex = 16;
@@ -526,7 +531,7 @@
             this.BrightnessBar.AutoSize = false;
             this.BrightnessBar.Cursor = System.Windows.Forms.Cursors.Default;
             this.BrightnessBar.Location = new System.Drawing.Point(144, 126);
-            this.BrightnessBar.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.BrightnessBar.Margin = new System.Windows.Forms.Padding(1);
             this.BrightnessBar.Maximum = 200;
             this.BrightnessBar.Name = "BrightnessBar";
             this.BrightnessBar.Size = new System.Drawing.Size(71, 49);
@@ -544,7 +549,7 @@
             this.panel4.Controls.Add(this.label3);
             this.panel4.Controls.Add(this.PicCor);
             this.panel4.Location = new System.Drawing.Point(514, 2);
-            this.panel4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(252, 655);
             this.panel4.TabIndex = 6;
@@ -553,7 +558,7 @@
             // 
             this.texdown_guan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.texdown_guan.Location = new System.Drawing.Point(176, 614);
-            this.texdown_guan.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.texdown_guan.Margin = new System.Windows.Forms.Padding(2);
             this.texdown_guan.Name = "texdown_guan";
             this.texdown_guan.Size = new System.Drawing.Size(68, 25);
             this.texdown_guan.TabIndex = 5;
@@ -588,7 +593,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PicCor.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.PicCor.Location = new System.Drawing.Point(21, 39);
-            this.PicCor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PicCor.Margin = new System.Windows.Forms.Padding(2);
             this.PicCor.Name = "PicCor";
             this.PicCor.Size = new System.Drawing.Size(207, 544);
             this.PicCor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -607,16 +612,17 @@
             this.panel3.Controls.Add(this.label1);
             this.panel3.Controls.Add(this.PicSag);
             this.panel3.Location = new System.Drawing.Point(258, 2);
-            this.panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(252, 655);
             this.panel3.TabIndex = 5;
+            this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
             // texdown_shi
             // 
             this.texdown_shi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.texdown_shi.Location = new System.Drawing.Point(179, 614);
-            this.texdown_shi.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.texdown_shi.Margin = new System.Windows.Forms.Padding(2);
             this.texdown_shi.Name = "texdown_shi";
             this.texdown_shi.Size = new System.Drawing.Size(68, 25);
             this.texdown_shi.TabIndex = 6;
@@ -651,7 +657,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PicSag.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.PicSag.Location = new System.Drawing.Point(35, 39);
-            this.PicSag.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PicSag.Margin = new System.Windows.Forms.Padding(2);
             this.PicSag.Name = "PicSag";
             this.PicSag.Size = new System.Drawing.Size(188, 544);
             this.PicSag.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -669,21 +675,16 @@
             // 
             this.errorProvider2.ContainerControl = this;
             // 
-            // gammaBar
+            // Mark_Clean_Label
             // 
-            this.gammaBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gammaBar.AutoSize = false;
-            this.gammaBar.Cursor = System.Windows.Forms.Cursors.Default;
-            this.gammaBar.Location = new System.Drawing.Point(144, 39);
-            this.gammaBar.Margin = new System.Windows.Forms.Padding(1);
-            this.gammaBar.Maximum = 700;
-            this.gammaBar.Minimum = 30;
-            this.gammaBar.Name = "gammaBar";
-            this.gammaBar.Size = new System.Drawing.Size(71, 30);
-            this.gammaBar.TabIndex = 29;
-            this.gammaBar.Value = 100;
-            this.gammaBar.Scroll += new System.EventHandler(this.BrightnessBarContrastBar_Scroll);
+            this.Mark_Clean_Label.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.Mark_Clean_Label.Location = new System.Drawing.Point(29, 39);
+            this.Mark_Clean_Label.Name = "Mark_Clean_Label";
+            this.Mark_Clean_Label.Size = new System.Drawing.Size(93, 30);
+            this.Mark_Clean_Label.TabIndex = 3;
+            this.Mark_Clean_Label.Text = "MarkCleard";
+            this.Mark_Clean_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Mark_Clean_Label.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Mark_Clean_Button_Click);
             // 
             // Frm_RealTime_Navigation_ZLX
             // 
@@ -691,10 +692,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1283, 659);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Frm_RealTime_Navigation_ZLX";
             this.Text = "3D_show";
             this.Load += new System.EventHandler(this.Frm_RealTime_Navigation_ZLX_Load);
+            this.SizeChanged += new System.EventHandler(this.PictureSizeChanged);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
@@ -712,6 +714,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PicTra)).EndInit();
             this.panel10.ResumeLayout(false);
             this.panel10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gammaBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ContrastBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_increaseY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_increaseZ)).EndInit();
@@ -725,7 +728,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.PicSag)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gammaBar)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -780,8 +782,8 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Button Mark_Clean_Button;
         private System.Windows.Forms.TrackBar gammaBar;
+        private System.Windows.Forms.Label Mark_Clean_Label;
     }
 }
 

@@ -114,6 +114,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NavigationControls\NavigationControls.cs" />
     <Compile Include="Rubbish.cs" />
     <Compile Include="ConvertFile.cs" />
     <Compile Include="Dlg_waitingRecons.cs">
