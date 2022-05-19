@@ -120,40 +120,6 @@ namespace Ultrasonics3DReconstructor
             return v2;
         }
 
-        private Vector3 TransformWithCalibration_Navigation(Vector3 vector, int increaseX, int increaseY, int increaseZ)
-        {
-            //Constanr_Matrix of transformation 
-            //float[,] matrixC = new float[3, 3] { { 0, 1, 0 }, { 1, 0, 0 }, { 0, 0, 1 } };
-            //float[,] matrixC = new float[3, 3] { { 1, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 } };
-
-            Vector3 v = vector;
-            //float[] initial_vector = new float[3] {vector.X, vector.Y,0f };
-            //v.X = matrixC[0, 0] * initial_vector[0] + matrixC[0, 1] * initial_vector[1] + matrixC[0, 2] * initial_vector[2];
-            //v.Y = matrixC[1, 0] * initial_vector[0] + matrixC[1, 1] * initial_vector[1] + matrixC[1, 2] * initial_vector[2];
-            //v.Z = matrixC[2, 0] * initial_vector[0] + matrixC[2, 1] * initial_vector[1] + matrixC[2, 2] * initial_vector[2];
-
-            Matrix4x4 matrixR = new Matrix4x4();
-
-            //Get parameter of transformation in s[]        
-            //matrixR.M11 = -0.9975f; matrixR.M12 = -0.0625f; matrixR.M13 = 0.0317f; matrixR.M14 = 0f;
-            //matrixR.M21 = 0.0618f; matrixR.M22 = -0.9979f; matrixR.M23 = -0.0218f; matrixR.M24 = 0f;
-            //matrixR.M31 = 0.0330f; matrixR.M32 = -0.0198f; matrixR.M33 = 0.9993f; matrixR.M34 = 0f;
-
-            //matrixR.M41 = -204.9082f + 10f; matrixR.M42 = -6.828f; matrixR.M43 = 44.4672f; matrixR.M44 = 1f;
-            matrixR.M11 = 1; matrixR.M12 = 0f; matrixR.M13 = 0; matrixR.M14 = 0f;
-            matrixR.M21 = 0; matrixR.M22 = 1; matrixR.M23 = 0; matrixR.M24 = 0f;
-            matrixR.M31 = 0; matrixR.M32 = 0; matrixR.M33 = 1; matrixR.M34 = 0f;
-
-            matrixR.M41 = 270f + increaseX; matrixR.M42 = -20f + increaseY; matrixR.M43 = 20f + increaseZ; matrixR.M44 = 1f;
-            //Implement TransformVector
-            Vector3 v2 = new Vector3();
-            v2.X = matrixR.M11 * v.X + matrixR.M21 * v.Y + matrixR.M31 * v.Z + matrixR.M41;
-            v2.Y = matrixR.M12 * v.X + matrixR.M22 * v.Y + matrixR.M32 * v.Z + matrixR.M42;
-            v2.Z = matrixR.M13 * v.X + matrixR.M23 * v.Y + matrixR.M33 * v.Z + matrixR.M43;
-
-            return v2;
-        }
-
         private Vector3 RotationAndTranslation(Vector3 vector)    //fixed 只能在 unsafe环境下使用
         {
             Matrix4x4 matrixR = new Matrix4x4();
@@ -182,7 +148,7 @@ namespace Ultrasonics3DReconstructor
             float d = (float)(parasQuaternion[3]);
 
             rotationMatrix[0] = (float)(1 - 2 * Math.Pow(c, 2) - 2 * Math.Pow(d, 2));
-            rotationMatrix[1] = (float)(2 * b * c + 2 * a * d);//zaici ganxie litongxue de bianxie (~_~!)
+            rotationMatrix[1] = (float)(2 * b * c + 2 * a * d);//thx Li to code this fucntion (~_~!)
             rotationMatrix[2] = (float)(2 * b * d - 2 * a * c);
             rotationMatrix[3] = (float)(2 * b * c - 2 * a * d);
             rotationMatrix[4] = (float)(1 - 2 * Math.Pow(b, 2) - 2 * Math.Pow(d, 2));

@@ -228,6 +228,7 @@ namespace Portable_BMU_App
             if (isAllUnitsConencted)
             {
                 DisconnectAllUnits();
+
             }
         }
 
@@ -396,6 +397,7 @@ namespace Portable_BMU_App
         /// G4 Equipment
         public static void g4NewInfo(uint v1, uint v2, ref UnitInterFaceV733.G4_SENSORDATA g4Info)
         {
+            //获取G4信息
             //saveGPS.Add(g4Info.pos);
             //saveGPS.Add(g4Info.ori);
             //Console.WriteLine("[+]Show G4 ID is :" + Thread.CurrentThread.ManagedThreadId.ToString() + "\n");
@@ -404,20 +406,21 @@ namespace Portable_BMU_App
             Object thisLock = new Object();
             lock (thisLock)
             {
+                //底层调用如果两个sensor则交替输出g4Info.nSnsID == 0 ;g4Info.nSnsID == 1; 
+                //实验只用到两个sensor所以这里只考虑0 1 两种情况
                 if (g4Info.nSnsID == 0) // If there has two sensor  这里0代表sensor1
                 {
                     Array.Copy(g4Info.pos, sourceXYZ, g4Info.pos.Length);
                     Array.Copy(g4Info.ori, sourceAER, g4Info.ori.Length);
                     g4Flag = true;
-                    Console.WriteLine("gengxin1?");
-                    //Console.WriteLine("G4");
+                    //Console.WriteLine("gengxin1?");
 
                 }
                 else
                 {
                     Array.Copy(g4Info.pos, sourceXYZ2, g4Info.pos.Length);
                     Array.Copy(g4Info.ori, sourceAER2, g4Info.ori.Length);
-                    Console.WriteLine("gengxin2?");
+                    //Console.WriteLine("gengxin2?");
                     g4Flag2 = true;
                 }
             }
@@ -562,13 +565,15 @@ namespace Portable_BMU_App
 
             }
 
-            if (Portable_BMU_App.UnitInterFaceV733.DisConnect() == true)
-            {
-                Console.WriteLine("G4 Disconnected!");
-                isG4Connected = false;
-            }
+            // 暂时不关闭G4
+            //if (Portable_BMU_App.UnitInterFaceV733.DisConnect() == true)
+            //{
+            //    Console.WriteLine("G4 Disconnected!");
+            //    isG4Connected = false;
+            //}
 
-            if (!isClariusConnected && !isG4Connected)
+            //if (!isClariusConnected && !isG4Connected)
+            if (!isClariusConnected )
             {
                 isAllUnitsConencted = false;
                 // change to disconnected icon
@@ -661,13 +666,14 @@ namespace Portable_BMU_App
             }
         }
 
+        //扫描仪的回调函数
         void newImageFn(IntPtr buffPointer, ref Portable_BMU_App.UnitInterFaceV733.ClariusProcessedImageInfo nfo, int npos, ref Portable_BMU_App.UnitInterFaceV733.ClariusPosInfo pos)
         {
             //Console.WriteLine("Clarius");
 
             //saveFlag = false;
             //Console.WriteLine("[+]Show Clarius ID is :" + Thread.CurrentThread.ManagedThreadId.ToString() + "\n");
-            int size = 640 * 480 * (4);
+            int size = 640 * 480 * (4);// 各个传感器的width和height都是640*480所以这里默认是640*
             byte[] buff = new byte[size];
             Marshal.Copy(buffPointer, buff, 0, size);
 
@@ -695,6 +701,7 @@ namespace Portable_BMU_App
             }
 
             UnitInterFaceV733.G4Listener_GetSinglePno(g4NewInfo); // 获取定位信息 XYZ ARE
+            //获取单帧的位置信息
 
 
         }
@@ -2420,12 +2427,12 @@ namespace Portable_BMU_App
                 ChooseScannerType = UnitInterFaceV733.ChooseScannerType.Clarius_HD;
                 Properties.Settings.Default.ScannerType = ChooseScannerType;
                 Properties.Settings.Default.Save();
-
-
             }
             MessageBox.Show(ChooseScannerType.ToString(), "Current selected scanner type", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Text = defaultTextinMainForm + " —— " + ChooseScannerType.ToString();
             Console.WriteLine(">> Scanner Type: {0}", ChooseScannerType.ToString());
+
+
         }
 
 

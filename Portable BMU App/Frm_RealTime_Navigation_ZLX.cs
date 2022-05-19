@@ -52,6 +52,7 @@ namespace Portable_BMU_App
         public static int Image_Height = 0;
         OpenCvSharp.Size dSizeFor3DDisplay;
         Thread threadRefreshNavigation;
+        Thread updataPositionThread;
 
         public static Vector3 boxOrg = new Vector3(0f, 0f, 0f);  // BoxSize and calibration Matrix
         public static int boxWidth = 0;                                               // BoxSize and calibration Matrix    原始图像三数据
@@ -683,11 +684,7 @@ namespace Portable_BMU_App
             Cv2.Rectangle(dstGGuan, startPoint3, endPoint3, OpenCvSharp.Scalar.Red, -1);
             Bitmap bitmapGuan = ConvertFile.MatToBitmap(dstGGuan);
             // 使用graphics类将bitmap添加导航辅助线
-            if (Click_Depth>0 && Click_Width>0 && Click_Width>0){
-
-
-
-
+            if (MarkExist == true) { 
 
                 //当存在mark的时候显示辅助线
                 PointF arrowStart = new PointF(resizedCoronalIndex_Y, resizedCoronalIndex_Z);
@@ -1360,8 +1357,7 @@ namespace Portable_BMU_App
                 Console.WriteLine(dataCount);
 
 
-
-
+          
             }
 
 
@@ -1498,17 +1494,17 @@ namespace Portable_BMU_App
             texdown_heng.Text = tex_heng;
             PicTra.Image = ConvertFile.MatToBitmap(pichengMat);
 
-
-
-
-
             PicSag.Width = (int)(PicTra.Width * height / width);  // 使得Sag面的宽度保持和Tra面的高度一致
             int poX = (int)((panel3.Width - PicSag.Width) / 2);
             int poY = 63;
             PicSag.Location = new System.Drawing.Point(poX, poY);
             PicProSag.Width = (int)(PicTra.Width * height / width);  // 使得Sag面的宽度保持和Tra面的高度一致
             PicProSag.Location = new System.Drawing.Point(poX, poY);
+
             UpdataFivePictureBox_Zoom_And_Mark();
+
+
+
         }
 
         #endregion
@@ -2157,7 +2153,6 @@ namespace Portable_BMU_App
                 float[] xyzArray = new float[3]; float[] quaternionArray = new float[4];
                 Object thisLock = new Object();
                 bool isNavigation = false;
-
                 lock (thisLock)
                 {
 
@@ -2166,7 +2161,9 @@ namespace Portable_BMU_App
                         Array.Copy(MainForm.sourceXYZ2, xyzArray, MainForm.sourceXYZ.Length);
                         Array.Copy(MainForm.sourceAER2, quaternionArray, MainForm.sourceAER.Length);
                         //Console.WriteLine("x:{0},y:{1},z:{2}",xyzArray[0],xyzArray[1],xyzArray[2]);
+
                         //savePreScanGPS.Add(xyzArray);
+
                         //savePreScanGPS.Add(quaternionArray);
                         isNavigation = true;
                         MainForm.g4Flag2 = false;
@@ -2178,11 +2175,10 @@ namespace Portable_BMU_App
                 {
                     Vector3 tempVector = new Vector3(xyzArray[0] * 10, xyzArray[1] * 10, xyzArray[2] * 10);
                     Vector3 sensor2Location = Vector3.Transform(tempVector, calibrationMatrix);
+
                     sensor2Location.X = 0f - sensor2Location.X;
 
                     Vector3 sensor2InVolume = sensor2Location - boxOrg;
-
-                
 
                     //Tex_increaseX.BeginInvoke(new MethodInvoker(delegate { textshow(texdown_guan, tex_guan); }));
 
@@ -2190,7 +2186,6 @@ namespace Portable_BMU_App
 
                     int indexY = (int)Math.Round(sensor2InVolume.Y / voxelWidth) + increasY;
                     int indexZ = (int)Math.Round(sensor2InVolume.Z / voxelDepth) + increasZ;
-
 
 
                     Console.WriteLine("x,y,z is {0},{1},{2}", indexX, indexY, indexZ);
@@ -2204,8 +2199,6 @@ namespace Portable_BMU_App
                             Console.WriteLine("boxd boxh boxw is {0},{1},{2} ", boxDepth, boxHeight, boxWidth);
                             //BeginInvoke((new MethodInvoker(delegate { ThreeD_Navigation_Standing(indexX, indexY, indexZ); })));
                             ThreeD_Navigation_Standing(indexX, indexY, indexZ);
-
-
                         }
                     }
                     else if (Properties.Settings.Default.ScanPosition == "Prone Position")
@@ -2278,9 +2271,24 @@ namespace Portable_BMU_App
             threadRefreshNavigation = new Thread(NavigationProcess);
             Thread.Sleep(20);
 
+            updataPositionThread = new Thread(updataPosition);// 更新位置
+            updataPositionThread.Start();
             threadRefreshNavigation.Start();
             Console.WriteLine("Start Navigation...");
             this.buttonNavigation.BackgroundImage = Properties.Resources.navigationG;
+        }
+
+
+        //新开线程 保持位置更新
+        void updataPosition()
+        {
+            while (true)
+            {
+                Thread.Sleep(50);
+                UnitInterFaceV733.G4Listener_GetSinglePno(MainForm.g4NewInfo); // 获取定位信息 XYZ ARE                                                            //获取单帧的位置信息
+            }
+
+
         }
 
         void NavigationStop()
@@ -2293,6 +2301,10 @@ namespace Portable_BMU_App
             if (!threadRefreshNavigation.Join(2000))
             {
                 threadRefreshNavigation.Abort();
+            }
+            if (!updataPositionThread.Join(20))
+            {
+                updataPositionThread.Abort();
             }
             Console.WriteLine("Stop Navigation!");
             this.buttonNavigation.BackgroundImage = Properties.Resources.navigation;
@@ -2552,8 +2564,7 @@ namespace Portable_BMU_App
 
         }
 
-
-     
+  
 
         void DisplayImage()
         {

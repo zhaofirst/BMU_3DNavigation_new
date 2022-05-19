@@ -48,6 +48,7 @@
             this.PicTra = new System.Windows.Forms.PictureBox();
             this.hscroll_transverse = new System.Windows.Forms.HScrollBar();
             this.panel10 = new System.Windows.Forms.Panel();
+            this.Mark_Clean_Label = new System.Windows.Forms.Label();
             this.gammaBar = new System.Windows.Forms.TrackBar();
             this.ContrastBar = new System.Windows.Forms.TrackBar();
             this.label6 = new System.Windows.Forms.Label();
@@ -67,13 +68,22 @@
             this.label3 = new System.Windows.Forms.Label();
             this.PicCor = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
             this.texdown_shi = new System.Windows.Forms.TextBox();
             this.hscroll_Sagittal = new System.Windows.Forms.HScrollBar();
             this.label1 = new System.Windows.Forms.Label();
             this.PicSag = new System.Windows.Forms.PictureBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.Mark_Clean_Label = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -277,6 +287,8 @@
             this.panel6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel6.Controls.Add(this.label18);
+            this.panel6.Controls.Add(this.label17);
             this.panel6.Controls.Add(this.texdown_heng);
             this.panel6.Controls.Add(this.label2);
             this.panel6.Controls.Add(this.PicTra);
@@ -329,9 +341,9 @@
             // 
             this.hscroll_transverse.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.hscroll_transverse.Location = new System.Drawing.Point(7, 311);
+            this.hscroll_transverse.Location = new System.Drawing.Point(10, 307);
             this.hscroll_transverse.Name = "hscroll_transverse";
-            this.hscroll_transverse.Size = new System.Drawing.Size(151, 35);
+            this.hscroll_transverse.Size = new System.Drawing.Size(151, 32);
             this.hscroll_transverse.TabIndex = 7;
             this.hscroll_transverse.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hscroll_Transverse_Scroll);
             // 
@@ -358,6 +370,17 @@
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(231, 287);
             this.panel10.TabIndex = 8;
+            // 
+            // Mark_Clean_Label
+            // 
+            this.Mark_Clean_Label.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.Mark_Clean_Label.Location = new System.Drawing.Point(29, 39);
+            this.Mark_Clean_Label.Name = "Mark_Clean_Label";
+            this.Mark_Clean_Label.Size = new System.Drawing.Size(93, 30);
+            this.Mark_Clean_Label.TabIndex = 3;
+            this.Mark_Clean_Label.Text = "MarkCleard";
+            this.Mark_Clean_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Mark_Clean_Label.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Mark_Clean_Button_Click);
             // 
             // gammaBar
             // 
@@ -544,6 +567,10 @@
             this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel4.Controls.Add(this.label16);
+            this.panel4.Controls.Add(this.label15);
+            this.panel4.Controls.Add(this.label14);
+            this.panel4.Controls.Add(this.label13);
             this.panel4.Controls.Add(this.texdown_guan);
             this.panel4.Controls.Add(this.hscroll_Coronal);
             this.panel4.Controls.Add(this.label3);
@@ -557,7 +584,7 @@
             // texdown_guan
             // 
             this.texdown_guan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.texdown_guan.Location = new System.Drawing.Point(176, 614);
+            this.texdown_guan.Location = new System.Drawing.Point(175, 614);
             this.texdown_guan.Margin = new System.Windows.Forms.Padding(2);
             this.texdown_guan.Name = "texdown_guan";
             this.texdown_guan.Size = new System.Drawing.Size(68, 25);
@@ -569,9 +596,9 @@
             // 
             this.hscroll_Coronal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.hscroll_Coronal.Location = new System.Drawing.Point(21, 614);
+            this.hscroll_Coronal.Location = new System.Drawing.Point(30, 610);
             this.hscroll_Coronal.Name = "hscroll_Coronal";
-            this.hscroll_Coronal.Size = new System.Drawing.Size(143, 35);
+            this.hscroll_Coronal.Size = new System.Drawing.Size(143, 32);
             this.hscroll_Coronal.TabIndex = 6;
             this.hscroll_Coronal.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hscroll_Coronal_Scroll);
             // 
@@ -592,7 +619,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PicCor.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.PicCor.Location = new System.Drawing.Point(21, 39);
+            this.PicCor.Location = new System.Drawing.Point(21, 38);
             this.PicCor.Margin = new System.Windows.Forms.Padding(2);
             this.PicCor.Name = "PicCor";
             this.PicCor.Size = new System.Drawing.Size(207, 544);
@@ -607,6 +634,10 @@
             this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel3.Controls.Add(this.label12);
+            this.panel3.Controls.Add(this.label11);
+            this.panel3.Controls.Add(this.label10);
+            this.panel3.Controls.Add(this.label9);
             this.panel3.Controls.Add(this.texdown_shi);
             this.panel3.Controls.Add(this.hscroll_Sagittal);
             this.panel3.Controls.Add(this.label1);
@@ -617,6 +648,15 @@
             this.panel3.Size = new System.Drawing.Size(252, 655);
             this.panel3.TabIndex = 5;
             this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
+            // 
+            // label9
+            // 
+            this.label9.Font = new System.Drawing.Font("宋体", 10F);
+            this.label9.Location = new System.Drawing.Point(15, 39);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(18, 41);
+            this.label9.TabIndex = 8;
+            this.label9.Text = "UP";
             // 
             // texdown_shi
             // 
@@ -633,9 +673,9 @@
             // 
             this.hscroll_Sagittal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.hscroll_Sagittal.Location = new System.Drawing.Point(18, 614);
+            this.hscroll_Sagittal.Location = new System.Drawing.Point(18, 610);
             this.hscroll_Sagittal.Name = "hscroll_Sagittal";
-            this.hscroll_Sagittal.Size = new System.Drawing.Size(150, 35);
+            this.hscroll_Sagittal.Size = new System.Drawing.Size(150, 32);
             this.hscroll_Sagittal.TabIndex = 6;
             this.hscroll_Sagittal.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hscroll_Sagittal_Scroll);
             // 
@@ -675,16 +715,104 @@
             // 
             this.errorProvider2.ContainerControl = this;
             // 
-            // Mark_Clean_Label
+            // label10
             // 
-            this.Mark_Clean_Label.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.Mark_Clean_Label.Location = new System.Drawing.Point(29, 39);
-            this.Mark_Clean_Label.Name = "Mark_Clean_Label";
-            this.Mark_Clean_Label.Size = new System.Drawing.Size(93, 30);
-            this.Mark_Clean_Label.TabIndex = 3;
-            this.Mark_Clean_Label.Text = "MarkCleard";
-            this.Mark_Clean_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Mark_Clean_Label.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Mark_Clean_Button_Click);
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label10.Font = new System.Drawing.Font("宋体", 10F);
+            this.label10.Location = new System.Drawing.Point(15, 513);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(18, 68);
+            this.label10.TabIndex = 9;
+            this.label10.Text = "DOWN";
+            // 
+            // label11
+            // 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("宋体", 10F);
+            this.label11.Location = new System.Drawing.Point(31, 585);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(71, 17);
+            this.label11.TabIndex = 10;
+            this.label11.Text = "OUTWARD";
+            this.label11.Visible = false;
+            // 
+            // label12
+            // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("宋体", 10F);
+            this.label12.Location = new System.Drawing.Point(164, 585);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(62, 17);
+            this.label12.TabIndex = 11;
+            this.label12.Text = "INWARD";
+            this.label12.Visible = false;
+            // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("宋体", 10F);
+            this.label13.Location = new System.Drawing.Point(172, 585);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(53, 17);
+            this.label13.TabIndex = 12;
+            this.label13.Text = "RIGHT";
+            this.label13.Visible = false;
+            // 
+            // label14
+            // 
+            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("宋体", 10F);
+            this.label14.Location = new System.Drawing.Point(17, 584);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(44, 17);
+            this.label14.TabIndex = 12;
+            this.label14.Text = "LEFT";
+            this.label14.Visible = false;
+            // 
+            // label15
+            // 
+            this.label15.Font = new System.Drawing.Font("宋体", 10F);
+            this.label15.Location = new System.Drawing.Point(3, 39);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(18, 41);
+            this.label15.TabIndex = 12;
+            this.label15.Text = "UP";
+            // 
+            // label16
+            // 
+            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label16.Font = new System.Drawing.Font("宋体", 10F);
+            this.label16.Location = new System.Drawing.Point(3, 506);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(18, 75);
+            this.label16.TabIndex = 12;
+            this.label16.Text = "DOWN";
+            // 
+            // label17
+            // 
+            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("宋体", 10F);
+            this.label17.Location = new System.Drawing.Point(12, 282);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(44, 17);
+            this.label17.TabIndex = 13;
+            this.label17.Text = "LEFT";
+            // 
+            // label18
+            // 
+            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("宋体", 10F);
+            this.label18.Location = new System.Drawing.Point(169, 282);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(53, 17);
+            this.label18.TabIndex = 13;
+            this.label18.Text = "RIGHT";
             // 
             // Frm_RealTime_Navigation_ZLX
             // 
@@ -784,6 +912,16 @@
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.TrackBar gammaBar;
         private System.Windows.Forms.Label Mark_Clean_Label;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
     }
 }
 
