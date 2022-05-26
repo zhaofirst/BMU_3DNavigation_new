@@ -589,12 +589,10 @@ namespace Portable_BMU_App
 
         #region 导航部分
 
-        private void ThreeD_Navigation_Standing(int x, int y, int z)
+        private void ThreeD_Navigation_Standing(int x, int y, int z,float xCosine,float yCosine,float zCosine)
         {
 
 
-            //Console.WriteLine("threed duanle  ", boxDepth, boxHeight, boxWidth);
-            //Console.WriteLine("threed duanle 3", Properties.Settings.Default.ScanPosition);
             int rectSize = 3;
             int indexX = x - 1;
             int indexY = y - 1;
@@ -634,9 +632,6 @@ namespace Portable_BMU_App
 
             Mat brightnessMat_Sag_Pro = new Mat();
             updateBrightnessContrast(SagittalProjectionMat, brightnessMat_Sag_Pro, Brightnessvalue, Contrastvalue,gammaValue);
-
-
-
             Mat SaggitalImageColor_Pro = new Mat();
             Cv2.ApplyColorMap(brightnessMat_Sag_Pro, SaggitalImageColor_Pro, ColormapTypes.Bone);
             Mat navigationSaggImage = SaggitalImageColor_Pro.Clone();
@@ -686,14 +681,30 @@ namespace Portable_BMU_App
             // 使用graphics类将bitmap添加导航辅助线
             if (MarkExist == true) { 
 
-                //当存在mark的时候显示辅助线
+                //当存在mark的时候显示辅助线（应该所指向的方向的辅助线）
                 PointF arrowStart = new PointF(resizedCoronalIndex_Y, resizedCoronalIndex_Z);
                 int markY = (int)(Click_Width * ((float)PicCor.Width / boxWidth));
                 int markZ = (int)(Click_Depth * ((float)visualHeight_Guan / boxDepth));
                 PointF arrowEnd = new PointF(markY, markZ);
-                Console.WriteLine("Navigation mark is working");
+                //Console.WriteLine("Navigation mark is working");
+
+                //当前手术刀所指方向
+                Pen penCurrentGuan = new Pen(Brushes.Blue);
+                double doubleX = (double)(arrowEnd.X - arrowStart.X);
+                double doubleY = (double)(arrowEnd.Y - arrowStart.Y);
+                float ScaleCurrentGuan = (float)Math.Sqrt(Math.Pow(doubleX, 2) + Math.Pow(doubleY, 2));
+                PointF arrowCurrentStart = arrowStart;
+                Vector2 yzCosine = new Vector2(yCosine, zCosine);
+                yzCosine = Vector2.Normalize(yzCosine);
+                
+                PointF arrowCurrentEnd = new PointF(arrowStart.X+ ScaleCurrentGuan * yzCosine.X,   arrowStart.Y + ScaleCurrentGuan * yzCosine.Y);
+                bitmapGuan = DrawGraphs.DrawArrows(bitmapGuan, arrowCurrentStart, arrowCurrentEnd, Brushes.Blue, penCurrentGuan);
+
+
+                // 应该指向的方向
                 Pen penGuan = new Pen(Brushes.Red);
                 bitmapGuan = DrawGraphs.DrawArrows(bitmapGuan, arrowStart, arrowEnd, Brushes.Red, penGuan);
+
             }
             this.PicCor.BeginInvoke(new MethodInvoker(delegate { PictureBoxShow3D(PicCor, bitmapGuan); }));
             navigationGuanImage = null;
@@ -737,6 +748,21 @@ namespace Portable_BMU_App
                 int markX = (int)(Click_Height * ((float)PicSag.Width / boxHeight));
                 int markZ = (int)(Click_Depth * ((float)visualHeight_Shi / boxDepth));
                 PointF arrowEndShi = new PointF(markX, markZ);
+
+
+                //当前手术刀所指方向
+                Pen penCurrentShi = new Pen(Brushes.Blue);
+                double doubleX = (double)(arrowEndShi.X - arrowStartShi.X);
+                double doubleY = (double)(arrowEndShi.Y - arrowStartShi.Y);
+                float ScaleCurrentShi = (float)Math.Sqrt(Math.Pow(doubleX, 2) + Math.Pow(doubleY, 2));
+                Vector2 xzCosine = new Vector2(xCosine, zCosine);
+                xzCosine = Vector2.Normalize(xzCosine);
+                PointF arrowCurrentStart = arrowStartShi;
+                PointF arrowCurrentEnd = new PointF(arrowStartShi.X + ScaleCurrentShi * xzCosine.X, arrowStartShi.Y + ScaleCurrentShi * xzCosine.Y);
+                bitmapShi = DrawGraphs.DrawArrows(bitmapShi, arrowCurrentStart, arrowCurrentEnd, Brushes.Blue, penCurrentShi);
+
+
+
                 Pen penShi = new Pen(Brushes.Red);
                 bitmapShi = DrawGraphs.DrawArrows(bitmapShi, arrowStartShi, arrowEndShi, Brushes.Red, penShi);
             }
@@ -787,6 +813,20 @@ namespace Portable_BMU_App
                 int markX = (int)(Click_Height * ((float)visual_Height_Heng / boxHeight));
                 int markY = (int)(Click_Width * ((float)PicTra.Width / boxWidth));
                 PointF arrowEndHeng = new PointF(markY, markX);
+
+
+                //当前手术刀所指方向
+                Pen penCurrentHeng = new Pen(Brushes.Blue);
+                double doubleX = (double)(arrowEndHeng.X - arrowStartHeng.X);
+                double doubleY = (double)(arrowEndHeng.Y - arrowStartHeng.Y);
+                float ScaleCurrentHeng = (float)Math.Sqrt(Math.Pow(doubleX,2 ) + Math.Pow(doubleY, 2)) ;
+                Vector2 yxCosine = new Vector2(yCosine, xCosine);
+                yxCosine = Vector2.Normalize(yxCosine);
+                PointF arrowCurrentStart = arrowStartHeng;
+                PointF arrowCurrentEnd = new PointF(arrowStartHeng.X + ScaleCurrentHeng * yxCosine.X, arrowStartHeng.Y + ScaleCurrentHeng * yxCosine.Y);
+                bitmapHeng = DrawGraphs.DrawArrows(bitmapHeng, arrowCurrentStart, arrowCurrentEnd, Brushes.Blue, penCurrentHeng);
+
+
                 Pen penHeng = new Pen(Brushes.Red);
                 bitmapHeng = DrawGraphs.DrawArrows(bitmapHeng, arrowStartHeng, arrowEndHeng, Brushes.Red, penHeng);
             }
@@ -2183,29 +2223,31 @@ namespace Portable_BMU_App
                     //Tex_increaseX.BeginInvoke(new MethodInvoker(delegate { textshow(texdown_guan, tex_guan); }));
 
                     int indexX = (int)Math.Round(sensor2InVolume.X / voxelHeight) - increasX;
-
                     int indexY = (int)Math.Round(sensor2InVolume.Y / voxelWidth) + increasY;
                     int indexZ = (int)Math.Round(sensor2InVolume.Z / voxelDepth) + increasZ;
+                    //获得了当前sensor的朝向
+                    Vector3 tempVectorRotation = new Vector3(1, 0, 0);
+                    Vector3 rotationXYZ = Rotation2GetDirection(tempVectorRotation, quaternionArray);
+                    //rotationXYZ = Vector3.Transform(rotationXYZ, calibrationMatrix);
 
 
                     Console.WriteLine("x,y,z is {0},{1},{2}", indexX, indexY, indexZ);
-                    Console.WriteLine("boxd boxh boxw is {0},{1},{2} ", boxDepth, boxHeight, boxWidth);
-                    Console.WriteLine("zishi:{0}  ", Properties.Settings.Default.ScanPosition);
+                    Console.WriteLine("xCos,yCos,zCos is {0},{1},{2}", rotationXYZ.X, rotationXYZ.Y, rotationXYZ.Z);
+                    //Console.WriteLine("boxd boxh boxw is {0},{1},{2} ", boxDepth, boxHeight, boxWidth);
+                    //Console.WriteLine("zishi:{0}  ", Properties.Settings.Default.ScanPosition);
                     if (Properties.Settings.Default.ScanPosition == "Standing Position")
                     {
                         if (indexZ >= 1 && indexZ < boxDepth && indexX >= 1 && indexX <= boxHeight && indexY >= 1 && indexY <= boxWidth)
                         {
-                            Console.WriteLine("x,y,z is {0},{1},{2}", indexX, indexY, indexZ);
-                            Console.WriteLine("boxd boxh boxw is {0},{1},{2} ", boxDepth, boxHeight, boxWidth);
-                            //BeginInvoke((new MethodInvoker(delegate { ThreeD_Navigation_Standing(indexX, indexY, indexZ); })));
-                            ThreeD_Navigation_Standing(indexX, indexY, indexZ);
+                 
+                            ThreeD_Navigation_Standing(indexX, indexY, indexZ, rotationXYZ.X, rotationXYZ.Y, rotationXYZ.Z);
                         }
                     }
                     else if (Properties.Settings.Default.ScanPosition == "Prone Position")
                     {
                         if (indexZ >= 1 && indexZ < boxDepth && indexX >= 1 && indexX <= boxHeight && indexY >= 1 && indexY <= boxWidth)
                         {
-                            ThreeD_Navigation_Standing(indexX, indexY, indexZ);
+                            ThreeD_Navigation_Standing(indexX, indexY, indexZ, rotationXYZ.X, rotationXYZ.Y, rotationXYZ.Z);
                             //BeginInvoke((new MethodInvoker(delegate { ThreeD_Navigation_Standing(indexX, indexY, indexZ); })));
                         }
 
@@ -2620,11 +2662,54 @@ namespace Portable_BMU_App
         //----------------------- ----------------------------End of funcction from Frm_RealTime_Navigation------------------ --------//
         #endregion
 
+
+        ////
+        ///旋转矩阵的转换
+        ///用于确定当前传感器的方向
+        ///参数： 被旋转坐标，旋转四元数 
+        private Vector3 Rotation2GetDirection(Vector3 vector, float[] q)
+        {
+            Matrix4x4 matrixR = new Matrix4x4();
+            Vector3 v = new Vector3();
+            float[] rotationMatrix = GetSSMatrix(q);
+            //Get parameter of transformation in s[]        
+            matrixR.M11 = rotationMatrix[0]; matrixR.M12 = rotationMatrix[1]; matrixR.M13 = rotationMatrix[2]; matrixR.M14 = 0f;
+            matrixR.M21 = rotationMatrix[3]; matrixR.M22 = rotationMatrix[4]; matrixR.M23 = rotationMatrix[5]; matrixR.M24 = 0f;
+            matrixR.M31 = rotationMatrix[6]; matrixR.M32 = rotationMatrix[7]; matrixR.M33 = rotationMatrix[8]; matrixR.M34 = 0f;
+
+            matrixR.M41 = 0f; matrixR.M42 = 0f; matrixR.M43 = 0f; matrixR.M44 = 1f; // 没有平移
+
+
+            //Implement TransformVector
+            v.X = matrixR.M11 * vector.X + matrixR.M21 * vector.Y + matrixR.M31 * vector.Z + matrixR.M41;
+            v.Y = matrixR.M12 * vector.X + matrixR.M22 * vector.Y + matrixR.M32 * vector.Z + matrixR.M42;
+            v.Z = matrixR.M13 * vector.X + matrixR.M23 * vector.Y + matrixR.M33 * vector.Z + matrixR.M43;
+            return v;
+        }
+        //计算旋转矩阵
+        private float[]  GetSSMatrix(float[] parasQuaternion)
+        {
+            float[] rotationMatrix = new float[9];
+            float a = (float)(parasQuaternion[0]);
+            float b = (float)(parasQuaternion[1]);
+            float c = (float)(parasQuaternion[2]);
+            float d = (float)(parasQuaternion[3]);
+            rotationMatrix[0] = (float)(1 - 2 * Math.Pow(c, 2) - 2 * Math.Pow(d, 2));
+            rotationMatrix[1] = (float)(2 * b * c + 2 * a * d);//thx Li to code this fucntion (~_~!)
+            rotationMatrix[2] = (float)(2 * b * d - 2 * a * c);
+            rotationMatrix[3] = (float)(2 * b * c - 2 * a * d);
+            rotationMatrix[4] = (float)(1 - 2 * Math.Pow(b, 2) - 2 * Math.Pow(d, 2));
+            rotationMatrix[5] = (float)(2 * a * b + 2 * c * d);
+            rotationMatrix[6] = (float)(2 * a * c + 2 * b * d);
+            rotationMatrix[7] = (float)(2 * c * d - 2 * a * b);
+            rotationMatrix[8] = (float)(1 - 2 * Math.Pow(b, 2) - 2 * Math.Pow(c, 2));
+            return rotationMatrix;
+        }
+
     }
 
 
-
-
+ 
 
 
 

@@ -146,7 +146,6 @@ namespace Ultrasonics3DReconstructor
             float b = (float)(parasQuaternion[1]);
             float c = (float)(parasQuaternion[2]);
             float d = (float)(parasQuaternion[3]);
-
             rotationMatrix[0] = (float)(1 - 2 * Math.Pow(c, 2) - 2 * Math.Pow(d, 2));
             rotationMatrix[1] = (float)(2 * b * c + 2 * a * d);//thx Li to code this fucntion (~_~!)
             rotationMatrix[2] = (float)(2 * b * d - 2 * a * c);
@@ -156,8 +155,6 @@ namespace Ultrasonics3DReconstructor
             rotationMatrix[6] = (float)(2 * a * c + 2 * b * d);
             rotationMatrix[7] = (float)(2 * c * d - 2 * a * b);
             rotationMatrix[8] = (float)(1 - 2 * Math.Pow(b, 2) - 2 * Math.Pow(c, 2));
-
-
         }
     }
 }

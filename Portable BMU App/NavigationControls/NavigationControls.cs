@@ -15,6 +15,7 @@ namespace Portable_BMU_App.NavigationControls
     {
 
         //private void Form1_Paint_1(PictureBox sender, OpenCvSharp.Point startPt, OpenCvSharp.Point endPt)
+        // 原始图像 开始点 结束点 箭头颜色 虚线颜色
         public static Bitmap DrawArrows(Bitmap OrBitMap, PointF startPt, PointF endPt, Brush brushParameter = null, Pen penParameter = null)
         {
             //线的起点
