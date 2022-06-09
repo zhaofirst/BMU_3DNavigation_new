@@ -1615,7 +1615,7 @@ namespace Portable_BMU_App
             int Sag = System.Convert.ToInt32(texdown_shi.Text.Substring(0, texdown_shi.Text.IndexOf("/")));
             int Cor = System.Convert.ToInt32(texdown_guan.Text.Substring(0, texdown_guan.Text.IndexOf("/")));
 
-         
+        
             short[,] Transverse = volume[Tran];
             short[,] Sagittal = volume_shi[Sag];
             short[,] Coronal = volume_guan[Cor];
@@ -2218,7 +2218,8 @@ namespace Portable_BMU_App
 
                     sensor2Location.X = 0f - sensor2Location.X;
 
-                    Vector3 sensor2InVolume = sensor2Location - boxOrg;
+
+                    Vector3 sensor2InVolume = sensor2Location - boxOrg;// 做了T3的平移操作
 
                     //Tex_increaseX.BeginInvoke(new MethodInvoker(delegate { textshow(texdown_guan, tex_guan); }));
 
@@ -2228,30 +2229,32 @@ namespace Portable_BMU_App
                     //获得了当前sensor的朝向
                     Vector3 tempVectorRotation = new Vector3(1, 0, 0);
                     Vector3 rotationXYZ = Rotation2GetDirection(tempVectorRotation, quaternionArray);
-                    //rotationXYZ = Vector3.Transform(rotationXYZ, calibrationMatrix);
+                    Console.WriteLine("Before xCos,yCos,zCos is {0},{1},{2}", rotationXYZ.X, rotationXYZ.Y, rotationXYZ.Z);
+                    Matrix4x4 calibrationMatrixOnlyRotation = calibrationMatrix;
+                    calibrationMatrixOnlyRotation.M41 = 0;
+                    calibrationMatrixOnlyRotation.M42 = 0;
+                    calibrationMatrixOnlyRotation.M43 = 0;// 将位置变化置为0，即calibrationMatrixOnlyRotation仅仅代表旋转没有位移
 
+                    rotationXYZ = Vector3.Transform(rotationXYZ, calibrationMatrixOnlyRotation);//calibrationMatrix 做了T3的旋转（没有平移）
+                    rotationXYZ = Vector3.Normalize(rotationXYZ);
 
                     Console.WriteLine("x,y,z is {0},{1},{2}", indexX, indexY, indexZ);
-                    Console.WriteLine("xCos,yCos,zCos is {0},{1},{2}", rotationXYZ.X, rotationXYZ.Y, rotationXYZ.Z);
-                    //Console.WriteLine("boxd boxh boxw is {0},{1},{2} ", boxDepth, boxHeight, boxWidth);
-                    //Console.WriteLine("zishi:{0}  ", Properties.Settings.Default.ScanPosition);
-                    if (Properties.Settings.Default.ScanPosition == "Standing Position")
-                    {
-                        if (indexZ >= 1 && indexZ < boxDepth && indexX >= 1 && indexX <= boxHeight && indexY >= 1 && indexY <= boxWidth)
-                        {
-                 
-                            ThreeD_Navigation_Standing(indexX, indexY, indexZ, rotationXYZ.X, rotationXYZ.Y, rotationXYZ.Z);
-                        }
-                    }
-                    else if (Properties.Settings.Default.ScanPosition == "Prone Position")
-                    {
-                        if (indexZ >= 1 && indexZ < boxDepth && indexX >= 1 && indexX <= boxHeight && indexY >= 1 && indexY <= boxWidth)
-                        {
-                            ThreeD_Navigation_Standing(indexX, indexY, indexZ, rotationXYZ.X, rotationXYZ.Y, rotationXYZ.Z);
-                            //BeginInvoke((new MethodInvoker(delegate { ThreeD_Navigation_Standing(indexX, indexY, indexZ); })));
-                        }
+                    Console.WriteLine("After xCos,yCos,zCos is {0},{1},{2}", rotationXYZ.X, rotationXYZ.Y, rotationXYZ.Z);
 
+                    //if (Properties.Settings.Default.ScanPosition == "Standing Position")
+                    //{
+                    if (indexZ >= 1 && indexZ < boxDepth && indexX >= 1 && indexX <= boxHeight && indexY >= 1 && indexY <= boxWidth)
+                    {
+                        ThreeD_Navigation_Standing(indexX, indexY, indexZ, rotationXYZ.X, rotationXYZ.Y, rotationXYZ.Z);
                     }
+                    //}
+                    //else if (Properties.Settings.Default.ScanPosition == "Prone Position")
+                    //{
+                    //    if (indexZ >= 1 && indexZ < boxDepth && indexX >= 1 && indexX <= boxHeight && indexY >= 1 && indexY <= boxWidth)
+                    //    {
+                    //        ThreeD_Navigation_Standing(indexX, indexY, indexZ, rotationXYZ.X, rotationXYZ.Y, rotationXYZ.Z);
+                    //    }
+                    //}
 
 
                 }

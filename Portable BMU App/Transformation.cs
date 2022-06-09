@@ -614,6 +614,7 @@ namespace Ultrasonics3DReconstructor
                 //获取变化矩阵
                 Matrix4x4 transMatrix = this.MatrixForRotationAroundLine(rotOrg, rotDir, -(int)degreeNum);
                 calibrationMatrix = calibrationMatrix * transMatrix;
+                
 
                 ////对每一个矩形的每个顶点进行坐标变换
                 //for (int j = 0; j < this.rects.Length; j++)
